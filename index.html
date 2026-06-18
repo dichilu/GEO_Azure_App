@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GEO內容生成器 v1.18.0 企業上雲版</title>
+    <title>GEO內容生成器 v1.18.3 UI 體驗微調版</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
@@ -39,7 +39,6 @@
         const db = getFirestore(app);
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'ipc-global-production-v1';
         
-        // 🚨 企業上雲版：不再需要前端輸入 API Key，信箱改為可選輸入用於統計
         let localUserEmail = localStorage.getItem('ipc_user_email') || ""; 
 
         let isAuthReady = false;
@@ -55,7 +54,7 @@
         const i18n = {
             'zh-TW': {
                 navTitle: "GEO 內容生成系統",
-                navVer: "v1.18.0 企業上雲版 (免金鑰)",
+                navVer: "v1.18.3 UI 體驗微調版",
                 authConnecting: "正在連接雲端...",
                 authSuccess: "雲端已連線",
                 authError: "連線異常",
@@ -93,7 +92,7 @@
                 catLabel: "分類 (Cat):",
                 copyMeta: "複製標籤",
                 confirmReset: "確定要清除知識庫嗎？清除後雲端資料將同步清空。",
-                btnApiKey: "設定內部信箱", 
+                btnApiKey: "公司信箱登入", 
                 modalApiTitle: "系統登入 (僅作頻率統計)",
                 modalApiDesc: "本系統已對接公司內部安全通道，無需再輸入 API 金鑰。請輸入您的公司信箱以協助我們統計各部門使用頻率。",
                 modalApiSave: "儲存並登入",
@@ -111,11 +110,12 @@
                 modalFbEmpty: "請填寫建議內容！",
                 adminTabUsers: "👥 使用者追蹤",
                 adminTabFb: "💬 系統建議清單",
-                clearAllFiles: "清除所有檔案"
+                clearAllFiles: "清除所有檔案",
+                adminRequired: "請先解鎖管理員權限"
             },
             'zh-CN': {
                 navTitle: "GEO 内容生成系统",
-                navVer: "v1.18.0 企业上云版 (免金钥)",
+                navVer: "v1.18.3 UI 体验微调版",
                 authConnecting: "正在连接云端...",
                 authSuccess: "云端已连线",
                 authError: "连线异常",
@@ -153,7 +153,7 @@
                 catLabel: "分类 (Cat):",
                 copyMeta: "复制标签",
                 confirmReset: "确定要清除知识库吗？清除后云端资料将同步清空。",
-                btnApiKey: "设定内部信箱", 
+                btnApiKey: "公司信箱登录", 
                 modalApiTitle: "系统登入 (仅作频率统计)",
                 modalApiDesc: "本系统已对接公司内部安全通道，无需再输入 API 金钥。请输入您的公司信箱以协助我们统计各部门使用频率。",
                 modalApiSave: "储存并登入",
@@ -171,11 +171,12 @@
                 modalFbEmpty: "请填写建议内容！",
                 adminTabUsers: "👥 使用者追踪",
                 adminTabFb: "💬 系统建议清单",
-                clearAllFiles: "清除所有档案"
+                clearAllFiles: "清除所有档案",
+                adminRequired: "请先解锁管理员权限"
             },
             'en': {
                 navTitle: "GEO Content System",
-                navVer: "v1.18.0 Enterprise Cloud",
+                navVer: "v1.18.3 UI Tweak Patch",
                 authConnecting: "Connecting...",
                 authSuccess: "Cloud Connected",
                 authError: "Auth Error",
@@ -213,7 +214,7 @@
                 catLabel: "Category:",
                 copyMeta: "Copy Metadata",
                 confirmReset: "Are you sure you want to clear the knowledge base? Cloud data will be wiped.",
-                btnApiKey: "Set Corp Email",
+                btnApiKey: "Corp Email Login",
                 modalApiTitle: "System Login (Stats Only)",
                 modalApiDesc: "System is connected to internal secure channel. No API key needed. Please enter your corporate email for usage statistics.",
                 modalApiSave: "Save & Login",
@@ -231,7 +232,8 @@
                 modalFbEmpty: "Feedback cannot be empty!",
                 adminTabUsers: "👥 Users Tracking",
                 adminTabFb: "💬 Feedback List",
-                clearAllFiles: "Clear all files"
+                clearAllFiles: "Clear all files",
+                adminRequired: "Admin unlock required"
             }
         };
 
@@ -525,6 +527,9 @@
                 const adminBtn = document.getElementById('admin-panel-btn');
                 if (adminBtn) adminBtn.classList.remove('hidden');
 
+                const clearBtn = document.getElementById('clear-data-btn');
+                if (clearBtn) clearBtn.classList.remove('hidden');
+
                 window.closeUnlockModal();
                 window.showToast(i18n[currentLang].unlockSuccess, 'success');
             } else {
@@ -637,6 +642,13 @@
 
         window.openConfirmModal = () => {
             if (!isDataInitialLoaded) return;
+            
+            const ta = document.getElementById('kb-manual');
+            if (ta && ta.hasAttribute('readonly')) {
+                window.showToast(i18n[currentLang].adminRequired, 'error');
+                return;
+            }
+
             const modal = document.getElementById('confirm-modal');
             const content = document.getElementById('confirm-modal-content');
             modal.classList.remove('hidden');
@@ -934,6 +946,52 @@
                     }
                 }
 
+                // --- 新增：自動透過後端抓取 Target URLs 的真實內容 ---
+                if (targetUrls.trim()) {
+                    document.getElementById('process-sub-msg').innerText = "系統正在自動抓取目標網址內容...";
+                    const urls = targetUrls.split('\n').filter(u => u.trim() !== "");
+                    for (let i = 0; i < urls.length; i++) {
+                        const url = urls[i];
+                        try {
+                            const scrapeRes = await fetchWithRetry('/api/scrape', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({ url })
+                            }, 3); // 給最多3次重試
+                            if (scrapeRes && scrapeRes.text) {
+                                targetFileText += `\n--- [目標網頁抓取 ${i+1}: ${url}] ---\n${scrapeRes.text}\n`;
+                            }
+                        } catch (err) {
+                            console.warn(`網址抓取失敗: ${url}`, err);
+                            targetFileText += `\n--- [目標網頁抓取 ${i+1}: ${url}] 失敗 ---\n(請確保網址正確或由人工上傳規格表)\n`;
+                        }
+                    }
+                }
+
+                // --- 新增：自動透過後端抓取 Reference URLs (KB) 的真實內容 ---
+                if (kbUrls.trim()) {
+                    document.getElementById('process-sub-msg').innerText = "系統正在擷取大量企業知識庫網址 (可能需要較長時間)...";
+                    const urls = kbUrls.split('\n').filter(u => u.trim() !== "");
+                    for (let i = 0; i < urls.length; i++) {
+                        const url = urls[i];
+                        try {
+                            const scrapeRes = await fetchWithRetry('/api/scrape', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({ url })
+                            }, 2);
+                            if (scrapeRes && scrapeRes.text) {
+                                referenceFileText += `\n--- [參考網頁抓取 ${i+1}: ${url}] ---\n${scrapeRes.text}\n`;
+                            }
+                        } catch (err) {
+                            console.warn(`參考網址抓取失敗: ${url}`, err);
+                        }
+                    }
+                }
+
+                // 恢復原先的分析字幕
+                document.getElementById('process-sub-msg').innerText = t.procSub;
+
                 const MAX_CHARS = 30000;
                 if (targetFileText.length > MAX_CHARS) {
                     targetFileText = targetFileText.substring(0, MAX_CHARS);
@@ -974,7 +1032,7 @@
             const descLen = isZh ? `STRICTLY 70-75 ${chineseType} characters (Max 150 Bytes).` : 'STRICTLY 140-150 characters.';
             const grammarRule = isZh ? (isZhCN ? 'NATIVE SIMPLIFIED CHINESE GRAMMAR' : 'NATIVE CHINESE GRAMMAR') : 'NATIVE ENGLISH GRAMMAR';
             
-            const catNameEx = isZh ? (isZhCN ? "'无风扇边缘运算系统'" : "'無風扇邊緣運算系統'") : "'Compact Fanless Computer'";
+            const catNameEx = isZh ? (isZhCN ? "'无风扇边缘运算系统'" : "'無風扇邊緣運算系统'") : "'Compact Fanless Computer'";
             const ctaWords = isZh ? (isZhCN ? "CTA Power Words (e.g., '立即联系专家评估', '索取专属报价')" : "CTA Power Words (e.g., '立即聯繫專家評估', '索取專屬報價')") : "Short CTA (e.g., 'Buy now', 'Learn more', 'Contact us')";
 
             let pageLevelInstruction = "";
@@ -1127,7 +1185,10 @@
 
                 const tagInstruction = `- **[TAGS]**: Exactly 3-6 specific entity keywords. MUST be a mix of: 1. Specs (e.g., NVMe, M.2), 2. IPC Features (e.g., Wide Temp, Anti-Vibration), 3. Application Scenarios (e.g., Smart Factory).`;
 
-                const killSwitchInstruction = `\n🚨 **KILL SWITCH (ANTI-CONTAMINATION)**: When extracting data, carefully isolate the Target Model. If you see specs belonging to "Related Products" or other series mentioned on the page, YOU MUST DISCARD THEM. Output "N/A" rather than hallucinating cross-contaminated specs.`;
+                const killSwitchInstruction = `\n🚨 **KILL SWITCH (ANTI-CONTAMINATION & ENTITY LOCK)**: 
+                1. E-COMMERCE TRAP WARNING: The provided URL text often contains a "Related Products", "Accessories", or "Cross-Selling" section at the bottom (listing other models like Orin, Nano, etc.). 
+                2. STRICT ISOLATION: You MUST ONLY extract specifications that explicitly belong to the exact Target [MODEL]. 
+                3. FATAL ERROR PREVENTION: If you see conflicting core chips (e.g., Jetson Thor vs. Jetson AGX Orin) on the same page, check which exact model number they attach to. DO NOT mix specs from Model B into Target Model A's content. If uncertain, output "N/A" rather than hallucinating.`;
 
                 systemPrompt = `You are a professional IPC marketing expert.
                 **OUTPUT LANGUAGE**: MUST be **${targetLangLabel}**.
@@ -1211,13 +1272,11 @@
             }
 
             try {
-                // 🚨 企業上雲版：不再直接呼叫 Google API，改為呼叫自己的 Node.js 後端
                 const payload = {
                     contents: [{ parts: partsArray }],
                     systemInstruction: { parts: [{ text: systemPrompt }] }
                 };
                 
-                // 呼叫同一台主機上的 /api/generate 通道
                 const responseData = await fetchWithRetry('/api/generate', { 
                     method: 'POST', 
                     headers: { 'Content-Type': 'application/json' }, 
@@ -1297,7 +1356,7 @@
                     card.innerHTML = `
                         <div class="bg-gradient-to-r from-emerald-600 to-teal-500 px-8 py-5 flex justify-between items-center shadow-inner">
                             <div class="flex flex-col">
-                                <span class="text-[10px] text-white/80 font-black uppercase tracking-widest flex items-center gap-2"><i class="fab fa-google"></i> Google Ads (v1.18.0 企業上雲版)</span>
+                                <span class="text-[10px] text-white/80 font-black uppercase tracking-widest flex items-center gap-2"><i class="fab fa-google"></i> Google Ads (v1.18.3)</span>
                                 <span class="text-sm font-bold text-white truncate max-w-xl"><i class="fas fa-link mr-3 opacity-50"></i>${url}</span>
                             </div>
                         </div>
@@ -1380,7 +1439,7 @@
                         <div class="bg-slate-50 border-b border-slate-200 px-8 py-5 flex flex-col sm:flex-row justify-between sm:items-center gap-4">
                             <div class="flex items-center gap-4">
                                 <div class="w-10 h-10 rounded-xl bg-[#005bac]/10 text-[#005bac] flex items-center justify-center text-lg"><i class="fas fa-microchip"></i></div>
-                                <div><h4 class="font-black text-slate-800 text-base">${detox(model) || 'IPC MODEL'} (v1.18.0)</h4><p class="text-xs text-slate-500 truncate max-w-md mt-1">${url}</p></div>
+                                <div><h4 class="font-black text-slate-800 text-base">${detox(model) || 'IPC MODEL'} (v1.18.3)</h4><p class="text-xs text-slate-500 truncate max-w-md mt-1">${url}</p></div>
                             </div>
                             <button onclick="window.copyToClip(this, 'all')" data-content="${encodeURIComponent(titleClean + '\n' + descClean + '\n\n' + featuresTextToCopy + '\n\n' + 'TL;DR:\n' + tldrClean + '\n\n' + faqClean)}" class="text-xs bg-white border border-slate-300 px-5 py-2.5 rounded-lg font-bold shadow-sm transition-all hover:-translate-y-0.5 hover:shadow flex items-center gap-2"><i class="far fa-copy"></i> ${t.copyAll}</button>
                         </div>
@@ -1493,15 +1552,15 @@
                 <div class="w-10 h-10 bg-[#005bac] rounded-lg flex items-center justify-center shadow-md"><i class="fas fa-microchip text-white text-lg"></i></div>
                 <div>
                     <h1 class="text-xl font-bold text-slate-800 leading-tight" data-i18n="navTitle">GEO 內容生成系統</h1>
-                    <p class="text-xs text-slate-500 font-medium tracking-wide mt-0.5" data-i18n="navVer">v1.18.0 企業上雲版</p>
+                    <p class="text-xs text-slate-500 font-medium tracking-wide mt-0.5" data-i18n="navVer">v1.18.3 UI 體驗微調版</p>
                 </div>
             </div>
             <div class="flex items-center gap-4">
+                <button id="login-btn-display" onclick="window.toggleApiModal()" class="bg-white hover:bg-slate-50 text-slate-600 font-semibold text-xs px-4 py-2 rounded-md border border-slate-200 shadow-sm flex items-center gap-2 transition-all active:scale-95">
+                    <i class="fas fa-user-circle text-blue-500"></i> <span data-i18n="btnApiKey">公司信箱登入</span>
+                </button>
                 <button onclick="window.openFeedbackModal()" class="bg-white hover:bg-yellow-50 text-slate-600 hover:text-yellow-600 font-semibold text-xs px-4 py-2 rounded-md border border-slate-200 hover:border-yellow-200 shadow-sm flex items-center gap-2 transition-all active:scale-95">
                     <i class="fas fa-lightbulb text-yellow-500"></i> <span data-i18n="btnFeedback">系統建議</span>
-                </button>
-                <button id="login-btn-display" onclick="window.toggleApiModal()" class="bg-white hover:bg-slate-50 text-slate-600 font-semibold text-xs px-4 py-2 rounded-md border border-slate-200 shadow-sm flex items-center gap-2 transition-all active:scale-95">
-                    <i class="fas fa-user-circle text-blue-500"></i> <span data-i18n="btnApiKey">設定內部信箱</span>
                 </button>
                 
                 <div class="relative group">
@@ -1568,7 +1627,7 @@
                     <button onclick="window.loadSharedKnowledge()" class="text-xs font-semibold text-slate-600 hover:text-blue-600 bg-white px-4 py-2 rounded-md border border-slate-200 shadow-sm flex items-center gap-2">
                         <i id="reload-icon" class="fas fa-sync-alt"></i> <span data-i18n="btnReload">從雲端刷新</span>
                     </button>
-                    <button onclick="window.openConfirmModal()" class="text-xs font-semibold text-red-500 hover:text-red-700 bg-white px-4 py-2 rounded-md border border-red-100 shadow-sm flex items-center gap-2">
+                    <button id="clear-data-btn" onclick="window.openConfirmModal()" class="hidden text-xs font-semibold text-red-500 hover:text-red-700 bg-white px-4 py-2 rounded-md border border-red-100 shadow-sm flex items-center gap-2 transition-all">
                         <i class="fas fa-trash-alt"></i> <span data-i18n="btnReset">清除資料</span>
                     </button>
                 </div>

@@ -16,6 +16,30 @@ app.use(express.json({ limit: '50mb' }));
 // 【保全設定 2】：將這個資料夾變成網頁伺服器，自動讀取 index.html
 app.use(express.static(__dirname));
 
+// 【爬蟲代理通道】：專門透過 Jina Reader 抓取網頁的 Markdown 內容，完美避開跨網域 (CORS) 錯誤
+app.post('/api/scrape', async (req, res) => {
+    const targetUrl = req.body.url;
+    if (!targetUrl) {
+        return res.status(400).json({ error: "沒有提供目標網址" });
+    }
+    // 加入 Timeout 機制以防抓取過久
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 20000); // 20 秒超時限時
+    
+    try {
+        const response = await fetch(`https://r.jina.ai/${targetUrl}`, {
+            signal: controller.signal
+        });
+        clearTimeout(timeout);
+        if (!response.ok) throw new Error(`抓取錯誤碼: ${response.status}`);
+        const markdown = await response.text();
+        res.json({ text: markdown });
+    } catch (error) {
+        clearTimeout(timeout);
+        res.status(500).json({ error: `網頁抓取失敗: ${error.message}` });
+    }
+});
+
 // 【核心機密通道】：專門幫前端去向 Google 拿資料的隱形通道
 app.post('/api/generate', async (req, res) => {
     // 🚨 關鍵：從 Azure 保險箱拿出金鑰，前端絕對看不到！

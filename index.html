@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GEO內容生成器 v1.18.3 UI 體驗微調版</title>
+    <title>GEO?�容?��???v1.19.0 UI 體�?微調??/title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
@@ -53,130 +53,130 @@
 
         const i18n = {
             'zh-TW': {
-                navTitle: "GEO 內容生成系統",
-                navVer: "v1.18.3 UI 體驗微調版",
-                authConnecting: "正在連接雲端...",
-                authSuccess: "雲端已連線",
-                authError: "連線異常",
-                sec1Title: "目標優化產品",
-                pageLevel: "頁面層級",
-                levelPDP: "產品詳情頁 (PDP)",
-                levelPLP: "產品線頁面 (PLP)",
-                levelHome: "企業首頁 (Home)",
-                urlPlaceholder: "請輸入「目標產品網址」。AI 將以此鎖定精確型號，並作為 SEO 語境與頁面層級的背景參考。",
-                pdfTitle: "拖放「關聯文件」(支援 PDF, DOCX, XLSX, 圖檔, TXT)",
-                fileSelected: "目標檔案：",
-                refFileSelected: "參考檔案：",
-                sec2Title: "企業知識庫 (輔助參考區)",
-                kbUrlLabel: "外部參考資料 (單次沙盒)",
-                kbManualLabel: "品牌規範 (全域輔助參考)",
-                kbUrlPlaceholder: "請填寫「同系列產品線網址」或「技術白皮書」。",
-                refPdfTitle: "📎 附加參考檔案 (競品截圖/PDF)",
-                kbManualPlaceholder: "【管理員專用】目前雲端無資料。\n請解鎖並貼入《研華全球品牌憲法》。\n\n範例：\n1. 嚴禁使用便宜、秒殺等 B2C 詞彙。\n2. 寬溫統一稱為「嚴苛環境寬溫支援 (-40~85°C)」。\n3. 嚴禁提及 Moxa 等競品。",
-                btnReload: "從雲端刷新",
-                btnReset: "清除資料",
-                geoLabel: "目標優化引擎",
-                titleStrategyLabel: "標題生成策略",
-                strategyAuto: "智慧動態平衡",
-                strategyKeyword: "購買意圖優先 (報價/規格)",
-                strategyBrand: "品牌聲量優先 (原廠/現貨)",
-                btnSubmit: "執行 AI 內容生成",
-                processing: "處理中...",
-                resTitle: "優化產出結果",
-                btnExport: "匯出 Excel 報告",
+                navTitle: "GEO ?�容?��?系統",
+                navVer: "v1.19.0 UI 體�?微調??,
+                authConnecting: "�?��??��?�端...",
+                authSuccess: "?�端已�??",
+                authError: "????�常",
+                sec1Title: "?��??��??��?",
+                pageLevel: "?�面層�?",
+                levelPDP: "?��?詳�???(PDP)",
+                levelPLP: "?��?線�???(PLP)",
+                levelHome: "企業首�? (Home)",
+                urlPlaceholder: "請輸?�「目標產?�網?�?�。AI 將以此�?定精確�??��?並�???SEO 語�??��??�層級�??�景?�考�?,
+                pdfTitle: "?�放?��??��?件�??�援 PDF, DOCX, XLSX, ?��?, TXT)",
+                fileSelected: "?��?檔�?�?,
+                refFileSelected: "?�考�?案�?",
+                sec2Title: "企業?��?�?(輔助?�考�?)",
+                kbUrlLabel: "外部?�考�???(?�次沙�?)",
+                kbManualLabel: "?��?規�? (?��?輔助?��?",
+                kbUrlPlaceholder: "請填寫「�?系�??��?線網?�?��??��?術白?�書?��?,
+                refPdfTitle: "?? ?��??�考�?�?(競�??��?/PDF)",
+                kbManualPlaceholder: "?�管?�員專用?�目?�雲端無資�??�\n請解?�並貼入?��??�全?��??�憲法》。\n\n範�?：\n1. ?��?使用便�??��?殺�? B2C 詞�??�\n2. 寬溫統�?稱為?�嚴?�環境寬溫支??(-40~85°C)?�。\n3. ?��??��? Moxa 等競?��?,
+                btnReload: "從雲端刷??,
+                btnReset: "清除資�?",
+                geoLabel: "?��??��?引�?",
+                titleStrategyLabel: "標�??��?策略",
+                strategyAuto: "?�慧?��?平衡",
+                strategyKeyword: "購買?��??��? (?�價/規格)",
+                strategyBrand: "?��??��??��? (?��?/?�貨)",
+                btnSubmit: "?��? AI ?�容?��?",
+                processing: "?��?�?..",
+                resTitle: "?��??�出結�?",
+                btnExport: "?�出 Excel ?��?",
                 procTitle: "GEO Engine Active...",
-                procSub: "正在分析品牌定位與價值鏈特徵...",
-                copyAll: "複製全部",
+                procSub: "�?��?��??��?定�??�價?��??�徵...",
+                copyAll: "複製?�部",
                 copySingle: "複製",
                 tagLabel: "標籤 (Tags):",
-                catLabel: "分類 (Cat):",
+                catLabel: "?��? (Cat):",
                 copyMeta: "複製標籤",
-                confirmReset: "確定要清除知識庫嗎？清除後雲端資料將同步清空。",
-                btnApiKey: "公司信箱登入", 
-                modalApiTitle: "系統登入 (僅作頻率統計)",
-                modalApiDesc: "本系統已對接公司內部安全通道，無需再輸入 API 金鑰。請輸入您的公司信箱以協助我們統計各部門使用頻率。",
-                modalApiSave: "儲存並登入",
-                modalApiSuccess: "登入成功！",
-                unlockBtn: "解鎖編輯",
-                unlockPrompt: "請輸入管理員密碼解鎖品牌規範：",
-                unlockSuccess: "已解鎖！游標離開輸入框後將自動儲存。",
-                unlockFail: "密碼錯誤，拒絕解鎖。",
+                confirmReset: "確�?要�??�知識庫?��?清除後雲端�??��??�步清空??,
+                btnApiKey: "?�司信箱?�入", 
+                modalApiTitle: "系統?�入 (?��??��?統�?)",
+                modalApiDesc: "?�系統已對接?�司?�部安全?��?，無?�?�輸??API ?�鑰?��?輸入?��??�司信箱以�??��??�統計�??��?使用?��???,
+                modalApiSave: "?��?並登??,
+                modalApiSuccess: "?�入?��?�?,
+                unlockBtn: "�??編輯",
+                unlockPrompt: "請輸?�管?�員密碼�???��?規�?�?,
+                unlockSuccess: "已解?��?游�??��?輸入框�?將自?�儲存�?,
+                unlockFail: "密碼?�誤，�?絕解?��?,
                 btnFeedback: "系統建議",
-                modalFbTitle: "提供系統優化建議",
-                modalFbDesc: "請描述您遇到的問題或希望新增的功能。為方便後續聯繫，送出時將夾帶您的登入信箱。",
-                modalFbPlaceholder: "請輸入您的建議 (例如：希望增加 XXX 引擎的優化選項)...",
-                modalFbSubmit: "送出建議",
-                modalFbSuccess: "建議已送出，感謝您的回饋！",
-                modalFbEmpty: "請填寫建議內容！",
-                adminTabUsers: "👥 使用者追蹤",
-                adminTabFb: "💬 系統建議清單",
-                clearAllFiles: "清除所有檔案",
-                adminRequired: "請先解鎖管理員權限"
+                modalFbTitle: "?��?系統?��?建議",
+                modalFbDesc: "請�?述您?�到?��?題�?希�??��??��??�。為?�便後�??�繫，送出?��?夾帶?��??�入信箱??,
+                modalFbPlaceholder: "請輸?�您?�建�?(例�?：�??��???XXX 引�??�優?�選??...",
+                modalFbSubmit: "?�出建議",
+                modalFbSuccess: "建議已送出，�?謝您?��?饋�?",
+                modalFbEmpty: "請填寫建議內容�?",
+                adminTabUsers: "?�� 使用?�追�?,
+                adminTabFb: "?�� 系統建議清單",
+                clearAllFiles: "清除?�?��?�?,
+                adminRequired: "請�?�??管�??��???
             },
             'zh-CN': {
-                navTitle: "GEO 内容生成系统",
-                navVer: "v1.18.3 UI 体验微调版",
-                authConnecting: "正在连接云端...",
-                authSuccess: "云端已连线",
+                navTitle: "GEO ?�容?��?系�?",
+                navVer: "v1.19.0 UI 体�?微�???,
+                authConnecting: "�?��连接云端...",
+                authSuccess: "云端已�?�?,
                 authError: "连线异常",
-                sec1Title: "目标优化产品",
+                sec1Title: "?��?优�?产�?",
                 pageLevel: "页面层级",
-                levelPDP: "产品详情页 (PDP)",
-                levelPLP: "产品线页面 (PLP)",
-                levelHome: "企业首页 (Home)",
-                urlPlaceholder: "请输入「目标产品网址」。AI 将以此锁定精确型号，并作为 SEO 语境与页面层级的背景参考。",
-                pdfTitle: "拖放「关联文件」(支持 PDF, DOCX, XLSX, 图档, TXT)",
-                fileSelected: "目标档案：",
-                refFileSelected: "参考档案：",
-                sec2Title: "企业知识库 (辅助参考区)",
-                kbUrlLabel: "外部参考资料 (单次沙盒)",
-                kbManualLabel: "品牌规范 (全域辅助参考)",
-                kbUrlPlaceholder: "请填写「同系列产品线网址」或「技术白皮书」。",
-                refPdfTitle: "📎 附加参考档案 (竞品截图/PDF)",
-                kbManualPlaceholder: "【管理员专用】目前云端无资料。\n请解锁并贴入《研华全球品牌宪法》。\n\n范例：\n1. 严禁使用便宜、秒杀等 B2C 词汇。\n2. 宽温统一称为「严苛环境宽温支持 (-40~85°C)」。\n3. 严禁提及 Moxa 等竞品。",
-                btnReload: "从云端刷新",
-                btnReset: "清除资料",
-                geoLabel: "目标优化引擎",
-                titleStrategyLabel: "标题生成策略",
-                strategyAuto: "智慧动态平衡",
-                strategyKeyword: "购买意图优先 (报价/规格)",
-                strategyBrand: "品牌声量优先 (原厂/现货)",
-                btnSubmit: "执行 AI 内容生成",
-                processing: "处理中...",
-                resTitle: "优化产出结果",
-                btnExport: "汇出 Excel 报告",
+                levelPDP: "产�?详�?�?(PDP)",
+                levelPLP: "产�?线页??(PLP)",
+                levelHome: "企�?首页 (Home)",
+                urlPlaceholder: "请�??�「目?�产?��??�?�。AI 将以此�?定精确�??��?并�?�?SEO 语�?与页?��?级�??�景?�考�?,
+                pdfTitle: "?�放?�关?��?件�??��? PDF, DOCX, XLSX, ?�档, TXT)",
+                fileSelected: "?��?�??�?,
+                refFileSelected: "?�考档案�?",
+                sec2Title: "企�??��?�?(辅助?�考区)",
+                kbUrlLabel: "外部?�考�???(?�次沙�?)",
+                kbManualLabel: "?��?规�? (?��?辅助?��?",
+                kbUrlPlaceholder: "请填?�「�?系�?产�?线�??�?��??��??�白?�书?��?,
+                refPdfTitle: "?? ?��??�考档�?(竞�??�图/PDF)",
+                kbManualPlaceholder: "?�管?��?专用?�目?��?端�?资�??�\n请解?�并贴入?��??�全?��??�宪法》。\n\n?��?：\n1. 严�?使用便�??��??��?B2C 词�??�\n2. 宽温统�?称为?�严?�环境宽温支??(-40~85°C)?�。\n3. 严�??��? Moxa 等�??��?,
+                btnReload: "从�?端刷??,
+                btnReset: "清除资�?",
+                geoLabel: "?��?优�?引�?",
+                titleStrategyLabel: "?��??��?策略",
+                strategyAuto: "?�慧?�态平�?,
+                strategyKeyword: "购买?�图优�? (?�价/规格)",
+                strategyBrand: "?��?声�?优�? (?��?/?�货)",
+                btnSubmit: "?��? AI ?�容?��?",
+                processing: "处�?�?..",
+                resTitle: "优�?产出结�?",
+                btnExport: "汇出 Excel ?��?",
                 procTitle: "GEO Engine Active...",
-                procSub: "正在分析品牌定位与价值链特征...",
-                copyAll: "复制全部",
+                procSub: "�?��?��??��?定�?与价?�链?��?...",
+                copyAll: "复制?�部",
                 copySingle: "复制",
-                tagLabel: "标签 (Tags):",
-                catLabel: "分类 (Cat):",
-                copyMeta: "复制标签",
-                confirmReset: "确定要清除知识库吗？清除后云端资料将同步清空。",
-                btnApiKey: "公司信箱登录", 
-                modalApiTitle: "系统登入 (仅作频率统计)",
-                modalApiDesc: "本系统已对接公司内部安全通道，无需再输入 API 金钥。请输入您的公司信箱以协助我们统计各部门使用频率。",
-                modalApiSave: "储存并登入",
-                modalApiSuccess: "登入成功！",
-                unlockBtn: "解锁编辑",
-                unlockPrompt: "请输入管理员密码解锁品牌规范：",
-                unlockSuccess: "已解锁！光标离开输入框后将自动储存。",
-                unlockFail: "密码错误，拒绝解锁。",
-                btnFeedback: "系统建议",
-                modalFbTitle: "提供系统优化建议",
-                modalFbDesc: "请描述您遇到的问题或希望新增的功能。为方便后续联系，送出时将夹带您的登入信箱。",
-                modalFbPlaceholder: "请输入您的建议 (例如：希望增加 XXX 引擎的优化选项)...",
-                modalFbSubmit: "送出建议",
-                modalFbSuccess: "建议已送出，感谢您的反馈！",
-                modalFbEmpty: "请填写建议内容！",
-                adminTabUsers: "👥 使用者追踪",
-                adminTabFb: "💬 系统建议清单",
-                clearAllFiles: "清除所有档案",
-                adminRequired: "请先解锁管理员权限"
+                tagLabel: "?�签 (Tags):",
+                catLabel: "?�类 (Cat):",
+                copyMeta: "复制?�签",
+                confirmReset: "确�?要�??�知识�??��?清除?��?端�??��??�步清空??,
+                btnApiKey: "?�司信箱?��?", 
+                modalApiTitle: "系�??�入 (仅�?频�?统计)",
+                modalApiDesc: "?�系统已对接?�司?�部安全?��?，�??�?��???API ?�钥?�请输入?��??�司信箱以�??��?们�?计�??�门使用频�???,
+                modalApiSave: "?��?并登??,
+                modalApiSuccess: "?�入?��?�?,
+                unlockBtn: "�??编�?",
+                unlockPrompt: "请�??�管?��?密�?�???��?规�?�?,
+                unlockSuccess: "已解?��??��?离�?输入框�?将自?�储存�?,
+                unlockFail: "密�??�误，�?绝解?��?,
+                btnFeedback: "系�?建议",
+                modalFbTitle: "?��?系�?优�?建议",
+                modalFbDesc: "请�?述您?�到?�问题�?希�??��??��??�。为?�便?�续?�系，送出?��?夹带?��??�入信箱??,
+                modalFbPlaceholder: "请�??�您?�建�?(例�?：�??��???XXX 引�??��??�选项)...",
+                modalFbSubmit: "?�出建议",
+                modalFbSuccess: "建议已送出，�?谢您?��?馈�?",
+                modalFbEmpty: "请填?�建议�?容�?",
+                adminTabUsers: "?�� 使用?�追�?,
+                adminTabFb: "?�� 系�?建议清�?",
+                clearAllFiles: "清除?�?�档�?,
+                adminRequired: "请�?�??管�??��???
             },
             'en': {
                 navTitle: "GEO Content System",
-                navVer: "v1.18.3 UI Tweak Patch",
+                navVer: "v1.19.0 UI Tweak Patch",
                 authConnecting: "Connecting...",
                 authSuccess: "Cloud Connected",
                 authError: "Auth Error",
@@ -193,7 +193,7 @@
                 kbUrlLabel: "Reference Data (Sandbox)",
                 kbManualLabel: "Brand Guidelines (Reference)",
                 kbUrlPlaceholder: "Enter 'Same Product Line URLs' or 'Whitepapers'.",
-                refPdfTitle: "📎 Add Ref Files (Competitor Images/PDF)",
+                refPdfTitle: "?? Add Ref Files (Competitor Images/PDF)",
                 kbManualPlaceholder: "[Admin Only] Cloud data is empty.\nPlease unlock and paste the Global Brand Constitution.\n\nExample:\n1. Ban B2C words like 'cheap'.\n2. Standardize 'Wide Temp' to (-40~85°C).\n3. Prohibit mentioning Moxa.",
                 btnReload: "Reload Cloud",
                 btnReset: "Clear Data",
@@ -230,8 +230,8 @@
                 modalFbSubmit: "Submit Feedback",
                 modalFbSuccess: "Feedback submitted. Thank you!",
                 modalFbEmpty: "Feedback cannot be empty!",
-                adminTabUsers: "👥 Users Tracking",
-                adminTabFb: "💬 Feedback List",
+                adminTabUsers: "?�� Users Tracking",
+                adminTabFb: "?�� Feedback List",
                 clearAllFiles: "Clear all files",
                 adminRequired: "Admin unlock required"
             }
@@ -296,7 +296,7 @@
             document.getElementById('title-strategy').options[2].text = t.strategyBrand;
             
             const geoSelect = document.getElementById('pref-geo');
-            geoSelect.options[0].text = currentLang === 'zh-TW' ? "標準 SEO 優化" : (currentLang === 'zh-CN' ? "标准 SEO 优化" : "Standard SEO");
+            geoSelect.options[0].text = currentLang === 'zh-TW' ? "標�? SEO ?��?" : (currentLang === 'zh-CN' ? "?��? SEO 优�?" : "Standard SEO");
             
             document.getElementById('submit-btn-text').innerText = t.btnSubmit;
             if(document.getElementById('export-btn-text')) document.getElementById('export-btn-text').innerText = t.btnExport;
@@ -401,7 +401,7 @@
             const emailInput = document.getElementById('user-email-input').value.trim();
             
             if (emailInput && !emailInput.includes('@')) {
-                window.showToast(currentLang === 'en' ? "Valid email required" : (currentLang === 'zh-CN' ? "请输入正确的信箱格式" : "請輸入正確的信箱格式"), "error");
+                window.showToast(currentLang === 'en' ? "Valid email required" : (currentLang === 'zh-CN' ? "请�??�正确�?信箱?��?" : "請輸?�正確�?信箱?��?"), "error");
                 return;
             }
 
@@ -484,7 +484,7 @@
                 window.closeFeedbackModal();
             } catch (error) {
                 console.error("Feedback error:", error);
-                window.showToast(currentLang === 'en' ? 'Failed, try again later' : (currentLang === 'zh-CN' ? '送出失败，请稍后再试' : '送出失敗，請稍後再試'), 'error');
+                window.showToast(currentLang === 'en' ? 'Failed, try again later' : (currentLang === 'zh-CN' ? '?�出失败，请稍�??��?' : '?�出失�?，�?稍�??�試'), 'error');
             } finally {
                 btn.innerHTML = oldHtml;
                 btn.disabled = false;
@@ -518,7 +518,7 @@
                 ta.classList.add('bg-yellow-50', 'text-slate-800', 'border-yellow-300', 'input-focus');
                 
                 const btn = document.getElementById('unlock-btn');
-                const unlockText = currentLang === 'en' ? 'Unlocked' : (currentLang === 'zh-CN' ? '已解锁' : '已解鎖');
+                const unlockText = currentLang === 'en' ? 'Unlocked' : (currentLang === 'zh-CN' ? '已解?? : '已解??);
                 btn.innerHTML = `<i class="fas fa-lock-open text-emerald-600"></i> <span data-i18n="unlockBtn">${unlockText}</span>`;
                 btn.classList.remove('bg-slate-100', 'text-slate-500');
                 btn.classList.add('bg-emerald-50', 'border-emerald-200', 'border');
@@ -563,7 +563,7 @@
             const tbodyUsers = document.getElementById('admin-table-body-users');
             const tbodyFb = document.getElementById('admin-table-body-feedback');
             
-            const loadingMsg = currentLang === 'en' ? 'Loading data...' : (currentLang === 'zh-CN' ? '读取数据中...' : '讀取數據中...');
+            const loadingMsg = currentLang === 'en' ? 'Loading data...' : (currentLang === 'zh-CN' ? '读�??�据�?..' : '讀?�數?�中...');
             
             tbodyUsers.innerHTML = `<tr><td colspan="4" class="text-center py-8 text-slate-400"><i class="fas fa-circle-notch fa-spin text-xl text-blue-500 mb-2 block"></i>${loadingMsg}</td></tr>`;
             tbodyFb.innerHTML = `<tr><td colspan="3" class="text-center py-8 text-slate-400"><i class="fas fa-circle-notch fa-spin text-xl text-blue-500 mb-2 block"></i>${loadingMsg}</td></tr>`;
@@ -580,8 +580,8 @@
 
                 const now = new Date();
                 let htmlUsers = '';
-                const daySuffix = currentLang === 'en' ? 'days' : '天';
-                const timesSuffix = currentLang === 'en' ? 'times' : '次';
+                const daySuffix = currentLang === 'en' ? 'days' : '�?;
+                const timesSuffix = currentLang === 'en' ? 'times' : '�?;
 
                 stats.forEach((data) => {
                     const firstLogin = new Date(data.firstLoginAt || data.lastLoginAt);
@@ -599,7 +599,7 @@
                     </tr>`;
                 });
                 
-                const noRecordMsg = currentLang === 'en' ? 'No records found' : (currentLang === 'zh-CN' ? '目前无任何纪录' : '目前無任何紀錄');
+                const noRecordMsg = currentLang === 'en' ? 'No records found' : (currentLang === 'zh-CN' ? '?��??�任何纪�? : '?��??�任何�???);
                 if(stats.length === 0) htmlUsers = `<tr><td colspan="4" class="text-center py-8 text-slate-400 font-bold">${noRecordMsg}</td></tr>`;
                 tbodyUsers.innerHTML = htmlUsers;
 
@@ -621,12 +621,12 @@
                     </tr>`;
                 });
                 
-                const noFbMsg = currentLang === 'en' ? 'No feedback found' : (currentLang === 'zh-CN' ? '目前无任何建议' : '目前無任何建议');
+                const noFbMsg = currentLang === 'en' ? 'No feedback found' : (currentLang === 'zh-CN' ? '?��??�任何建�? : '?��??�任何建�?);
                 if(feedbacks.length === 0) htmlFb = `<tr><td colspan="3" class="text-center py-8 text-slate-400 font-bold">${noFbMsg}</td></tr>`;
                 tbodyFb.innerHTML = htmlFb;
                 
             } catch (e) {
-                const failMsg = currentLang === 'en' ? 'Load Failed' : (currentLang === 'zh-CN' ? '载入失败' : '載入失敗');
+                const failMsg = currentLang === 'en' ? 'Load Failed' : (currentLang === 'zh-CN' ? '载入失败' : '載入失�?');
                 tbodyUsers.innerHTML = `<tr><td colspan="4" class="text-center py-8 text-red-500 font-bold"><i class="fas fa-exclamation-triangle block text-2xl mb-2"></i>${failMsg}: ${e.message}</td></tr>`;
                 tbodyFb.innerHTML = `<tr><td colspan="3" class="text-center py-8 text-red-500 font-bold">${failMsg}</td></tr>`;
             }
@@ -670,9 +670,9 @@
                 document.getElementById('kb-urls').value = "";
                 document.getElementById('kb-manual').value = "";
                 window.updateDashboard("", "");
-                window.showToast(currentLang === 'en' ? 'Data Cleared' : (currentLang === 'zh-CN' ? '资料已清除同步' : '資料已清除同步'), 'success');
+                window.showToast(currentLang === 'en' ? 'Data Cleared' : (currentLang === 'zh-CN' ? '资�?已�??��?�? : '資�?已�??��?�?), 'success');
             } catch (e) {
-                window.showToast(currentLang === 'en' ? 'Clear Failed' : (currentLang === 'zh-CN' ? '清除失败' : '清除失敗'), 'error');
+                window.showToast(currentLang === 'en' ? 'Clear Failed' : (currentLang === 'zh-CN' ? '清除失败' : '清除失�?'), 'error');
             }
         };
 
@@ -778,14 +778,14 @@
                 return new Promise((resolve, reject) => {
                     const reader = new FileReader();
                     reader.onload = (e) => resolve(e.target.result);
-                    reader.onerror = (e) => reject(new Error("文字檔讀取失敗"));
+                    reader.onerror = (e) => reject(new Error("?��?檔�??�失??));
                     reader.readAsText(file);
                 });
             } else if (file.type === "application/pdf" || ext === 'pdf') {
                 return new Promise((resolve, reject) => {
                     const pdfLib = window.pdfjsLib || globalThis.pdfjsLib;
                     if (!pdfLib) {
-                        return reject(new Error("PDF 函式庫未載入，無法解析 PDF"));
+                        return reject(new Error("PDF ?��?庫未載入，無法解??PDF"));
                     }
                     const reader = new FileReader();
                     reader.onload = async (e) => {
@@ -800,7 +800,7 @@
                                 fullText += pageText + "\n";
                             }
                             resolve(fullText);
-                        } catch (err) { reject(new Error("PDF 解析失敗，檔案可能已損壞或受密碼保護")); }
+                        } catch (err) { reject(new Error("PDF �??失�?，�?案可?�已?��??��?密碼保護")); }
                     };
                     reader.onerror = (e) => reject(e);
                     reader.readAsArrayBuffer(file);
@@ -813,7 +813,7 @@
                             const arrayBuffer = e.target.result;
                             const result = await mammoth.extractRawText({arrayBuffer: arrayBuffer});
                             resolve(result.value);
-                        } catch (err) { reject(new Error("Word 檔解析失败")); }
+                        } catch (err) { reject(new Error("Word 檔解?�失�?)); }
                     };
                     reader.onerror = (e) => reject(e);
                     reader.readAsArrayBuffer(file);
@@ -832,15 +832,15 @@
                                 fullText += `\n--- Excel 表籤: ${sheetName} ---\n${csv}`;
                             });
                             resolve(fullText);
-                        } catch (err) { reject(new Error("Excel 檔解析失败")); }
+                        } catch (err) { reject(new Error("Excel 檔解?�失�?)); }
                     };
                     reader.onerror = (e) => reject(e);
                     reader.readAsArrayBuffer(file);
                 });
             } else if (ext === 'ppt' || ext === 'pptx' || ext === 'doc') {
-                 throw new Error(`為確保 AI 讀取品質，系統已攔截 .${ext} 檔案。<br>簡報檔或舊版文件會導致嚴重亂碼與 AI 幻覺，<b>請將此檔案「另存為 PDF」後再上傳！</b>`);
+                 throw new Error(`?�確�?AI 讀?��?質�?系統已�???.${ext} 檔�???br>簡報檔�??��??�件?��??�嚴?��?碼�? AI 幻覺�?b>請�?此�?案「另存為 PDF?��??��??��?</b>`);
             } else {
-                 throw new Error(`不支援的檔案格式: .${ext}`);
+                 throw new Error(`不支?��?檔�??��?: .${ext}`);
             }
         }
 
@@ -851,7 +851,7 @@
                     const res = await fetch(url, options);
                     if (res.ok) return await res.json();
                     const errData = await res.json().catch(() => ({}));
-                    const errMsg = errData.error?.message || `HTTP 狀態碼: ${res.status}`;
+                    const errMsg = errData.error?.message || `HTTP ?�?�碼: ${res.status}`;
                     if (res.status === 429 || res.status >= 500) {
                         if (i === maxRetries - 1) throw new Error(errMsg);
                         await new Promise(r => setTimeout(r, delay));
@@ -867,7 +867,7 @@
 
         const parseList = (contentBlock) => {
             if (!contentBlock || contentBlock === "N/A") return [];
-            return contentBlock.split('\n').map(s => s.replace(/^[-*•\d.]+\s*/, '').trim()).filter(s => s && !s.match(/^\[.*\]/));
+            return contentBlock.split('\n').map(s => s.replace(/^[-*?�\d.]+\s*/, '').trim()).filter(s => s && !s.match(/^\[.*\]/));
         };
 
         const renderAdsItems = (items, maxBytes) => {
@@ -920,13 +920,13 @@
                         const base64Data = await new Promise((resolve, reject) => {
                             const reader = new FileReader();
                             reader.onload = (e) => resolve(e.target.result.split(',')[1]); 
-                            reader.onerror = (e) => reject(new Error("目標圖片讀取失敗"));
+                            reader.onerror = (e) => reject(new Error("?��??��?讀?�失??));
                             reader.readAsDataURL(file);
                         });
                         imageParts.push({ inlineData: { mimeType: file.type, data: base64Data } });
                     } else {
                         const fileContent = await extractTextFromFile(file);
-                        targetFileText += `\n--- [目標文檔 ${i+1}: ${file.name}] ---\n${fileContent}`;
+                        targetFileText += `\n--- [?��??��? ${i+1}: ${file.name}] ---\n${fileContent}`;
                     }
                 }
                 
@@ -936,19 +936,19 @@
                         const base64Data = await new Promise((resolve, reject) => {
                             const reader = new FileReader();
                             reader.onload = (e) => resolve(e.target.result.split(',')[1]); 
-                            reader.onerror = (e) => reject(new Error("競品圖片讀取失敗"));
+                            reader.onerror = (e) => reject(new Error("競�??��?讀?�失??));
                             reader.readAsDataURL(file);
                         });
                         refImageParts.push({ inlineData: { mimeType: file.type, data: base64Data } });
                     } else {
                         const fileContent = await extractTextFromFile(file);
-                        referenceFileText += `\n--- [參考文檔 ${i+1}: ${file.name}] ---\n${fileContent}`;
+                        referenceFileText += `\n--- [?�考�?�?${i+1}: ${file.name}] ---\n${fileContent}`;
                     }
                 }
 
-                // --- 新增：自動透過後端抓取 Target URLs 的真實內容 ---
+                // --- ?��?：自?�透�?後端?��? Target URLs ?��?實內�?---
                 if (targetUrls.trim()) {
-                    document.getElementById('process-sub-msg').innerText = "系統正在自動抓取目標網址內容...";
+                    document.getElementById('process-sub-msg').innerText = "系統�?��?��??��??��?網�??�容...";
                     const urls = targetUrls.split('\n').filter(u => u.trim() !== "");
                     for (let i = 0; i < urls.length; i++) {
                         const url = urls[i];
@@ -957,20 +957,20 @@
                                 method: 'POST',
                                 headers: { 'Content-Type': 'application/json' },
                                 body: JSON.stringify({ url })
-                            }, 3); // 給最多3次重試
+                            }, 3); // 給�?�?次�?�?
                             if (scrapeRes && scrapeRes.text) {
-                                targetFileText += `\n--- [目標網頁抓取 ${i+1}: ${url}] ---\n${scrapeRes.text}\n`;
+                                targetFileText += `\n--- [?��?網�??��? ${i+1}: ${url}] ---\n${scrapeRes.text}\n`;
                             }
                         } catch (err) {
-                            console.warn(`網址抓取失敗: ${url}`, err);
-                            targetFileText += `\n--- [目標網頁抓取 ${i+1}: ${url}] 失敗 ---\n(請確保網址正確或由人工上傳規格表)\n`;
+                            console.warn(`網�??��?失�?: ${url}`, err);
+                            targetFileText += `\n--- [?��?網�??��? ${i+1}: ${url}] 失�? ---\n(請確保網?��?��?�由人工上傳規格�?\n`;
                         }
                     }
                 }
 
-                // --- 新增：自動透過後端抓取 Reference URLs (KB) 的真實內容 ---
+                // --- ?��?：自?�透�?後端?��? Reference URLs (KB) ?��?實內�?---
                 if (kbUrls.trim()) {
-                    document.getElementById('process-sub-msg').innerText = "系統正在擷取大量企業知識庫網址 (可能需要較長時間)...";
+                    document.getElementById('process-sub-msg').innerText = "系統�?��?��?大�?企業?��?庫網?� (?�能?�要�??��???...";
                     const urls = kbUrls.split('\n').filter(u => u.trim() !== "");
                     for (let i = 0; i < urls.length; i++) {
                         const url = urls[i];
@@ -981,15 +981,15 @@
                                 body: JSON.stringify({ url })
                             }, 2);
                             if (scrapeRes && scrapeRes.text) {
-                                referenceFileText += `\n--- [參考網頁抓取 ${i+1}: ${url}] ---\n${scrapeRes.text}\n`;
+                                referenceFileText += `\n--- [?�考網?��???${i+1}: ${url}] ---\n${scrapeRes.text}\n`;
                             }
                         } catch (err) {
-                            console.warn(`參考網址抓取失敗: ${url}`, err);
+                            console.warn(`?�考網?�?��?失�?: ${url}`, err);
                         }
                     }
                 }
 
-                // 恢復原先的分析字幕
+                // ?�復?��??��??��?�?
                 document.getElementById('process-sub-msg').innerText = t.procSub;
 
                 const MAX_CHARS = 30000;
@@ -1006,7 +1006,7 @@
             } catch (e) {
                 outputContainer.innerHTML = `
                     <div class="p-8 border-2 border-red-200 bg-red-50 rounded-2xl max-w-2xl mx-auto mt-10 shadow-lg">
-                        <h4 class="font-black text-red-700 mb-4 text-lg flex items-center gap-3"><i class="fas fa-exclamation-triangle text-2xl"></i> 檔案解析攔截或失敗</h4>
+                        <h4 class="font-black text-red-700 mb-4 text-lg flex items-center gap-3"><i class="fas fa-exclamation-triangle text-2xl"></i> 檔�?�???�截?�失??/h4>
                         <p class="text-sm text-red-600 font-medium leading-relaxed">${e.message}</p>
                     </div>`;
                 btn.disabled = false;
@@ -1019,10 +1019,10 @@
             const isZhCN = currentLang === 'zh-CN';
             const isZh = isZhTW || isZhCN;
             
-            const targetLangLabel = isZhTW ? 'Traditional Chinese (繁體中文)' : 
-                                   (isZhCN ? 'Simplified Chinese (简体中文). STRICTLY FORBIDDEN to use Traditional Chinese characters.' : 'English');
+            const targetLangLabel = isZhTW ? 'Traditional Chinese (繁�?中�?)' : 
+                                   (isZhCN ? 'Simplified Chinese (简体中??. STRICTLY FORBIDDEN to use Traditional Chinese characters.' : 'English');
             
-            const brandName = isZh ? (isZhCN ? '研华' : '研華') : 'Advantech';
+            const brandName = isZh ? (isZhCN ? '?��?' : '?�華') : 'Advantech';
             const chineseType = isZhTW ? 'Trad. Chinese' : 'Simp. Chinese';
             
             const adHeadLen = isZh ? `13-15 ${chineseType} characters (26-30 Bytes)` : '25-30 characters';
@@ -1032,38 +1032,38 @@
             const descLen = isZh ? `STRICTLY 70-75 ${chineseType} characters (Max 150 Bytes).` : 'STRICTLY 140-150 characters.';
             const grammarRule = isZh ? (isZhCN ? 'NATIVE SIMPLIFIED CHINESE GRAMMAR' : 'NATIVE CHINESE GRAMMAR') : 'NATIVE ENGLISH GRAMMAR';
             
-            const catNameEx = isZh ? (isZhCN ? "'无风扇边缘运算系统'" : "'無風扇邊緣運算系统'") : "'Compact Fanless Computer'";
-            const ctaWords = isZh ? (isZhCN ? "CTA Power Words (e.g., '立即联系专家评估', '索取专属报价')" : "CTA Power Words (e.g., '立即聯繫專家評估', '索取專屬報價')") : "Short CTA (e.g., 'Buy now', 'Learn more', 'Contact us')";
+            const catNameEx = isZh ? (isZhCN ? "'?��??�边缘�?算系�?" : "'?�風?��?�??算系�?") : "'Compact Fanless Computer'";
+            const ctaWords = isZh ? (isZhCN ? "CTA Power Words (e.g., '立即?�系专家评估', '索�?专�??�价')" : "CTA Power Words (e.g., '立即?�繫專家評估', '索�?專屬?�價')") : "Short CTA (e.g., 'Buy now', 'Learn more', 'Contact us')";
 
             let pageLevelInstruction = "";
             let featureInstruction = "";
             let rsaLevelInstruction = ""; 
             
             if (level === "Category") {
-                pageLevelInstruction = `🚨 PAGE LEVEL (PLP): This is a Product Line Page (Category). DO NOT extract or focus on a single product series. You MUST extract the BROAD CATEGORY NAME (e.g., ${catNameEx}) for the [MODEL/SERIES] field. Optimize for the entire product line's overarching benefits.`;
+                pageLevelInstruction = `?�� PAGE LEVEL (PLP): This is a Product Line Page (Category). DO NOT extract or focus on a single product series. You MUST extract the BROAD CATEGORY NAME (e.g., ${catNameEx}) for the [MODEL/SERIES] field. Optimize for the entire product line's overarching benefits.`;
                 featureInstruction = `- **[GEO FEATURES]**: PLP pages do NOT need specific hardware specs. YOU MUST OUTPUT exactly: "N/A" for this section.`;
-                rsaLevelInstruction = `🚨 RSA PAGE LEVEL (PLP): Optimize for the ENTIRE SERIES. Replace specific model names with the Series/Category name. Focus headlines on overarching solutions.`;
+                rsaLevelInstruction = `?�� RSA PAGE LEVEL (PLP): Optimize for the ENTIRE SERIES. Replace specific model names with the Series/Category name. Focus headlines on overarching solutions.`;
             } else if (level === "Home") {
-                pageLevelInstruction = `🚨 PAGE LEVEL (HOME): This is a Corporate Home Page. DO NOT output specific hardware specs. Extract the Brand Name (e.g., '${brandName}') for the [MODEL/SERIES] field. Optimize for overarching brand authority.`;
+                pageLevelInstruction = `?�� PAGE LEVEL (HOME): This is a Corporate Home Page. DO NOT output specific hardware specs. Extract the Brand Name (e.g., '${brandName}') for the [MODEL/SERIES] field. Optimize for overarching brand authority.`;
                 featureInstruction = `- **[GEO FEATURES]**: Home pages do NOT need hardware specs. YOU MUST OUTPUT exactly: "N/A" for this section.`;
-                rsaLevelInstruction = `🚨 RSA PAGE LEVEL (HOME): Optimize for BRAND AUTHORITY. NEVER use specific hardware models or specs. Focus ALL headlines on global leadership, IoT ecosystem.`;
+                rsaLevelInstruction = `?�� RSA PAGE LEVEL (HOME): Optimize for BRAND AUTHORITY. NEVER use specific hardware models or specs. Focus ALL headlines on global leadership, IoT ecosystem.`;
             } else {
-                pageLevelInstruction = `🚨 PAGE LEVEL (PDP): This is a Product Detail Page. Focus strictly on the exact single hardware model and its specific technical parameters. Your [MODEL/SERIES] field should be the exact model name (e.g., ARK-11-S1A5).`;
+                pageLevelInstruction = `?�� PAGE LEVEL (PDP): This is a Product Detail Page. Focus strictly on the exact single hardware model and its specific technical parameters. Your [MODEL/SERIES] field should be the exact model name (e.g., ARK-11-S1A5).`;
                 featureInstruction = `- **[GEO FEATURES]**: Exactly 8 factual bullet points starting with '- '. NO hallucination.
                    - **Sentence Structure**: [Verb] + [key specs] + [purpose/benefit].
                    - **Industrial Differentiation**: You MUST heavily emphasize industrial-grade specs.`;
-                rsaLevelInstruction = `🚨 RSA PAGE LEVEL (PDP): Optimize for a SINGLE SPECIFIC MODEL. Headlines MUST highlight exact technical parameters, verified specs with numbers.`;
+                rsaLevelInstruction = `?�� RSA PAGE LEVEL (PDP): Optimize for a SINGLE SPECIFIC MODEL. Headlines MUST highlight exact technical parameters, verified specs with numbers.`;
             }
 
             let systemPrompt = "";
 
             let adsLongHeadlineRule = isZh 
-                ? `🚨 IDENTITY LOCK: EVERY SINGLE line MUST explicitly start with the Brand and Product/Series name (e.g., "${brandName} [Model/Series]...").\n                   🚨 READABILITY: You MUST use full-width commas (，) to separate clauses.`
-                : `🚨 IDENTITY LOCK: Start with "${brandName}". Keep product names brief.\n                   🚨 READABILITY: Use half-width commas (,). BE EXTREMELY CONCISE to fit under 90 chars.`;
+                ? `?�� IDENTITY LOCK: EVERY SINGLE line MUST explicitly start with the Brand and Product/Series name (e.g., "${brandName} [Model/Series]...").\n                   ?�� READABILITY: You MUST use full-width commas (�? to separate clauses.`
+                : `?�� IDENTITY LOCK: Start with "${brandName}". Keep product names brief.\n                   ?�� READABILITY: Use half-width commas (,). BE EXTREMELY CONCISE to fit under 90 chars.`;
             
             let adsDescRule = isZh
-                ? `🚨 ROLE: Appears below headlines. MUST be complete sentences elaborating on benefits and MUST end with a strong Call-To-Action (CTA).`
-                : `🚨 ROLE: Appears below headlines. Use concise phrases (not necessarily full sentences) to save space. MUST end with a SHORT CTA (e.g., 'Buy now', 'Contact us').`;
+                ? `?�� ROLE: Appears below headlines. MUST be complete sentences elaborating on benefits and MUST end with a strong Call-To-Action (CTA).`
+                : `?�� ROLE: Appears below headlines. Use concise phrases (not necessarily full sentences) to save space. MUST end with a SHORT CTA (e.g., 'Buy now', 'Contact us').`;
 
             if (currentEngineMode === "ADS") {
                 systemPrompt = `You are an elite Google Ads Media Buyer for the IPC sector.
@@ -1073,23 +1073,23 @@
                 
                 **STRICT Google Ads RULES**:
                 1. NO MARKDOWN (except for bullet points). ENSURE ${grammarRule}.
-                2. **[ADS KEYWORDS]**: Exactly 20 lines. 🚨 KEYWORD FUNNEL MIX (3:4:3 Ratio):
+                2. **[ADS KEYWORDS]**: Exactly 20 lines. ?�� KEYWORD FUNNEL MIX (3:4:3 Ratio):
                    - 6x Head Terms 
                    - 8x Solution Terms 
                    - 6x BOF Long-tail Terms 
                    Each line MUST start with "- ".
                 3. **[ADS HEADLINES]**: Exactly 15 short headlines. LENGTH MUST BE ${adHeadLen}.
                    Mix: 3x Brand/Subject, 6x Core Benefits, 6x Verified Specs/Features.
-                   🚨 ZERO UNIT CORPSES SHIELD: If you cannot find an exact numerical value for a spec (e.g., 8GB), DO NOT output fragments like "GB RAM" or "VDC". Discard the spec entirely to prevent broken descriptions.
+                   ?�� ZERO UNIT CORPSES SHIELD: If you cannot find an exact numerical value for a spec (e.g., 8GB), DO NOT output fragments like "GB RAM" or "VDC". Discard the spec entirely to prevent broken descriptions.
                 4. **[ADS LONG HEADLINES]**: Exactly 5 lines. LENGTH MUST BE ${adDescLen}. 
-                   🚨 CRITICAL ROLE: Each line stands ALONE as a massive billboard. 
+                   ?�� CRITICAL ROLE: Each line stands ALONE as a massive billboard. 
                    ${adsLongHeadlineRule}
-                   🚨 FINAL RULE: Do NOT use periods at the end.
+                   ?�� FINAL RULE: Do NOT use periods at the end.
                 5. **[ADS DESCRIPTIONS]**: Exactly 5 lines. LENGTH MUST BE ${adDescLen}. 
                    ${adsDescRule}
                 
-                🚨 GOOGLE ADS EDITORIAL POLICY (CRITICAL) 🚨:
-                - STRICTLY NO EXCLAMATION MARKS (! or ！) in any headlines or descriptions.
+                ?�� GOOGLE ADS EDITORIAL POLICY (CRITICAL) ?��:
+                - STRICTLY NO EXCLAMATION MARKS (! or �? in any headlines or descriptions.
                 - NO special characters (@, >, ???) or Emojis.
                 - NO clickbait phrases like 'Click here'.
                 
@@ -1116,11 +1116,11 @@
 
                 let strategyInstruction = "";
 
-                const intentWordsZH_TW = "報價, 價格, 規格, 採購, 專案諮詢, 測試樣機, 技術評估, 現貨, 專案價, 交期, 客製化, 導入, 技術手冊, Datasheet, 效能評估, 架構設計, 解決方案, 應用案例, 實績, 系統整合, 批量採購, 升級替換";
-                const authWordsZH_TW = "原廠直營, 官方授權, 官方現貨, 原廠保固, 解決方案專家, 長期供貨, 官方認證, 原廠技術支援, 全球聯保, 工控領導品牌, 原廠指南, 官方旗艦, 產業首選, 研發製造, 專利技術, 原廠直供, 官方服務, 原廠零件, 官方推薦, 首選品牌";
+                const intentWordsZH_TW = "?�價, ?�格, 規格, ?�購, 專�?諮詢, 測試�??, ?�術�?�? ?�貨, 專�??? 交�?, 客製?? 導入, ?�術�??? Datasheet, ?�能評估, ?��?設�?, �?��?��?, ?�用案�?, 實績, 系統?��?, ?��??�購, ?��??��?";
+                const authWordsZH_TW = "?��??��?, 官方?��?, 官方?�貨, ?��?保固, �?��?��?專家, ?��?供貨, 官方認�?, ?��??�術支?? ?��??��?, 工控?��??��?, ?��??��?, 官方?�艦, ?�業首選, ?�發製�? 專利?��? ?��??��?, 官方?��?, ?��??�件, 官方?�薦, 首選?��?";
                 
-                const intentWordsZH_CN = "报价, 价格, 规格, 采购, 项目咨询, 测试样机, 技术评估, 现货, 项目价, 交期, 定制化, 导入, 技术手册, Datasheet, 效能评估, 架构设计, 解决方案, 应用案例, 业绩, 系统集成, 批量采购, 升级替换";
-                const authWordsZH_CN = "原厂直营, 官方授权, 官方现货, 原厂质保, 解决方案专家, 长期供货, 官方认证, 原厂技术支持, 全球联保, 工控领导品牌, 原厂指南, 官方旗舰, 产业首选, 研发制造, 专利技术, 原厂直供, 官方服务, 原厂零件, 官方推荐, 首选品牌";
+                const intentWordsZH_CN = "?�价, 价格, 规格, ?�购, 项目?�询, 测�??�机, ?�?��?�? ?�货, 项目�? 交�?, 定制?? 导入, ?�?��??? Datasheet, ?�能评估, ?��?设计, �?��?��?, 应用案�?, 业绩, 系�??��?, ?��??�购, ?�级?�换";
+                const authWordsZH_CN = "?��??�营, 官方?��?, 官方?�货, ?��?质�?, �?��?��?专家, ?��?供货, 官方认�?, ?��??�?�支?? ?��??��?, 工控领导?��?, ?��??��?, 官方?�舰, 产�?首�? ?��??��? 专利?�?? ?��??��?, 官方?�务, ?��??�件, 官方?��?, 首选�???;
 
                 const intentWordsEN = "Pricing, Quote, Specs, Purchase, Project Consulting, Evaluation Unit, Tech Assessment, In Stock, Lead Time, Customization, Deployment, Manual, Datasheet, Architecture, Solution, Case Study, Integration, Bulk Order, Replacement, Benchmark";
                 const authWordsEN = "Official Direct, Authorized, Official Stock, Factory Warranty, Solution Expert, Long-term Supply, Certified, Official Support, Global Warranty, IPC Leader, Official Guide, Flagship, Industry Choice, R&D Manufacturer, Patented, Official Service, Genuine Parts, Top Choice, Official Recommendation, Pioneer";
@@ -1130,62 +1130,62 @@
 
                 if (level === "Product") {
                     if (effectiveStrategy === "keyword_first") {
-                        strategyInstruction = isZh ? `🚨 SALES INTENT MODE (BOF): Formula: [Model] [Intent Word (Must choose ONE from: ${currentIntentWords})] [Core USP] | ${brandName}` : `🚨 SALES INTENT MODE: Formula: [Model] [Intent Word (Choose ONE: ${currentIntentWords})] [Core USP] | ${brandName}`;
+                        strategyInstruction = isZh ? `?�� SALES INTENT MODE (BOF): Formula: [Model] [Intent Word (Must choose ONE from: ${currentIntentWords})] [Core USP] | ${brandName}` : `?�� SALES INTENT MODE: Formula: [Model] [Intent Word (Choose ONE: ${currentIntentWords})] [Core USP] | ${brandName}`;
                     } else if (effectiveStrategy === "brand_first") {
-                        strategyInstruction = isZh ? `🚨 BRAND AUTHORITY MODE: Formula: ${brandName}[Authority Word (Must choose ONE from: ${currentAuthWords})] [Model][Core Category]` : `🚨 BRAND AUTHORITY MODE: Formula: ${brandName} [Authority Word (Choose ONE: ${currentAuthWords})]: [Model] [Category]`;
+                        strategyInstruction = isZh ? `?�� BRAND AUTHORITY MODE: Formula: ${brandName}[Authority Word (Must choose ONE from: ${currentAuthWords})] [Model][Core Category]` : `?�� BRAND AUTHORITY MODE: Formula: ${brandName} [Authority Word (Choose ONE: ${currentAuthWords})]: [Model] [Category]`;
                     } else {
-                        strategyInstruction = isZh ? `🚨 BALANCED USP MODE: Formula: [Model] [Strongest Single USP][Core Category] | ${brandName}` : `🚨 BALANCED USP MODE: Formula: [Model] [Core USP] [Category] | ${brandName}`;
+                        strategyInstruction = isZh ? `?�� BALANCED USP MODE: Formula: [Model] [Strongest Single USP][Core Category] | ${brandName}` : `?�� BALANCED USP MODE: Formula: [Model] [Core USP] [Category] | ${brandName}`;
                     }
                 } else {
                     if (effectiveStrategy === "keyword_first") {
-                        strategyInstruction = isZh ? `🚨 SALES INTENT MODE (BOF): Formula: [Series/Category] [Intent Word (Must choose ONE from: ${currentIntentWords})] [Core USP] | ${brandName}` : `🚨 SALES INTENT MODE: Formula: [Series/Category] [Intent Word (Choose ONE: ${currentIntentWords})] [Core USP] | ${brandName}`;
+                        strategyInstruction = isZh ? `?�� SALES INTENT MODE (BOF): Formula: [Series/Category] [Intent Word (Must choose ONE from: ${currentIntentWords})] [Core USP] | ${brandName}` : `?�� SALES INTENT MODE: Formula: [Series/Category] [Intent Word (Choose ONE: ${currentIntentWords})] [Core USP] | ${brandName}`;
                     } else if (effectiveStrategy === "brand_first") {
-                        strategyInstruction = isZh ? `🚨 BRAND AUTHORITY MODE: Formula: ${brandName}[Authority Word (Must choose ONE from: ${currentAuthWords})] [Series/Category]` : `🚨 BRAND AUTHORITY MODE: Formula: ${brandName} [Authority Word (Choose ONE: ${currentAuthWords})]: [Series/Category]`;
+                        strategyInstruction = isZh ? `?�� BRAND AUTHORITY MODE: Formula: ${brandName}[Authority Word (Must choose ONE from: ${currentAuthWords})] [Series/Category]` : `?�� BRAND AUTHORITY MODE: Formula: ${brandName} [Authority Word (Choose ONE: ${currentAuthWords})]: [Series/Category]`;
                     } else {
-                        strategyInstruction = isZh ? `🚨 BALANCED USP MODE: Formula: [Series/Category] [Strongest Single USP][Secondary Benefit/Scenario] | ${brandName}` : `🚨 BALANCED USP MODE: Formula: [Series/Category] [Core USP] [Secondary Benefit/Scenario] | ${brandName}`;
+                        strategyInstruction = isZh ? `?�� BALANCED USP MODE: Formula: [Series/Category] [Strongest Single USP][Secondary Benefit/Scenario] | ${brandName}` : `?�� BALANCED USP MODE: Formula: [Series/Category] [Core USP] [Secondary Benefit/Scenario] | ${brandName}`;
                     }
                 }
                 
-                strategyInstruction += `\n🚨 **TITLE ABSOLUTE RULES (ANTI-DOUBLE-BRAND)**: 
+                strategyInstruction += `\n?�� **TITLE ABSOLUTE RULES (ANTI-DOUBLE-BRAND)**: 
                 1. MUST STRICTLY follow the formula structure above. 
                 2. **BRAND DEDUPLICATION (CRITICAL)**: The brand name "${brandName}" MUST appear EXACTLY ONCE in the final title. 
                    - If you are using 'BRAND AUTHORITY MODE', the brand name is at the START. YOU MUST NOT add "| ${brandName}" at the end.
-                   - If you are using 'SALES INTENT MODE' or 'BALANCED USP MODE', the brand name is at the END ("| ${brandName}"). YOU MUST STRIP any occurrence of "${brandName}" from the [Model] or [Series] variables before assembling the title. (e.g., Change "研華邊緣AI解決方案" to "邊緣AI解決方案").
+                   - If you are using 'SALES INTENT MODE' or 'BALANCED USP MODE', the brand name is at the END ("| ${brandName}"). YOU MUST STRIP any occurrence of "${brandName}" from the [Model] or [Series] variables before assembling the title. (e.g., Change "?�華?�緣AI�?��?��?" to "?�緣AI�?��?��?").
                 3. NEVER output "${brandName} ... | ${brandName}". IF YOU OUTPUT TWO BRAND NAMES, YOU FAIL.
-                4. **NO FLUFF WORDS (CRITICAL)**: You are STRICTLY FORBIDDEN from using subjective, meaningless adjectives like "強化", "專業級", "工業級", "頂級", "最強". Only use the exact words from the lists provided.
+                4. **NO FLUFF WORDS (CRITICAL)**: You are STRICTLY FORBIDDEN from using subjective, meaningless adjectives like "強�?", "專業�?, "工業�?, "?��?", "?��?. Only use the exact words from the lists provided.
                 5. ENSURE ${grammarRule}.`;
 
                 if (isZh) {
-                    strategyInstruction += `\n6. **SEAMLESS FUSION (CRITICAL)**: For Chinese titles, you MUST seamlessly combine the USP and Category (or Scenario) into a single professional compound noun WITHOUT ANY spaces, colons (：), hyphens (-), or connectors like "的" between them. Use a single half-width space AFTER the Model/Series name. (e.g., "ARK-1220 極致精巧無風扇工控機 | 研華").`;
+                    strategyInstruction += `\n6. **SEAMLESS FUSION (CRITICAL)**: For Chinese titles, you MUST seamlessly combine the USP and Category (or Scenario) into a single professional compound noun WITHOUT ANY spaces, colons (�?, hyphens (-), or connectors like "?? between them. Use a single half-width space AFTER the Model/Series name. (e.g., "ARK-1220 極致精巧?�風?�工?��? | ?�華").`;
                 }
 
                 let descFormatInstruction = "{Description}";
                 let faqFormatInstruction = "";
                 
                 const faqDepthInstruction = isZh 
-                    ? `🚨 FAQ DEPTH & DENSITY REQUIREMENT: Each answer MUST be an in-depth, expert-level explanation of APPROXIMATELY 150 CHINESE CHARACTERS. 🚨 FORMAT FORCING: Output EACH answer as a SINGLE, highly condensed paragraph. ABSOLUTELY NO bullet points, numbered lists, or line breaks within a single answer. Maximize Data Density by seamlessly integrating precise specs and commercial benefits into fluid sentences. SHALLOW OR FLUFFY ANSWERS ARE STRICTLY FORBIDDEN.` 
-                    : `🚨 FAQ DEPTH & DENSITY REQUIREMENT: Each answer MUST be an in-depth, expert-level explanation of APPROXIMATELY 75 WORDS. 🚨 FORMAT FORCING: Output EACH answer as a SINGLE, highly condensed paragraph. ABSOLUTELY NO bullet points, numbered lists, or line breaks within a single answer. Maximize Data Density by seamlessly integrating precise specs and commercial benefits into fluid sentences. SHALLOW OR FLUFFY ANSWERS ARE STRICTLY FORBIDDEN.`;
+                    ? `?�� FAQ DEPTH & DENSITY REQUIREMENT: Each answer MUST be an in-depth, expert-level explanation of APPROXIMATELY 150 CHINESE CHARACTERS. ?�� FORMAT FORCING: Output EACH answer as a SINGLE, highly condensed paragraph. ABSOLUTELY NO bullet points, numbered lists, or line breaks within a single answer. Maximize Data Density by seamlessly integrating precise specs and commercial benefits into fluid sentences. SHALLOW OR FLUFFY ANSWERS ARE STRICTLY FORBIDDEN.` 
+                    : `?�� FAQ DEPTH & DENSITY REQUIREMENT: Each answer MUST be an in-depth, expert-level explanation of APPROXIMATELY 75 WORDS. ?�� FORMAT FORCING: Output EACH answer as a SINGLE, highly condensed paragraph. ABSOLUTELY NO bullet points, numbered lists, or line breaks within a single answer. Maximize Data Density by seamlessly integrating precise specs and commercial benefits into fluid sentences. SHALLOW OR FLUFFY ANSWERS ARE STRICTLY FORBIDDEN.`;
 
                 if (geo === "Claude") {
-                    descFormatInstruction = "{Description - 🚨 MANDATORY: MUST start with a highly professional, logical, and fluent tone. NO keyword stuffing.}";
+                    descFormatInstruction = "{Description - ?�� MANDATORY: MUST start with a highly professional, logical, and fluent tone. NO keyword stuffing.}";
                     faqFormatInstruction = `MANDATORY FAQ STYLE: "Senior Decision Maker Perspective". \n- Q: Must ask about system integration, long-term stability, or TCO.\n- A: Must answer with strategic architecture perspective. \n${faqDepthInstruction}`;
                 } else if (geo === "Gemini") {
-                    descFormatInstruction = "{Description - 🚨 MANDATORY: MUST start with an authoritative, definitive statement.}";
+                    descFormatInstruction = "{Description - ?�� MANDATORY: MUST start with an authoritative, definitive statement.}";
                     faqFormatInstruction = `MANDATORY FAQ STYLE: "Standards Compliance & Architecture Comparison". \n- Q: Must ask about industry standards (e.g., EN50155) or architecture contrast.\n- A: Must answer with factual, definitive statements. \n${faqDepthInstruction}`;
                 } else if (geo === "ChatGPT") {
-                    descFormatInstruction = "{Description - 🚨 MANDATORY: MUST start with a short pain-point question (?)}";
+                    descFormatInstruction = "{Description - ?�� MANDATORY: MUST start with a short pain-point question (?)}";
                     faqFormatInstruction = `MANDATORY FAQ STYLE: "User Pain-Point Consultation". \n- Q: Must ask a scenario-based pain-point question (e.g., "How to solve high-vibration data loss in CNC machines?").\n- A: Must answer with empathetic, solution-oriented advisory tone. \n${faqDepthInstruction}`;
                 } else if (geo === "Perplexity") {
-                    descFormatInstruction = "{Description - 🚨 MANDATORY: MUST start with high-density data/specs or military-grade certifications.}";
+                    descFormatInstruction = "{Description - ?�� MANDATORY: MUST start with high-density data/specs or military-grade certifications.}";
                     faqFormatInstruction = `MANDATORY FAQ STYLE: "Hardcore Engineering Data". \n- Q: Must ask about specific capability limits or benchmark contrast.\n- A: MUST maximize DATA DENSITY. Force the inclusion of precise values, IP ratings, or military-grade certification codes. \n${faqDepthInstruction}`;
                 } else {
-                    descFormatInstruction = `{Description - 🚨 MANDATORY: MUST end with CTA: ${ctaWords}}`;
+                    descFormatInstruction = `{Description - ?�� MANDATORY: MUST end with CTA: ${ctaWords}}`;
                     faqFormatInstruction = `MANDATORY FAQ STYLE: "Standard Business & Technical Comparison". \n- Q: Must ask about technical comparison vs traditional solutions. \n- A: Must answer clearly with commercial benefits. \n${faqDepthInstruction}`;
                 }
 
                 const tagInstruction = `- **[TAGS]**: Exactly 3-6 specific entity keywords. MUST be a mix of: 1. Specs (e.g., NVMe, M.2), 2. IPC Features (e.g., Wide Temp, Anti-Vibration), 3. Application Scenarios (e.g., Smart Factory).`;
 
-                const killSwitchInstruction = `\n🚨 **KILL SWITCH (ANTI-CONTAMINATION & ENTITY LOCK)**: 
+                const killSwitchInstruction = `\n?�� **KILL SWITCH (ANTI-CONTAMINATION & ENTITY LOCK)**: 
                 1. E-COMMERCE TRAP WARNING: The provided URL text often contains a "Related Products", "Accessories", or "Cross-Selling" section at the bottom (listing other models like Orin, Nano, etc.). 
                 2. STRICT ISOLATION: You MUST ONLY extract specifications that explicitly belong to the exact Target [MODEL]. 
                 3. FATAL ERROR PREVENTION: If you see conflicting core chips (e.g., Jetson Thor vs. Jetson AGX Orin) on the same page, check which exact model number they attach to. DO NOT mix specs from Model B into Target Model A's content. If uncertain, output "N/A" rather than hallucinating.`;
@@ -1198,8 +1198,8 @@
                 **ANTI-RECITATION RULE (CRITICAL)**:
                 You MUST paraphrase all product descriptions and technical benefits. DO NOT copy exact sentences from the provided URLs or source documents. Synthesize the information in your own words to prevent copyright/recitation filters from blocking your response.
 
-                **🚨 FLUENCY FIRST OVERRIDE**: 
-                While adhering to length limits, the generated text MUST read like a natural, fluent sentence written by a human expert. DO NOT output robotic, keyword-stuffed fragments like "邊緣AIJetsonThor加速-邊緣系統-廣泛應用". It must be natural.
+                **?�� FLUENCY FIRST OVERRIDE**: 
+                While adhering to length limits, the generated text MUST read like a natural, fluent sentence written by a human expert. DO NOT output robotic, keyword-stuffed fragments like "?�緣AIJetsonThor?��??�緣系統-�???�用". It must be natural.
 
                 **TITLE STRUCTURE**:
                 ${strategyInstruction}
@@ -1208,18 +1208,18 @@
                 - **TITLE**: ${titleLen}
                 - **DESCRIPTION**: ${descLen}
                 
-                **[TL;DR] 核心摘要 (極限 ${isZh ? '200 Bytes / 約 100 ' + chineseType + ' characters' : '150 characters'})**: 
-                🚨 專為 AI 爬蟲 (Perplexity/SearchGPT) 設計的極簡摘要。精準定義「這是什麼、給誰用、最大亮點」。嚴禁任何行銷廢話。
+                **[TL;DR] ?��??��? (極�? ${isZh ? '200 Bytes / �?100 ' + chineseType + ' characters' : '150 characters'})**: 
+                ?�� 專為 AI ?�蟲 (Perplexity/SearchGPT) 設�??�極簡�?要。精準�?義「這是什麼、給誰用?��?大亮點」。嚴禁任何�??�廢話�?
                 
                 **ADVANCED GEO STRATEGIES**:
-                - **[FAQ]**: Exactly 3 Q&A pairs. 🚨 SEMANTIC CONTRAST REQUIRED:
+                - **[FAQ]**: Exactly 3 Q&A pairs. ?�� SEMANTIC CONTRAST REQUIRED:
                   - ABSOLUTELY FORBIDDEN: Basic spec questions (e.g., "What is the voltage/CPU?").
                   - ${faqFormatInstruction}
                 ${featureInstruction}
                 ${tagInstruction}
                 - **[CATEGORY]**: 1-2 broad product classification.
                 
-                🚨 DO NOT WRAP YOUR ENTIRE RESPONSE IN MARKDOWN CODE BLOCKS. RETURN RAW TEXT. 🚨
+                ?�� DO NOT WRAP YOUR ENTIRE RESPONSE IN MARKDOWN CODE BLOCKS. RETURN RAW TEXT. ?��
 
                 **MANDATORY FORMAT**:
                 ### [URL_START] {Target}
@@ -1251,7 +1251,7 @@
             let partsArray = [{ text: promptText }];
             
             if (targetFileText) {
-                partsArray.push({ text: `\n\n🚨 [TARGET SOURCE DOCUMENTS] 🚨\n=> 指令：必須且只能從這裡提取客觀數據用於 [GEO Features]。\n${targetFileText}` });
+                partsArray.push({ text: `\n\n?�� [TARGET SOURCE DOCUMENTS] ?��\n=> ?�令：�??��??�能從這裡?��?客�??��??�於 [GEO Features]?�\n${targetFileText}` });
             }
             if (imageParts.length > 0) {
                 partsArray = partsArray.concat(imageParts);
@@ -1259,8 +1259,8 @@
 
             let refContext = ``;
             if (kbUrls.trim() || referenceFileText || refImageParts.length > 0) {
-                refContext += `\n\n🚨 [COMPETITOR / REFERENCE CONTEXT] 🚨\n`;
-                refContext += `=> 絕對限制：STRICTLY FORBIDDEN！接下來你看到的任何文字與【圖片】，全部都是對手或舊機型的！嚴禁從裡面提取任何實體特徵用於自家硬體特徵，只能用來了解市場語境與 Expert FAQ 的語義對比推理！\n`;
+                refContext += `\n\n?�� [COMPETITOR / REFERENCE CONTEXT] ?��\n`;
+                refContext += `=> 絕�??�制：STRICTLY FORBIDDEN！接下�?你�??��?任�??��??�【�??�】�??�部?�是對�??��?機�??��??��?從裡?��??�任何實體特徵用?�自家硬體特徵�??�能?��?了解市場語�???Expert FAQ ?��?義�?比推?��?\n`;
                 if (kbUrls.trim()) refContext += `[Reference URLs]:\n${kbUrls}\n`;
                 if (referenceFileText) refContext += `[Reference Documents]:\n${referenceFileText}\n`;
                 
@@ -1288,16 +1288,16 @@
                 if (!outputText) {
                     const finishReason = responseData.candidates?.[0]?.finishReason || "SAFETY/RECITATION/UNKNOWN";
                     if (finishReason === "STOP") {
-                         throw new Error(`回傳資料為空 (API 中斷原因: STOP)。請嘗試減少衝突的參考資料或重新產生。`);
+                         throw new Error(`?�傳資�??�空 (API 中斷?��?: STOP)?��??�試減�?衝�??��??��??��??�新?��??�`);
                     }
-                    throw new Error(`回傳資料為空 (API 中斷原因: ${finishReason})。請嘗試減少敏感詞彙或重整頁面。`);
+                    throw new Error(`?�傳資�??�空 (API 中斷?��?: ${finishReason})?��??�試減�??��?詞�??��??��??�。`);
                 }
                 
                 renderCards(outputText, currentEngineMode);
             } catch (e) {
                 outputContainer.innerHTML = `
                     <div class="p-8 border-2 border-red-200 bg-red-50 rounded-2xl max-w-2xl mx-auto mt-10 shadow-lg">
-                        <h4 class="font-black text-red-700 mb-4 text-lg flex items-center gap-3"><i class="fas fa-exclamation-triangle text-2xl"></i> ${currentLang === 'en' ? 'Generation Failed' : (currentLang === 'zh-CN' ? '生成失败' : '生成失敗')}</h4>
+                        <h4 class="font-black text-red-700 mb-4 text-lg flex items-center gap-3"><i class="fas fa-exclamation-triangle text-2xl"></i> ${currentLang === 'en' ? 'Generation Failed' : (currentLang === 'zh-CN' ? '?��?失败' : '?��?失�?')}</h4>
                         <p class="text-sm text-red-600 font-medium leading-relaxed">${e.message}</p>
                     </div>`;
             } finally {
@@ -1314,15 +1314,15 @@
             const isZhTW = currentLang === 'zh-TW';
             const isZhCN = currentLang === 'zh-CN';
             
-            const ftLabel = isZhTW ? 'FEATURES (重點特徵)' : (isZhCN ? 'FEATURES (重点特征)' : 'FEATURES');
-            const tldrLabel = isZhTW ? 'TL;DR (AI 摘要抓取點)' : (isZhCN ? 'TL;DR (AI 摘要抓取点)' : 'TL;DR (AI Summary Hook)');
-            const faqLabel = isZhTW ? 'Expert FAQ (語義對比推理)' : (isZhCN ? 'Expert FAQ (语义对比推理)' : 'Expert FAQ');
-            const metaTitleLabel = isZhTW ? 'Meta Title (意圖與權威鎖定)' : (isZhCN ? 'Meta Title (意图与权威锁定)' : 'Meta Title (Locked Intent)');
-            const metaDescLabel = isZhTW ? 'Meta Description (CTA / 痛點開場)' : (isZhCN ? 'Meta Description (CTA / 痛点开场)' : 'Meta Description (Hook)');
-            const adsKeywordLabel = isZhTW ? '廣告關鍵字矩陣 (20組)' : (isZhCN ? '广告关键字矩阵 (20组)' : 'Ads Keywords (20 terms)');
-            const adsHeadlineLabel = isZhTW ? '短標題 (上限 30 Bytes)' : (isZhCN ? '短标题 (上限 30 Bytes)' : 'Headlines (Max 30 Bytes)');
-            const adsLongLabel = isZhTW ? '長標題 (上限 90 Bytes)' : (isZhCN ? '长标题 (上限 90 Bytes)' : 'Long Headlines (Max 90 Bytes)');
-            const adsDescLabel = isZhTW ? '廣告描述 (上限 90 Bytes)' : (isZhCN ? '广告描述 (上限 90 Bytes)' : 'Ads Descriptions (Max 90 Bytes)');
+            const ftLabel = isZhTW ? 'FEATURES (?��??�徵)' : (isZhCN ? 'FEATURES (?�点?��?)' : 'FEATURES');
+            const tldrLabel = isZhTW ? 'TL;DR (AI ?��??��?�?' : (isZhCN ? 'TL;DR (AI ?��??��???' : 'TL;DR (AI Summary Hook)');
+            const faqLabel = isZhTW ? 'Expert FAQ (語義對�??��?)' : (isZhCN ? 'Expert FAQ (语�?对�??��?)' : 'Expert FAQ');
+            const metaTitleLabel = isZhTW ? 'Meta Title (?��??��?威�?�?' : (isZhCN ? 'Meta Title (?�图与�?威�?�?' : 'Meta Title (Locked Intent)');
+            const metaDescLabel = isZhTW ? 'Meta Description (CTA / ?��??�場)' : (isZhCN ? 'Meta Description (CTA / ?�点开??' : 'Meta Description (Hook)');
+            const adsKeywordLabel = isZhTW ? '�???�鍵字矩??(20�?' : (isZhCN ? '广�??�键字矩??(20�?' : 'Ads Keywords (20 terms)');
+            const adsHeadlineLabel = isZhTW ? '?��?�?(上�? 30 Bytes)' : (isZhCN ? '?��?�?(上�? 30 Bytes)' : 'Headlines (Max 30 Bytes)');
+            const adsLongLabel = isZhTW ? '?��?�?(上�? 90 Bytes)' : (isZhCN ? '?��?�?(上�? 90 Bytes)' : 'Long Headlines (Max 90 Bytes)');
+            const adsDescLabel = isZhTW ? '�???�述 (上�? 90 Bytes)' : (isZhCN ? '广�??�述 (上�? 90 Bytes)' : 'Ads Descriptions (Max 90 Bytes)');
             
             const segments = text.split(/###\s*\[?URL_START\]?/gi).filter(s => s.trim() !== "");
             lastResultsData = []; 
@@ -1356,7 +1356,7 @@
                     card.innerHTML = `
                         <div class="bg-gradient-to-r from-emerald-600 to-teal-500 px-8 py-5 flex justify-between items-center shadow-inner">
                             <div class="flex flex-col">
-                                <span class="text-[10px] text-white/80 font-black uppercase tracking-widest flex items-center gap-2"><i class="fab fa-google"></i> Google Ads (v1.18.3)</span>
+                                <span class="text-[10px] text-white/80 font-black uppercase tracking-widest flex items-center gap-2"><i class="fab fa-google"></i> Google Ads (v1.19.0)</span>
                                 <span class="text-sm font-bold text-white truncate max-w-xl"><i class="fas fa-link mr-3 opacity-50"></i>${url}</span>
                             </div>
                         </div>
@@ -1439,7 +1439,7 @@
                         <div class="bg-slate-50 border-b border-slate-200 px-8 py-5 flex flex-col sm:flex-row justify-between sm:items-center gap-4">
                             <div class="flex items-center gap-4">
                                 <div class="w-10 h-10 rounded-xl bg-[#005bac]/10 text-[#005bac] flex items-center justify-center text-lg"><i class="fas fa-microchip"></i></div>
-                                <div><h4 class="font-black text-slate-800 text-base">${detox(model) || 'IPC MODEL'} (v1.18.3)</h4><p class="text-xs text-slate-500 truncate max-w-md mt-1">${url}</p></div>
+                                <div><h4 class="font-black text-slate-800 text-base">${detox(model) || 'IPC MODEL'} (v1.19.0)</h4><p class="text-xs text-slate-500 truncate max-w-md mt-1">${url}</p></div>
                             </div>
                             <button onclick="window.copyToClip(this, 'all')" data-content="${encodeURIComponent(titleClean + '\n' + descClean + '\n\n' + featuresTextToCopy + '\n\n' + 'TL;DR:\n' + tldrClean + '\n\n' + faqClean)}" class="text-xs bg-white border border-slate-300 px-5 py-2.5 rounded-lg font-bold shadow-sm transition-all hover:-translate-y-0.5 hover:shadow flex items-center gap-2"><i class="far fa-copy"></i> ${t.copyAll}</button>
                         </div>
@@ -1541,9 +1541,9 @@
         .custom-scrollbar::-webkit-scrollbar { width: 6px; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
 
-        /* ===== 行動版優化 (Mobile Responsive Fix) ===== */
+        /* ===== 行�??�優??(Mobile Responsive Fix) ===== */
         @media (max-width: 640px) {
-            /* Navbar：右側控制列在手機上換行顯示，兩項一行 */
+            /* Navbar：右?�控?��??��?機�??��?顯示，兩?��?�?*/
             .nav-controls {
                 display: grid;
                 grid-template-columns: 1fr 1fr;
@@ -1551,24 +1551,24 @@
                 width: 100%;
             }
             .nav-controls .auth-status-pill {
-                grid-column: 1 / -1; /* 連線狀態佔滿整行 */
+                grid-column: 1 / -1; /* ????�?��?滿整�?*/
                 justify-content: center;
             }
-            /* 各 Section 手機上 padding 縮減 */
+            /* ??Section ?��?�?padding 縮�? */
             .mobile-pad { padding: 16px !important; }
-            /* 結果卡片 header/body 手機縮排 */
+            /* 結�??��? header/body ?��?縮�? */
             .result-card-header { padding: 16px !important; }
             .result-card-body { padding: 16px !important; }
-            /* 操作列（引擎/策略/按鈕）手機全寬 */
+            /* ?��??��?引�?/策略/?��?）�?機全�?*/
             .action-bar-selects { flex-direction: column !important; }
             .action-bar-selects > div { width: 100% !important; }
-            /* 手機版 textarea 高度縮小避免過長 */
+            /* ?��???textarea 高度縮�??��??�長 */
             .mobile-textarea { height: 160px !important; }
-            /* 手機版 file upload 區高度 */
+            /* ?��???file upload ?�高度 */
             .mobile-dropzone { height: 120px !important; }
-            /* 手機字型縮小 */
+            /* ?��?字�?縮�? */
             .result-title { font-size: 1rem !important; }
-            /* Byte 計數 badge 在手機上換行 */
+            /* Byte 計數 badge ?��?機�??��? */
             .label-row { flex-wrap: wrap; gap: 6px; }
         }
     </style>
@@ -1583,10 +1583,10 @@
             <div class="flex items-center gap-3 w-full sm:w-auto">
                 <div class="w-9 h-9 sm:w-10 sm:h-10 bg-[#005bac] rounded-lg flex items-center justify-center shadow-md flex-shrink-0"><i class="fas fa-microchip text-white text-base sm:text-lg"></i></div>
                 <div class="flex-grow">
-                    <h1 class="text-base sm:text-xl font-bold text-slate-800 leading-tight" data-i18n="navTitle">GEO 內容生成系統</h1>
-                    <p class="text-[10px] sm:text-xs text-slate-500 font-medium tracking-wide mt-0.5 hidden sm:block" data-i18n="navVer">v1.18.3 UI 體驗微調版</p>
+                    <h1 class="text-base sm:text-xl font-bold text-slate-800 leading-tight" data-i18n="navTitle">GEO ?�容?��?系統</h1>
+                    <p class="text-[10px] sm:text-xs text-slate-500 font-medium tracking-wide mt-0.5 hidden sm:block" data-i18n="navVer">v1.19.0 UI 體�?微調??/p>
                 </div>
-                <!-- 手機版：連線狀態移到 logo 右側 -->
+                <!-- ?��??��?????�?�移??logo ?�側 -->
                 <div id="auth-status" class="sm:hidden text-[10px] font-semibold text-slate-500 bg-slate-100 border border-slate-200 px-2 py-1 rounded-full flex items-center shadow-inner transition-colors duration-500 flex-shrink-0">
                     <i class="fas fa-circle-notch fa-spin mr-1"></i> ...
                 </div>
@@ -1594,22 +1594,22 @@
             <!-- Right Controls -->
             <div class="nav-controls flex items-center gap-2 w-full sm:w-auto sm:flex-row">
                 <button id="login-btn-display" onclick="window.toggleApiModal()" class="bg-white hover:bg-slate-50 text-slate-600 font-semibold text-xs px-3 py-2 rounded-md border border-slate-200 shadow-sm flex items-center gap-1.5 transition-all active:scale-95 flex-1 sm:flex-none justify-center">
-                    <i class="fas fa-user-circle text-blue-500"></i> <span data-i18n="btnApiKey">公司信箱登入</span>
+                    <i class="fas fa-user-circle text-blue-500"></i> <span data-i18n="btnApiKey">?�司信箱?�入</span>
                 </button>
                 <button onclick="window.openFeedbackModal()" class="bg-white hover:bg-yellow-50 text-slate-600 hover:text-yellow-600 font-semibold text-xs px-3 py-2 rounded-md border border-slate-200 hover:border-yellow-200 shadow-sm flex items-center gap-1.5 transition-all active:scale-95 flex-1 sm:flex-none justify-center">
                     <i class="fas fa-lightbulb text-yellow-500"></i> <span data-i18n="btnFeedback">系統建議</span>
                 </button>
                 <div class="relative group flex-1 sm:flex-none">
                     <select id="lang-selector" onchange="window.changeLanguage()" class="appearance-none bg-white hover:bg-slate-50 text-slate-600 font-semibold text-xs pl-3 pr-7 py-2 rounded-md border border-slate-200 shadow-sm transition-all outline-none focus:border-blue-500 cursor-pointer active:scale-95 w-full">
-                        <option value="zh-TW">繁體中文</option>
-                        <option value="zh-CN">简体中文</option>
+                        <option value="zh-TW">繁�?中�?</option>
+                        <option value="zh-CN">简体中??/option>
                         <option value="en" selected>English</option>
                     </select>
                     <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-slate-500">
                         <i class="fas fa-chevron-down text-[10px]"></i>
                     </div>
                 </div>
-                <!-- 桌面版連線狀態 -->
+                <!-- 桌面?��???�??-->
                 <div id="auth-status-desktop" class="hidden sm:flex text-xs font-semibold text-slate-500 bg-slate-100 border border-slate-200 px-4 py-2 rounded-full items-center shadow-inner transition-colors duration-500">
                     <i class="fas fa-circle-notch fa-spin mr-2"></i> Connecting...
                 </div>
@@ -1622,27 +1622,27 @@
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 sm:mb-6 gap-3">
                 <h2 class="text-base sm:text-lg font-bold text-slate-800 flex items-center gap-3">
                     <span class="bg-blue-100 text-blue-700 w-7 h-7 rounded-md flex items-center justify-center text-sm flex-shrink-0">1</span>
-                    <span data-i18n="sec1Title">目標優化產品</span>
+                    <span data-i18n="sec1Title">?��??��??��?</span>
                 </h2>
                 <div class="flex items-center gap-2 bg-slate-50 px-3 py-2 rounded-lg border border-slate-200 self-start sm:self-auto">
-                    <span class="text-xs font-semibold text-slate-500" data-i18n="pageLevel">頁面層級</span>
+                    <span class="text-xs font-semibold text-slate-500" data-i18n="pageLevel">?�面層�?</span>
                     <select id="current-level" class="bg-transparent border-none text-xs sm:text-sm font-bold text-[#005bac] outline-none cursor-pointer p-0 pr-4">
-                        <option value="Product">產品詳情頁 (PDP)</option>
-                        <option value="Category">產品線頁面 (PLP)</option>
-                        <option value="Home">企業首頁 (Home)</option>
+                        <option value="Product">?��?詳�???(PDP)</option>
+                        <option value="Category">?��?線�???(PLP)</option>
+                        <option value="Home">企業首�? (Home)</option>
                     </select>
                 </div>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                 <div class="flex flex-col h-full">
                     <label class="block text-xs font-semibold text-slate-500 uppercase mb-2">Target URLs</label>
-                    <textarea id="url-input" class="w-full h-40 sm:h-56 p-3 sm:p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 input-focus custom-scrollbar resize-none leading-relaxed flex-grow mobile-textarea" data-i18n="urlPlaceholder" placeholder="請輸入產品網址..."></textarea>
+                    <textarea id="url-input" class="w-full h-40 sm:h-56 p-3 sm:p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 input-focus custom-scrollbar resize-none leading-relaxed flex-grow mobile-textarea" data-i18n="urlPlaceholder" placeholder="請輸?�產?�網?�..."></textarea>
                 </div>
                 <div class="flex flex-col h-full">
                     <label class="block text-xs font-semibold text-slate-500 uppercase mb-2">Source Files</label>
                     <div class="h-40 sm:h-56 border-2 border-dashed border-blue-200 rounded-xl p-4 sm:p-6 flex flex-col items-center justify-center bg-blue-50/30 hover:bg-blue-50 hover:border-blue-400 transition-colors relative cursor-pointer group mobile-dropzone">
                         <i class="fas fa-file-upload text-3xl sm:text-4xl text-blue-400 mb-2 sm:mb-4 group-hover:text-blue-500 transition-colors group-hover:-translate-y-1"></i>
-                        <span class="text-xs sm:text-sm font-bold text-slate-600 text-center" data-i18n="pdfTitle">拖放「關聯文件」(支援 PDF, DOCX, XLSX, 圖檔, TXT)</span>
+                        <span class="text-xs sm:text-sm font-bold text-slate-600 text-center" data-i18n="pdfTitle">?�放?��??��?件�??�援 PDF, DOCX, XLSX, ?��?, TXT)</span>
                         <input type="file" id="file-input" multiple accept=".pdf,.txt,.docx,.xlsx,.xls,.csv,.png,.jpg,.jpeg" class="absolute inset-0 opacity-0 cursor-pointer w-full h-full">
                     </div>
                     <div id="file-status-display" class="hidden mt-3 text-xs font-medium px-3 py-2 bg-blue-50 border border-blue-100 text-blue-800 rounded-lg flex items-center transition-all animate-in fade-in"></div>
@@ -1655,35 +1655,35 @@
                 <div class="flex items-center gap-2 flex-wrap">
                     <h2 class="text-base sm:text-lg font-bold text-slate-800 flex items-center gap-3">
                         <span class="bg-slate-200 text-slate-600 w-7 h-7 rounded-md flex items-center justify-center text-sm flex-shrink-0">2</span>
-                        <span data-i18n="sec2Title">企業知識庫 (輔助參考區)</span>
+                        <span data-i18n="sec2Title">企業?��?�?(輔助?�考�?)</span>
                     </h2>
                     <span id="sync-indicator" class="text-xs text-slate-400"></span>
                 </div>
                 <div class="flex gap-2 self-start sm:self-auto">
                     <button onclick="window.loadSharedKnowledge()" class="text-xs font-semibold text-slate-600 hover:text-blue-600 bg-white px-3 py-2 rounded-md border border-slate-200 shadow-sm flex items-center gap-1.5">
-                        <i id="reload-icon" class="fas fa-sync-alt"></i> <span data-i18n="btnReload">從雲端刷新</span>
+                        <i id="reload-icon" class="fas fa-sync-alt"></i> <span data-i18n="btnReload">從雲端刷??/span>
                     </button>
                     <button id="clear-data-btn" onclick="window.openConfirmModal()" class="hidden text-xs font-semibold text-red-500 hover:text-red-700 bg-white px-3 py-2 rounded-md border border-red-100 shadow-sm flex items-center gap-1.5 transition-all">
-                        <i class="fas fa-trash-alt"></i> <span data-i18n="btnReset">清除資料</span>
+                        <i class="fas fa-trash-alt"></i> <span data-i18n="btnReset">清除資�?</span>
                     </button>
                 </div>
             </div>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                 <div class="flex flex-col h-full">
                     <div class="flex justify-between items-end mb-2">
-                        <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider" data-i18n="kbUrlLabel">外部參考資料 (單次沙盒)</label>
+                        <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider" data-i18n="kbUrlLabel">外部?�考�???(?�次沙�?)</label>
                         <span class="text-[10px] font-medium text-slate-400 bg-slate-100 px-2 py-0.5 rounded">URLs: <span id="url-count">0</span></span>
                     </div>
                     
                     <div class="flex flex-col h-44 sm:h-56 border-2 border-dashed border-slate-300 rounded-xl bg-slate-50 overflow-hidden transition-colors hover:border-slate-400 group/container">
-                        <textarea id="kb-urls" data-i18n="kbUrlPlaceholder" onblur="window.autoBrainSync()" class="w-full flex-grow p-3 sm:p-4 bg-transparent border-none text-sm text-slate-700 outline-none custom-scrollbar resize-none leading-relaxed" placeholder="輸入相關技術白皮書網址..."></textarea>
+                        <textarea id="kb-urls" data-i18n="kbUrlPlaceholder" onblur="window.autoBrainSync()" class="w-full flex-grow p-3 sm:p-4 bg-transparent border-none text-sm text-slate-700 outline-none custom-scrollbar resize-none leading-relaxed" placeholder="輸入?��??�術白?�書網�?..."></textarea>
                         
                         <div class="w-full h-px bg-slate-200 flex-shrink-0"></div>
                         
                         <div class="p-3 h-14 sm:h-16 flex-shrink-0 flex flex-col items-center justify-center bg-slate-100/50 hover:bg-slate-100 transition-colors relative cursor-pointer">
                             <div class="flex items-center gap-2 text-slate-400 group-hover/container:text-slate-600 transition-colors">
                                 <i class="fas fa-paperclip text-base sm:text-lg"></i>
-                                <span class="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider" data-i18n="refPdfTitle">📎 附加參考檔案 (競品截圖/PDF)</span>
+                                <span class="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider" data-i18n="refPdfTitle">?? ?��??�考�?�?(競�??��?/PDF)</span>
                             </div>
                             <input type="file" id="ref-file-input" multiple accept=".pdf,.txt,.docx,.xlsx,.xls,.csv,.png,.jpg,.jpeg" class="absolute inset-0 opacity-0 cursor-pointer w-full h-full">
                         </div>
@@ -1695,12 +1695,12 @@
                 <div class="flex flex-col h-full">
                     <div class="flex justify-between items-end mb-2">
                         <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider flex items-center gap-2 w-full flex-wrap">
-                            <span data-i18n="kbManualLabel">品牌規範 (全域輔助參考)</span>
-                            <button id="admin-panel-btn" onclick="window.openAdminDashboard()" class="hidden ml-2 text-[10px] bg-blue-100 hover:bg-blue-200 text-blue-700 px-2.5 py-1 rounded transition-colors"><i class="fas fa-chart-bar"></i> 追蹤儀表板</button>
-                            <button onclick="window.openUnlockModal()" id="unlock-btn" class="ml-auto text-[10px] bg-slate-100 hover:bg-slate-200 text-slate-500 px-2.5 py-1 rounded transition-colors"><i class="fas fa-lock"></i> <span data-i18n="unlockBtn">解鎖編輯</span></button>
+                            <span data-i18n="kbManualLabel">?��?規�? (?��?輔助?��?</span>
+                            <button id="admin-panel-btn" onclick="window.openAdminDashboard()" class="hidden ml-2 text-[10px] bg-blue-100 hover:bg-blue-200 text-blue-700 px-2.5 py-1 rounded transition-colors"><i class="fas fa-chart-bar"></i> 追蹤?�表板</button>
+                            <button onclick="window.openUnlockModal()" id="unlock-btn" class="ml-auto text-[10px] bg-slate-100 hover:bg-slate-200 text-slate-500 px-2.5 py-1 rounded transition-colors"><i class="fas fa-lock"></i> <span data-i18n="unlockBtn">�??編輯</span></button>
                         </label>
                     </div>
-                    <textarea id="kb-manual" data-i18n="kbManualPlaceholder" readonly onblur="window.autoBrainSync()" class="w-full h-44 sm:h-56 p-3 sm:p-4 bg-slate-100 border border-slate-200 rounded-xl text-sm text-slate-400 cursor-not-allowed custom-scrollbar resize-none transition-colors leading-relaxed placeholder:text-slate-400/80" placeholder="【管理員專用】目前雲端無資料。\n請解鎖並貼入《研華全球品牌憲法》。\n\n範例：\n1. 嚴禁使用便宜、秒殺等 B2C 詞彙。\n2. 寬溫統一稱為「嚴苛環境寬溫支援 (-40~85°C)」。\n3. 嚴禁提及 Moxa 等競品。"></textarea>
+                    <textarea id="kb-manual" data-i18n="kbManualPlaceholder" readonly onblur="window.autoBrainSync()" class="w-full h-44 sm:h-56 p-3 sm:p-4 bg-slate-100 border border-slate-200 rounded-xl text-sm text-slate-400 cursor-not-allowed custom-scrollbar resize-none transition-colors leading-relaxed placeholder:text-slate-400/80" placeholder="?�管?�員專用?�目?�雲端無資�??�\n請解?�並貼入?��??�全?��??�憲法》。\n\n範�?：\n1. ?��?使用便�??��?殺�? B2C 詞�??�\n2. 寬溫統�?稱為?�嚴?�環境寬溫支??(-40~85°C)?�。\n3. ?��??��? Moxa 等競?��?></textarea>
                     <div class="flex justify-end mt-1">
                         <span class="text-[10px] font-medium text-slate-400 bg-slate-100 px-2 py-0.5 rounded">Chars: <span id="char-count">0</span></span>
                     </div>
@@ -1711,9 +1711,9 @@
         <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4 sm:p-8 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 sm:gap-6">
             <div class="action-bar-selects flex flex-col sm:flex-row w-full md:w-auto gap-3">
                 <div class="w-full sm:w-56">
-                    <label class="block text-xs font-semibold text-slate-500 uppercase mb-2" data-i18n="geoLabel">目標優化引擎</label>
+                    <label class="block text-xs font-semibold text-slate-500 uppercase mb-2" data-i18n="geoLabel">?��??��?引�?</label>
                     <select id="pref-geo" class="w-full px-3 sm:px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm font-semibold text-slate-700 focus:border-[#005bac] outline-none cursor-pointer shadow-sm">
-                        <option value="Standard SEO">標準SEO優化</option>
+                        <option value="Standard SEO">標�?SEO?��?</option>
                         <option value="Gemini">Gemini</option>
                         <option value="Claude">Claude</option>
                         <option value="ChatGPT">ChatGPT</option>
@@ -1722,28 +1722,28 @@
                     </select>
                 </div>
                 <div class="w-full sm:w-64">
-                    <label class="block text-xs font-semibold text-slate-500 uppercase mb-2" data-i18n="titleStrategyLabel">標題生成策略</label>
+                    <label class="block text-xs font-semibold text-slate-500 uppercase mb-2" data-i18n="titleStrategyLabel">標�??��?策略</label>
                     <select id="title-strategy" class="w-full px-3 sm:px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm font-semibold text-slate-700 focus:border-[#005bac] outline-none cursor-pointer shadow-sm">
-                        <option value="smart_auto">智慧動態平衡</option>
-                        <option value="keyword_first">購買意圖優先 (報價/規格)</option>
-                        <option value="brand_first">品牌聲量優先 (原廠/現貨)</option>
+                        <option value="smart_auto">?�慧?��?平衡</option>
+                        <option value="keyword_first">購買?��??��? (?�價/規格)</option>
+                        <option value="brand_first">?��??��??��? (?��?/?�貨)</option>
                     </select>
                 </div>
             </div>
             <button id="submit-btn" onclick="window.executeOptimization()" class="w-full md:w-auto bg-[#005bac] hover:bg-[#004a8d] text-white px-6 sm:px-8 py-3.5 rounded-lg font-bold text-sm shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-3">
-                <i class="fas fa-magic"></i><span id="submit-btn-text" data-i18n="btnSubmit">執行 AI 內容生成</span>
+                <i class="fas fa-magic"></i><span id="submit-btn-text" data-i18n="btnSubmit">?��? AI ?�容?��?</span>
             </button>
         </div>
 
         <section id="result-area" class="hidden mt-6 sm:mt-12 scroll-mt-24">
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-4 sm:mb-6 gap-3">
                 <div>
-                    <h3 class="text-xl sm:text-2xl font-bold text-slate-800" data-i18n="resTitle">優化產出結果</h3>
+                    <h3 class="text-xl sm:text-2xl font-bold text-slate-800" data-i18n="resTitle">?��??�出結�?</h3>
                     <div class="h-1 w-16 bg-[#005bac] rounded-full mt-2 sm:mt-3"></div>
                 </div>
                 <div id="export-btn-container" class="hidden animate-in fade-in zoom-in duration-300">
                     <button onclick="window.exportToExcel()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm px-4 sm:px-6 py-2.5 rounded-lg flex items-center gap-2 shadow-sm">
-                        <i class="fas fa-file-excel"></i><span id="export-btn-text" data-i18n="btnExport">匯出 Excel 報告</span>
+                        <i class="fas fa-file-excel"></i><span id="export-btn-text" data-i18n="btnExport">?�出 Excel ?��?</span>
                     </button>
                 </div>
             </div>
@@ -1751,14 +1751,14 @@
         </section>
     </main>
 
-    <!-- 系統登入 Modal (無金鑰版) -->
+    <!-- 系統?�入 Modal (?��??��?) -->
     <div id="api-modal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm hidden z-[100] flex items-center justify-center transition-opacity opacity-0">
         <div class="bg-white rounded-2xl p-8 max-w-md w-full mx-4 shadow-2xl transform scale-95 transition-transform duration-300" id="api-modal-content">
             <div class="flex justify-between items-center mb-5">
-                <h3 class="text-lg font-bold text-slate-800 flex items-center gap-2"><i class="fas fa-shield-alt text-[#005bac]"></i> <span data-i18n="modalApiTitle">系統登入 (僅作頻率統計)</span></h3>
+                <h3 class="text-lg font-bold text-slate-800 flex items-center gap-2"><i class="fas fa-shield-alt text-[#005bac]"></i> <span data-i18n="modalApiTitle">系統?�入 (?��??��?統�?)</span></h3>
                 <button onclick="window.toggleApiModal()" class="text-slate-400 hover:text-slate-600 transition-colors p-1"><i class="fas fa-times text-lg"></i></button>
             </div>
-            <p id="api-modal-desc" class="text-xs text-slate-500 mb-6 font-medium leading-relaxed" data-i18n="modalApiDesc">本系統已對接公司內部安全通道，無需再輸入 API 金鑰。請輸入您的公司信箱以協助我們統計各部門使用頻率。</p>
+            <p id="api-modal-desc" class="text-xs text-slate-500 mb-6 font-medium leading-relaxed" data-i18n="modalApiDesc">?�系統已對接?�司?�部安全?��?，無?�?�輸??API ?�鑰?��?輸入?��??�司信箱以�??��??�統計�??��?使用?��???/p>
             
             <div class="space-y-4">
                 <div>
@@ -1767,12 +1767,12 @@
                 </div>
                 
                 <button onclick="window.saveApiKey()" class="w-full bg-slate-800 hover:bg-black text-white font-bold py-3.5 mt-2 rounded-lg shadow-sm transition-all active:scale-95 flex justify-center items-center gap-2">
-                    <i class="fas fa-sign-in-alt"></i> <span data-i18n="modalApiSave">儲存並登入</span>
+                    <i class="fas fa-sign-in-alt"></i> <span data-i18n="modalApiSave">?��?並登??/span>
                 </button>
             </div>
             <div class="mt-4 text-center h-4">
                 <span id="api-save-status" class="text-xs font-bold text-emerald-500 opacity-0 transition-opacity flex items-center justify-center gap-1">
-                    <i class="fas fa-check-circle"></i> <span data-i18n="modalApiSuccess">登入成功！</span>
+                    <i class="fas fa-check-circle"></i> <span data-i18n="modalApiSuccess">?�入?��?�?/span>
                 </span>
             </div>
         </div>
@@ -1782,47 +1782,47 @@
     <div id="feedback-modal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm hidden z-[100] flex items-center justify-center transition-opacity opacity-0">
         <div class="bg-white rounded-2xl p-8 max-w-lg w-full mx-4 shadow-2xl transform scale-95 transition-transform duration-300" id="feedback-modal-content">
             <div class="flex justify-between items-center mb-5">
-                <h3 class="text-lg font-bold text-slate-800 flex items-center gap-2"><i class="fas fa-lightbulb text-yellow-500"></i> <span data-i18n="modalFbTitle">提供系統優化建議</span></h3>
+                <h3 class="text-lg font-bold text-slate-800 flex items-center gap-2"><i class="fas fa-lightbulb text-yellow-500"></i> <span data-i18n="modalFbTitle">?��?系統?��?建議</span></h3>
                 <button onclick="window.closeFeedbackModal()" class="text-slate-400 hover:text-slate-600 transition-colors p-1"><i class="fas fa-times text-lg"></i></button>
             </div>
-            <p class="text-xs text-slate-500 mb-6 font-medium leading-relaxed" data-i18n="modalFbDesc">請描述您遇到的問題或希望新增的功能。為方便後續聯繫，送出時將夾帶您的登入信箱。</p>
+            <p class="text-xs text-slate-500 mb-6 font-medium leading-relaxed" data-i18n="modalFbDesc">請�?述您?�到?��?題�?希�??��??��??�。為?�便後�??�繫，送出?��?夾帶?��??�入信箱??/p>
             
             <div class="space-y-4">
-                <textarea id="feedback-input" class="w-full h-40 p-4 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-700 focus:border-yellow-400 focus:bg-white outline-none transition-colors custom-scrollbar resize-none leading-relaxed" data-i18n="modalFbPlaceholder" placeholder="請輸入您的建議..."></textarea>
+                <textarea id="feedback-input" class="w-full h-40 p-4 bg-slate-50 border border-slate-200 rounded-lg text-sm text-slate-700 focus:border-yellow-400 focus:bg-white outline-none transition-colors custom-scrollbar resize-none leading-relaxed" data-i18n="modalFbPlaceholder" placeholder="請輸?�您?�建�?.."></textarea>
                 <button id="feedback-submit-btn" onclick="window.submitFeedback()" class="w-full bg-yellow-500 hover:bg-yellow-600 text-white font-bold py-3.5 mt-2 rounded-lg shadow-sm transition-all active:scale-95 flex justify-center items-center gap-2">
-                    <i class="fas fa-paper-plane"></i> <span data-i18n="modalFbSubmit">送出建議</span>
+                    <i class="fas fa-paper-plane"></i> <span data-i18n="modalFbSubmit">?�出建議</span>
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- 自定義密碼解鎖彈窗 -->
+    <!-- ?��?義�?碼解?��?�?-->
     <div id="unlock-modal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm hidden z-[100] flex items-center justify-center transition-opacity opacity-0">
         <div class="bg-white rounded-2xl p-8 max-w-sm w-full mx-4 shadow-2xl transform transition-transform scale-95" id="unlock-modal-content">
             <div class="flex justify-between items-center mb-5">
-                <h3 class="text-lg font-bold text-slate-800 flex items-center gap-2"><i class="fas fa-lock text-[#005bac]"></i> <span data-i18n="unlockBtn">管理員解鎖</span></h3>
+                <h3 class="text-lg font-bold text-slate-800 flex items-center gap-2"><i class="fas fa-lock text-[#005bac]"></i> <span data-i18n="unlockBtn">管�??�解??/span></h3>
                 <button onclick="window.closeUnlockModal()" class="text-slate-400 hover:text-slate-600 transition-colors"><i class="fas fa-times"></i></button>
             </div>
-            <p id="unlock-prompt-text" class="text-xs text-slate-500 mb-6 font-medium leading-relaxed">請輸入管理員密碼解鎖品牌規範：</p>
+            <p id="unlock-prompt-text" class="text-xs text-slate-500 mb-6 font-medium leading-relaxed">請輸?�管?�員密碼�???��?規�?�?/p>
             <input type="password" id="unlock-pwd-input" class="w-full p-3.5 bg-slate-50 border border-slate-200 rounded-lg text-sm focus:border-[#005bac] focus:bg-white outline-none transition-colors mb-2 font-mono" onkeydown="if(event.key === 'Enter') window.submitUnlock()">
-            <p id="unlock-error-msg" class="text-xs text-red-500 font-bold hidden mb-4"><i class="fas fa-exclamation-circle"></i> <span id="unlock-error-text">密碼錯誤，拒絕解鎖。</span></p>
+            <p id="unlock-error-msg" class="text-xs text-red-500 font-bold hidden mb-4"><i class="fas fa-exclamation-circle"></i> <span id="unlock-error-text">密碼?�誤，�?絕解?��?/span></p>
             <button onclick="window.submitUnlock()" class="w-full bg-slate-800 hover:bg-black text-white font-bold py-3.5 mt-2 rounded-lg shadow-sm transition-all active:scale-95 flex justify-center items-center gap-2">
-                <i class="fas fa-key"></i> 確認解鎖
+                <i class="fas fa-key"></i> 確�?�??
             </button>
         </div>
     </div>
 
-    <!-- Admin 追蹤儀表板彈窗 -->
+    <!-- Admin 追蹤?�表板彈�? -->
     <div id="admin-dashboard-modal" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm hidden z-[150] flex items-center justify-center transition-opacity opacity-0 p-4 sm:p-8">
         <div class="bg-white rounded-2xl max-w-5xl w-full mx-auto shadow-2xl transform transition-transform scale-95 flex flex-col max-h-full" id="admin-dashboard-content">
             <div class="flex justify-between items-center p-6 bg-slate-50 rounded-t-2xl">
-                <h3 class="text-xl font-black text-slate-800 flex items-center gap-3"><i class="fas fa-chart-line text-[#005bac]"></i> 管理員追蹤儀表板</h3>
+                <h3 class="text-xl font-black text-slate-800 flex items-center gap-3"><i class="fas fa-chart-line text-[#005bac]"></i> 管�??�追蹤�?表板</h3>
                 <button onclick="window.closeAdminDashboard()" class="text-slate-400 hover:text-slate-700 bg-white border border-slate-200 w-8 h-8 rounded-lg flex items-center justify-center transition-colors shadow-sm"><i class="fas fa-times"></i></button>
             </div>
             
             <div class="flex border-b border-slate-200 px-6 bg-slate-50">
-                <button onclick="window.switchAdminTab('users')" id="tab-btn-users" class="px-6 py-3 font-black text-[#005bac] border-b-2 border-[#005bac] transition-colors" data-i18n="adminTabUsers">👥 使用者追蹤</button>
-                <button onclick="window.switchAdminTab('feedback')" id="tab-btn-feedback" class="px-6 py-3 font-bold text-slate-400 hover:text-slate-600 border-b-2 border-transparent transition-colors" data-i18n="adminTabFb">💬 系統建議清單</button>
+                <button onclick="window.switchAdminTab('users')" id="tab-btn-users" class="px-6 py-3 font-black text-[#005bac] border-b-2 border-[#005bac] transition-colors" data-i18n="adminTabUsers">?�� 使用?�追�?/button>
+                <button onclick="window.switchAdminTab('feedback')" id="tab-btn-feedback" class="px-6 py-3 font-bold text-slate-400 hover:text-slate-600 border-b-2 border-transparent transition-colors" data-i18n="adminTabFb">?�� 系統建議清單</button>
             </div>
 
             <div id="admin-tab-users" class="p-6 overflow-y-auto custom-scrollbar flex-grow bg-white rounded-b-2xl">
@@ -1831,8 +1831,8 @@
                         <tr class="bg-slate-100 border-y border-slate-200 text-xs font-black text-slate-500 uppercase tracking-widest">
                             <th class="py-3 px-4 rounded-tl-lg">User Email</th>
                             <th class="py-3 px-4 text-center">使用天數</th>
-                            <th class="py-3 px-4 text-center">總登入次數</th>
-                            <th class="py-3 px-4 text-right rounded-tr-lg">最後登入時間</th>
+                            <th class="py-3 px-4 text-center">總登?�次??/th>
+                            <th class="py-3 px-4 text-right rounded-tr-lg">?�後登?��???/th>
                         </tr>
                     </thead>
                     <tbody id="admin-table-body-users"></tbody>
@@ -1843,9 +1843,9 @@
                 <table class="w-full text-left border-collapse">
                     <thead>
                         <tr class="bg-slate-100 border-y border-slate-200 text-xs font-black text-slate-500 uppercase tracking-widest">
-                            <th class="py-3 px-4 rounded-tl-lg w-32">提交時間</th>
-                            <th class="py-3 px-4">建議內容</th>
-                            <th class="py-3 px-4 text-right rounded-tr-lg">提交者信箱</th>
+                            <th class="py-3 px-4 rounded-tl-lg w-32">?�交?��?</th>
+                            <th class="py-3 px-4">建議?�容</th>
+                            <th class="py-3 px-4 text-right rounded-tr-lg">?�交?�信�?/th>
                         </tr>
                     </thead>
                     <tbody id="admin-table-body-feedback"></tbody>
@@ -1854,18 +1854,18 @@
         </div>
     </div>
 
-    <!-- 自定義清除資料警告彈窗 -->
+    <!-- ?��?義�??��??�警?��?�?-->
     <div id="confirm-modal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm hidden z-[100] flex items-center justify-center transition-opacity opacity-0">
         <div class="bg-white rounded-2xl p-8 max-w-sm w-full mx-4 shadow-2xl transform transition-transform scale-95" id="confirm-modal-content">
             <div class="flex items-center gap-3 mb-4">
                 <div class="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center text-red-600"><i class="fas fa-exclamation-triangle"></i></div>
-                <h3 class="text-lg font-bold text-slate-800">警告</h3>
+                <h3 class="text-lg font-bold text-slate-800">警�?</h3>
             </div>
-            <p id="confirm-reset-text" class="text-sm text-slate-600 mb-8 font-medium leading-relaxed">確定要清除知識庫嗎？清除後雲端資料將同步清空。</p>
+            <p id="confirm-reset-text" class="text-sm text-slate-600 mb-8 font-medium leading-relaxed">確�?要�??�知識庫?��?清除後雲端�??��??�步清空??/p>
             <div class="flex gap-3 justify-end">
-                <button onclick="window.closeConfirmModal()" class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-lg text-sm transition-colors">取消</button>
+                <button onclick="window.closeConfirmModal()" class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-lg text-sm transition-colors">?��?</button>
                 <button onclick="window.executeReset()" class="px-5 py-2.5 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg text-sm shadow-sm transition-colors flex items-center gap-2">
-                    <i class="fas fa-trash-alt"></i> 確定清除
+                    <i class="fas fa-trash-alt"></i> 確�?清除
                 </button>
             </div>
         </div>

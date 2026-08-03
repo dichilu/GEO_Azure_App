@@ -1,0 +1,8 @@
+{
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}",
+        ".vscode{,/**}"
+    ],
+    "appService.defaultWebAppToDeploy": "/subscriptions/1ac54e1e-9c55-4921-9c73-5fb0cabb9d56/resourceGroups/adv-sales-marketing-services/providers/Microsoft.Web/sites/adv-ai-geo",
+    "appService.deploySubpath": "."
+}

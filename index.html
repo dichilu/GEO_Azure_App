@@ -43,7 +43,7 @@
 
         let isAuthReady = false;
         let isDataInitialLoaded = false;
-        let currentLang = 'zh-TW'; 
+        let currentLang = 'en'; 
         let lastResultsData = [];
         let currentEngineMode = 'GEO';
         let currentAuthStatusState = 'connecting'; 
@@ -1540,131 +1540,167 @@
         .input-focus:focus { border-color: #005bac; box-shadow: 0 0 0 3px rgba(0, 91, 172, 0.1); outline: none; }
         .custom-scrollbar::-webkit-scrollbar { width: 6px; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+
+        /* ===== 行動版優化 (Mobile Responsive Fix) ===== */
+        @media (max-width: 640px) {
+            /* Navbar：右側控制列在手機上換行顯示，兩項一行 */
+            .nav-controls {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 8px;
+                width: 100%;
+            }
+            .nav-controls .auth-status-pill {
+                grid-column: 1 / -1; /* 連線狀態佔滿整行 */
+                justify-content: center;
+            }
+            /* 各 Section 手機上 padding 縮減 */
+            .mobile-pad { padding: 16px !important; }
+            /* 結果卡片 header/body 手機縮排 */
+            .result-card-header { padding: 16px !important; }
+            .result-card-body { padding: 16px !important; }
+            /* 操作列（引擎/策略/按鈕）手機全寬 */
+            .action-bar-selects { flex-direction: column !important; }
+            .action-bar-selects > div { width: 100% !important; }
+            /* 手機版 textarea 高度縮小避免過長 */
+            .mobile-textarea { height: 160px !important; }
+            /* 手機版 file upload 區高度 */
+            .mobile-dropzone { height: 120px !important; }
+            /* 手機字型縮小 */
+            .result-title { font-size: 1rem !important; }
+            /* Byte 計數 badge 在手機上換行 */
+            .label-row { flex-wrap: wrap; gap: 6px; }
+        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col overflow-x-hidden">
     <!-- Custom Toast Notification -->
     <div id="custom-toast" class="fixed top-5 left-1/2 transform -translate-x-1/2 z-[200] px-6 py-3 rounded-full shadow-xl font-bold text-sm transition-all duration-300 opacity-0 -translate-y-full pointer-events-none"></div>
 
-    <nav class="bg-white border-b border-slate-200 px-6 py-4 sticky top-0 z-50 shadow-sm">
-        <div class="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
-            <div class="flex items-center gap-4">
-                <div class="w-10 h-10 bg-[#005bac] rounded-lg flex items-center justify-center shadow-md"><i class="fas fa-microchip text-white text-lg"></i></div>
-                <div>
-                    <h1 class="text-xl font-bold text-slate-800 leading-tight" data-i18n="navTitle">GEO 內容生成系統</h1>
-                    <p class="text-xs text-slate-500 font-medium tracking-wide mt-0.5" data-i18n="navVer">v1.18.3 UI 體驗微調版</p>
+    <nav class="bg-white border-b border-slate-200 px-4 sm:px-6 py-3 sm:py-4 sticky top-0 z-50 shadow-sm">
+        <div class="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-3">
+            <!-- Logo & Title -->
+            <div class="flex items-center gap-3 w-full sm:w-auto">
+                <div class="w-9 h-9 sm:w-10 sm:h-10 bg-[#005bac] rounded-lg flex items-center justify-center shadow-md flex-shrink-0"><i class="fas fa-microchip text-white text-base sm:text-lg"></i></div>
+                <div class="flex-grow">
+                    <h1 class="text-base sm:text-xl font-bold text-slate-800 leading-tight" data-i18n="navTitle">GEO 內容生成系統</h1>
+                    <p class="text-[10px] sm:text-xs text-slate-500 font-medium tracking-wide mt-0.5 hidden sm:block" data-i18n="navVer">v1.18.3 UI 體驗微調版</p>
+                </div>
+                <!-- 手機版：連線狀態移到 logo 右側 -->
+                <div id="auth-status" class="sm:hidden text-[10px] font-semibold text-slate-500 bg-slate-100 border border-slate-200 px-2 py-1 rounded-full flex items-center shadow-inner transition-colors duration-500 flex-shrink-0">
+                    <i class="fas fa-circle-notch fa-spin mr-1"></i> ...
                 </div>
             </div>
-            <div class="flex items-center gap-4">
-                <button id="login-btn-display" onclick="window.toggleApiModal()" class="bg-white hover:bg-slate-50 text-slate-600 font-semibold text-xs px-4 py-2 rounded-md border border-slate-200 shadow-sm flex items-center gap-2 transition-all active:scale-95">
+            <!-- Right Controls -->
+            <div class="nav-controls flex items-center gap-2 w-full sm:w-auto sm:flex-row">
+                <button id="login-btn-display" onclick="window.toggleApiModal()" class="bg-white hover:bg-slate-50 text-slate-600 font-semibold text-xs px-3 py-2 rounded-md border border-slate-200 shadow-sm flex items-center gap-1.5 transition-all active:scale-95 flex-1 sm:flex-none justify-center">
                     <i class="fas fa-user-circle text-blue-500"></i> <span data-i18n="btnApiKey">公司信箱登入</span>
                 </button>
-                <button onclick="window.openFeedbackModal()" class="bg-white hover:bg-yellow-50 text-slate-600 hover:text-yellow-600 font-semibold text-xs px-4 py-2 rounded-md border border-slate-200 hover:border-yellow-200 shadow-sm flex items-center gap-2 transition-all active:scale-95">
+                <button onclick="window.openFeedbackModal()" class="bg-white hover:bg-yellow-50 text-slate-600 hover:text-yellow-600 font-semibold text-xs px-3 py-2 rounded-md border border-slate-200 hover:border-yellow-200 shadow-sm flex items-center gap-1.5 transition-all active:scale-95 flex-1 sm:flex-none justify-center">
                     <i class="fas fa-lightbulb text-yellow-500"></i> <span data-i18n="btnFeedback">系統建議</span>
                 </button>
-                
-                <div class="relative group">
-                    <select id="lang-selector" onchange="window.changeLanguage()" class="appearance-none bg-white hover:bg-slate-50 text-slate-600 font-semibold text-xs pl-4 pr-8 py-2 rounded-md border border-slate-200 shadow-sm transition-all outline-none focus:border-blue-500 cursor-pointer active:scale-95">
+                <div class="relative group flex-1 sm:flex-none">
+                    <select id="lang-selector" onchange="window.changeLanguage()" class="appearance-none bg-white hover:bg-slate-50 text-slate-600 font-semibold text-xs pl-3 pr-7 py-2 rounded-md border border-slate-200 shadow-sm transition-all outline-none focus:border-blue-500 cursor-pointer active:scale-95 w-full">
                         <option value="zh-TW">繁體中文</option>
                         <option value="zh-CN">简体中文</option>
-                        <option value="en">English</option>
+                        <option value="en" selected>English</option>
                     </select>
                     <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-slate-500">
                         <i class="fas fa-chevron-down text-[10px]"></i>
                     </div>
                 </div>
-
-                <div id="auth-status" class="text-xs font-semibold text-slate-500 bg-slate-100 border border-slate-200 px-4 py-2 rounded-full flex items-center shadow-inner transition-colors duration-500">
+                <!-- 桌面版連線狀態 -->
+                <div id="auth-status-desktop" class="hidden sm:flex text-xs font-semibold text-slate-500 bg-slate-100 border border-slate-200 px-4 py-2 rounded-full items-center shadow-inner transition-colors duration-500">
                     <i class="fas fa-circle-notch fa-spin mr-2"></i> Connecting...
                 </div>
             </div>
         </div>
     </nav>
 
-    <main class="flex-grow max-w-6xl mx-auto w-full p-4 sm:p-8 space-y-8">
-        <section class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 sm:p-8">
-            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
-                <h2 class="text-lg font-bold text-slate-800 flex items-center gap-3">
-                    <span class="bg-blue-100 text-blue-700 w-7 h-7 rounded-md flex items-center justify-center text-sm">1</span>
+    <main class="flex-grow max-w-6xl mx-auto w-full p-3 sm:p-8 space-y-4 sm:space-y-8">
+        <section class="bg-white rounded-xl shadow-sm border border-slate-200 p-4 sm:p-8 mobile-pad">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 sm:mb-6 gap-3">
+                <h2 class="text-base sm:text-lg font-bold text-slate-800 flex items-center gap-3">
+                    <span class="bg-blue-100 text-blue-700 w-7 h-7 rounded-md flex items-center justify-center text-sm flex-shrink-0">1</span>
                     <span data-i18n="sec1Title">目標優化產品</span>
                 </h2>
-                <div class="flex items-center gap-3 bg-slate-50 px-4 py-2 rounded-lg border border-slate-200">
+                <div class="flex items-center gap-2 bg-slate-50 px-3 py-2 rounded-lg border border-slate-200 self-start sm:self-auto">
                     <span class="text-xs font-semibold text-slate-500" data-i18n="pageLevel">頁面層級</span>
-                    <select id="current-level" class="bg-transparent border-none text-sm font-bold text-[#005bac] outline-none cursor-pointer p-0 pr-4">
+                    <select id="current-level" class="bg-transparent border-none text-xs sm:text-sm font-bold text-[#005bac] outline-none cursor-pointer p-0 pr-4">
                         <option value="Product">產品詳情頁 (PDP)</option>
                         <option value="Category">產品線頁面 (PLP)</option>
                         <option value="Home">企業首頁 (Home)</option>
                     </select>
                 </div>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                 <div class="flex flex-col h-full">
                     <label class="block text-xs font-semibold text-slate-500 uppercase mb-2">Target URLs</label>
-                    <textarea id="url-input" class="w-full h-56 p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 input-focus custom-scrollbar resize-none leading-relaxed flex-grow" data-i18n="urlPlaceholder" placeholder="請輸入產品網址..."></textarea>
+                    <textarea id="url-input" class="w-full h-40 sm:h-56 p-3 sm:p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 input-focus custom-scrollbar resize-none leading-relaxed flex-grow mobile-textarea" data-i18n="urlPlaceholder" placeholder="請輸入產品網址..."></textarea>
                 </div>
                 <div class="flex flex-col h-full">
                     <label class="block text-xs font-semibold text-slate-500 uppercase mb-2">Source Files</label>
-                    <div class="h-56 border-2 border-dashed border-blue-200 rounded-xl p-6 flex flex-col items-center justify-center bg-blue-50/30 hover:bg-blue-50 hover:border-blue-400 transition-colors relative cursor-pointer group">
-                        <i class="fas fa-file-upload text-4xl text-blue-400 mb-4 group-hover:text-blue-500 transition-colors group-hover:-translate-y-1"></i>
-                        <span class="text-sm font-bold text-slate-600" data-i18n="pdfTitle">拖放「關聯文件」(支援 PDF, DOCX, XLSX, 圖檔, TXT)</span>
+                    <div class="h-40 sm:h-56 border-2 border-dashed border-blue-200 rounded-xl p-4 sm:p-6 flex flex-col items-center justify-center bg-blue-50/30 hover:bg-blue-50 hover:border-blue-400 transition-colors relative cursor-pointer group mobile-dropzone">
+                        <i class="fas fa-file-upload text-3xl sm:text-4xl text-blue-400 mb-2 sm:mb-4 group-hover:text-blue-500 transition-colors group-hover:-translate-y-1"></i>
+                        <span class="text-xs sm:text-sm font-bold text-slate-600 text-center" data-i18n="pdfTitle">拖放「關聯文件」(支援 PDF, DOCX, XLSX, 圖檔, TXT)</span>
                         <input type="file" id="file-input" multiple accept=".pdf,.txt,.docx,.xlsx,.xls,.csv,.png,.jpg,.jpeg" class="absolute inset-0 opacity-0 cursor-pointer w-full h-full">
                     </div>
-                    <div id="file-status-display" class="hidden mt-3 text-xs font-medium px-4 py-2.5 bg-blue-50 border border-blue-100 text-blue-800 rounded-lg flex items-center transition-all animate-in fade-in"></div>
+                    <div id="file-status-display" class="hidden mt-3 text-xs font-medium px-3 py-2 bg-blue-50 border border-blue-100 text-blue-800 rounded-lg flex items-center transition-all animate-in fade-in"></div>
                 </div>
             </div>
         </section>
 
-        <section class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 sm:p-8">
-            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
-                <div class="flex items-center gap-3">
-                    <h2 class="text-lg font-bold text-slate-800 flex items-center gap-3">
-                        <span class="bg-slate-200 text-slate-600 w-7 h-7 rounded-md flex items-center justify-center text-sm">2</span>
+        <section class="bg-white rounded-xl shadow-sm border border-slate-200 p-4 sm:p-8 mobile-pad">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 sm:mb-6 gap-3">
+                <div class="flex items-center gap-2 flex-wrap">
+                    <h2 class="text-base sm:text-lg font-bold text-slate-800 flex items-center gap-3">
+                        <span class="bg-slate-200 text-slate-600 w-7 h-7 rounded-md flex items-center justify-center text-sm flex-shrink-0">2</span>
                         <span data-i18n="sec2Title">企業知識庫 (輔助參考區)</span>
                     </h2>
-                    <span id="sync-indicator" class="ml-2 text-xs text-slate-400"></span>
+                    <span id="sync-indicator" class="text-xs text-slate-400"></span>
                 </div>
-                <div class="flex gap-2">
-                    <button onclick="window.loadSharedKnowledge()" class="text-xs font-semibold text-slate-600 hover:text-blue-600 bg-white px-4 py-2 rounded-md border border-slate-200 shadow-sm flex items-center gap-2">
+                <div class="flex gap-2 self-start sm:self-auto">
+                    <button onclick="window.loadSharedKnowledge()" class="text-xs font-semibold text-slate-600 hover:text-blue-600 bg-white px-3 py-2 rounded-md border border-slate-200 shadow-sm flex items-center gap-1.5">
                         <i id="reload-icon" class="fas fa-sync-alt"></i> <span data-i18n="btnReload">從雲端刷新</span>
                     </button>
-                    <button id="clear-data-btn" onclick="window.openConfirmModal()" class="hidden text-xs font-semibold text-red-500 hover:text-red-700 bg-white px-4 py-2 rounded-md border border-red-100 shadow-sm flex items-center gap-2 transition-all">
+                    <button id="clear-data-btn" onclick="window.openConfirmModal()" class="hidden text-xs font-semibold text-red-500 hover:text-red-700 bg-white px-3 py-2 rounded-md border border-red-100 shadow-sm flex items-center gap-1.5 transition-all">
                         <i class="fas fa-trash-alt"></i> <span data-i18n="btnReset">清除資料</span>
                     </button>
                 </div>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                 <div class="flex flex-col h-full">
                     <div class="flex justify-between items-end mb-2">
                         <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider" data-i18n="kbUrlLabel">外部參考資料 (單次沙盒)</label>
                         <span class="text-[10px] font-medium text-slate-400 bg-slate-100 px-2 py-0.5 rounded">URLs: <span id="url-count">0</span></span>
                     </div>
                     
-                    <div class="flex flex-col h-56 border-2 border-dashed border-slate-300 rounded-xl bg-slate-50 overflow-hidden transition-colors hover:border-slate-400 group/container">
-                        <textarea id="kb-urls" data-i18n="kbUrlPlaceholder" onblur="window.autoBrainSync()" class="w-full flex-grow p-4 bg-transparent border-none text-sm text-slate-700 outline-none custom-scrollbar resize-none leading-relaxed" placeholder="輸入相關技術白皮書網址..."></textarea>
+                    <div class="flex flex-col h-44 sm:h-56 border-2 border-dashed border-slate-300 rounded-xl bg-slate-50 overflow-hidden transition-colors hover:border-slate-400 group/container">
+                        <textarea id="kb-urls" data-i18n="kbUrlPlaceholder" onblur="window.autoBrainSync()" class="w-full flex-grow p-3 sm:p-4 bg-transparent border-none text-sm text-slate-700 outline-none custom-scrollbar resize-none leading-relaxed" placeholder="輸入相關技術白皮書網址..."></textarea>
                         
                         <div class="w-full h-px bg-slate-200 flex-shrink-0"></div>
                         
-                        <div class="p-3 h-16 flex-shrink-0 flex flex-col items-center justify-center bg-slate-100/50 hover:bg-slate-100 transition-colors relative cursor-pointer">
+                        <div class="p-3 h-14 sm:h-16 flex-shrink-0 flex flex-col items-center justify-center bg-slate-100/50 hover:bg-slate-100 transition-colors relative cursor-pointer">
                             <div class="flex items-center gap-2 text-slate-400 group-hover/container:text-slate-600 transition-colors">
-                                <i class="fas fa-paperclip text-lg"></i>
-                                <span class="text-[11px] font-bold uppercase tracking-wider" data-i18n="refPdfTitle">📎 附加參考檔案 (競品截圖/PDF)</span>
+                                <i class="fas fa-paperclip text-base sm:text-lg"></i>
+                                <span class="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider" data-i18n="refPdfTitle">📎 附加參考檔案 (競品截圖/PDF)</span>
                             </div>
                             <input type="file" id="ref-file-input" multiple accept=".pdf,.txt,.docx,.xlsx,.xls,.csv,.png,.jpg,.jpeg" class="absolute inset-0 opacity-0 cursor-pointer w-full h-full">
                         </div>
                     </div>
                     
-                    <div id="ref-file-status-display" class="hidden mt-3 text-xs font-medium px-4 py-2.5 bg-slate-50 border border-slate-200 text-slate-700 rounded-lg flex items-center transition-all animate-in fade-in"></div>
+                    <div id="ref-file-status-display" class="hidden mt-3 text-xs font-medium px-3 py-2 bg-slate-50 border border-slate-200 text-slate-700 rounded-lg flex items-center transition-all animate-in fade-in"></div>
                 </div>
                 
                 <div class="flex flex-col h-full">
                     <div class="flex justify-between items-end mb-2">
-                        <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider flex items-center gap-2 w-full">
+                        <label class="block text-xs font-semibold text-slate-500 uppercase tracking-wider flex items-center gap-2 w-full flex-wrap">
                             <span data-i18n="kbManualLabel">品牌規範 (全域輔助參考)</span>
                             <button id="admin-panel-btn" onclick="window.openAdminDashboard()" class="hidden ml-2 text-[10px] bg-blue-100 hover:bg-blue-200 text-blue-700 px-2.5 py-1 rounded transition-colors"><i class="fas fa-chart-bar"></i> 追蹤儀表板</button>
                             <button onclick="window.openUnlockModal()" id="unlock-btn" class="ml-auto text-[10px] bg-slate-100 hover:bg-slate-200 text-slate-500 px-2.5 py-1 rounded transition-colors"><i class="fas fa-lock"></i> <span data-i18n="unlockBtn">解鎖編輯</span></button>
                         </label>
                     </div>
-                    <textarea id="kb-manual" data-i18n="kbManualPlaceholder" readonly onblur="window.autoBrainSync()" class="w-full h-56 p-4 bg-slate-100 border border-slate-200 rounded-xl text-sm text-slate-400 cursor-not-allowed custom-scrollbar resize-none transition-colors leading-relaxed placeholder:text-slate-400/80" placeholder="【管理員專用】目前雲端無資料。\n請解鎖並貼入《研華全球品牌憲法》。\n\n範例：\n1. 嚴禁使用便宜、秒殺等 B2C 詞彙。\n2. 寬溫統一稱為「嚴苛環境寬溫支援 (-40~85°C)」。\n3. 嚴禁提及 Moxa 等競品。"></textarea>
+                    <textarea id="kb-manual" data-i18n="kbManualPlaceholder" readonly onblur="window.autoBrainSync()" class="w-full h-44 sm:h-56 p-3 sm:p-4 bg-slate-100 border border-slate-200 rounded-xl text-sm text-slate-400 cursor-not-allowed custom-scrollbar resize-none transition-colors leading-relaxed placeholder:text-slate-400/80" placeholder="【管理員專用】目前雲端無資料。\n請解鎖並貼入《研華全球品牌憲法》。\n\n範例：\n1. 嚴禁使用便宜、秒殺等 B2C 詞彙。\n2. 寬溫統一稱為「嚴苛環境寬溫支援 (-40~85°C)」。\n3. 嚴禁提及 Moxa 等競品。"></textarea>
                     <div class="flex justify-end mt-1">
                         <span class="text-[10px] font-medium text-slate-400 bg-slate-100 px-2 py-0.5 rounded">Chars: <span id="char-count">0</span></span>
                     </div>
@@ -1672,11 +1708,11 @@
             </div>
         </section>
 
-        <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6">
-            <div class="flex flex-col sm:flex-row w-full md:w-auto gap-4">
+        <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4 sm:p-8 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 sm:gap-6">
+            <div class="action-bar-selects flex flex-col sm:flex-row w-full md:w-auto gap-3">
                 <div class="w-full sm:w-56">
                     <label class="block text-xs font-semibold text-slate-500 uppercase mb-2" data-i18n="geoLabel">目標優化引擎</label>
-                    <select id="pref-geo" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm font-semibold text-slate-700 focus:border-[#005bac] outline-none cursor-pointer shadow-sm">
+                    <select id="pref-geo" class="w-full px-3 sm:px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm font-semibold text-slate-700 focus:border-[#005bac] outline-none cursor-pointer shadow-sm">
                         <option value="Standard SEO">標準SEO優化</option>
                         <option value="Gemini">Gemini</option>
                         <option value="Claude">Claude</option>
@@ -1687,31 +1723,31 @@
                 </div>
                 <div class="w-full sm:w-64">
                     <label class="block text-xs font-semibold text-slate-500 uppercase mb-2" data-i18n="titleStrategyLabel">標題生成策略</label>
-                    <select id="title-strategy" class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm font-semibold text-slate-700 focus:border-[#005bac] outline-none cursor-pointer shadow-sm">
+                    <select id="title-strategy" class="w-full px-3 sm:px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm font-semibold text-slate-700 focus:border-[#005bac] outline-none cursor-pointer shadow-sm">
                         <option value="smart_auto">智慧動態平衡</option>
                         <option value="keyword_first">購買意圖優先 (報價/規格)</option>
                         <option value="brand_first">品牌聲量優先 (原廠/現貨)</option>
                     </select>
                 </div>
             </div>
-            <button id="submit-btn" onclick="window.executeOptimization()" class="w-full md:w-auto bg-[#005bac] hover:bg-[#004a8d] text-white px-8 py-3.5 rounded-lg font-bold text-sm shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-3">
+            <button id="submit-btn" onclick="window.executeOptimization()" class="w-full md:w-auto bg-[#005bac] hover:bg-[#004a8d] text-white px-6 sm:px-8 py-3.5 rounded-lg font-bold text-sm shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-3">
                 <i class="fas fa-magic"></i><span id="submit-btn-text" data-i18n="btnSubmit">執行 AI 內容生成</span>
             </button>
         </div>
 
-        <section id="result-area" class="hidden mt-12 scroll-mt-24">
-            <div class="flex flex-col sm:flex-row justify-between items-end mb-6 gap-4">
+        <section id="result-area" class="hidden mt-6 sm:mt-12 scroll-mt-24">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-4 sm:mb-6 gap-3">
                 <div>
-                    <h3 class="text-2xl font-bold text-slate-800" data-i18n="resTitle">優化產出結果</h3>
-                    <div class="h-1 w-16 bg-[#005bac] rounded-full mt-3"></div>
+                    <h3 class="text-xl sm:text-2xl font-bold text-slate-800" data-i18n="resTitle">優化產出結果</h3>
+                    <div class="h-1 w-16 bg-[#005bac] rounded-full mt-2 sm:mt-3"></div>
                 </div>
                 <div id="export-btn-container" class="hidden animate-in fade-in zoom-in duration-300">
-                    <button onclick="window.exportToExcel()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm px-6 py-2.5 rounded-lg flex items-center gap-2 shadow-sm">
+                    <button onclick="window.exportToExcel()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm px-4 sm:px-6 py-2.5 rounded-lg flex items-center gap-2 shadow-sm">
                         <i class="fas fa-file-excel"></i><span id="export-btn-text" data-i18n="btnExport">匯出 Excel 報告</span>
                     </button>
                 </div>
             </div>
-            <div id="output-container" class="space-y-8"></div>
+            <div id="output-container" class="space-y-4 sm:space-y-8"></div>
         </section>
     </main>
 

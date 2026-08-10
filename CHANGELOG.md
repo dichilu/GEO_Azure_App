@@ -1,5 +1,13 @@
 # 版本控管紀錄 (Changelog)
 
+## [v1.19.2] - 2026-08-10
+### 變更
+- **爬蟲代理引擎由 Jina Reader 改為 Apify Website Content Crawler**（[server.js:19-53](server.js:19)）：
+  - 原因：Jina Reader 對有反爬蟲防護的網站（例如 iotmart.com，Salesforce Experience Cloud 商店頁）完全抓不到內容，只回傳網站攔截畫面，AI 因無真實資料而輸出大量 N/A。
+  - 改用 Apify `apify/website-content-crawler` actor，設定 `crawlerType: playwright:firefox`、`dynamicContentWaitSecs: 20`、`htmlTransformer: none`，關閉預設的 Readability 式自動內容判斷（該演算法會誤判把賣點/認證/價格區塊當雜訊丟棄），改用手動 `removeElementsCssSelector` 排除常見同意管理工具（CookieYes/OneTrust/Cookiebot/TrustArc）與導覽/頁尾。
+  - 需在 Azure 後台額外設定環境變數 `APIFY_API_KEY`。
+  - 已知取捨：Apify 為用量計費（非固定免費額度），且抓取耗時較長（單次約 25-60 秒，逾時上限調整為 140 秒）；`removeElementsCssSelector` 為手動維護清單，遇到用其他同意管理工具的網站可能仍有殘留雜訊，需個別調整。
+
 ## [v1.19.1] - 2026-08-10
 ### 修復
 - **產品型號／關鍵字幻覺修正 (commit `ca98b17`)**：

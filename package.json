@@ -1,6 +1,6 @@
 {
   "name": "geo-content-generator-azure",
-  "version": "1.19.1",
+  "version": "1.19.2",
   "description": "研華 GEO 企業內部上雲版",
   "main": "server.js",
   "type": "module",

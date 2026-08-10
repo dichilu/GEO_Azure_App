@@ -16,23 +16,47 @@ app.use(express.json({ limit: '50mb' }));
 // 【保全設定 2】：將這個資料夾變成網頁伺服器，自動讀取 index.html
 app.use(express.static(__dirname));
 
-// 【爬蟲代理通道】：專門透過 Jina Reader 抓取網頁的 Markdown 內容，完美避開跨網域 (CORS) 錯誤
+// 【爬蟲代理通道】：透過 Apify Website Content Crawler 抓取網頁的 Markdown 內容，完美避開跨網域 (CORS) 錯誤
+// 關閉 Readability 式自動清理（htmlTransformer: none），改用手動選擇器排除 Cookie 同意框與導覽/頁尾，
+// 避免像 iotmart.com 這類 Salesforce Experience Cloud 商店頁，內建演算法誤判把賣點/認證/價格當雜訊丟棄
 app.post('/api/scrape', async (req, res) => {
     const targetUrl = req.body.url;
     if (!targetUrl) {
         return res.status(400).json({ error: "沒有提供目標網址" });
     }
-    // 加入 Timeout 機制以防抓取過久
+    const apifyToken = process.env.APIFY_API_KEY;
+    if (!apifyToken) {
+        return res.status(500).json({ error: "伺服器嚴重錯誤：Azure 後台尚未設定 APIFY_API_KEY 環境變數！" });
+    }
+    // Apify 需要啟動無頭瀏覽器渲染 JS，比純文字抓取慢，給 140 秒超時
     const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 20000); // 20 秒超時限時
-    
+    const timeout = setTimeout(() => controller.abort(), 140000);
+
     try {
-        const response = await fetch(`https://r.jina.ai/${targetUrl}`, {
+        const response = await fetch(`https://api.apify.com/v2/actors/apify~website-content-crawler/run-sync-get-dataset-items?token=${apifyToken}&timeout=120`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                startUrls: [{ url: targetUrl }],
+                maxCrawlDepth: 0,
+                maxCrawlPages: 1,
+                saveMarkdown: true,
+                crawlerType: 'playwright:firefox',
+                dynamicContentWaitSecs: 20,
+                htmlTransformer: 'none',
+                // 涵蓋常見同意管理工具（CookieYes/OneTrust/Cookiebot/TrustArc）+ 通用頁尾/導覽，
+                // 但仍非萬能：不同網站用的同意框架不同，仍可能有殘留雜訊，需個別網站再微調
+                removeElementsCssSelector: '[class*="cky-"], [id*="cookieyes" i], #onetrust-banner-sdk, .onetrust-pc-dark-filter, #CybotCookiebotDialog, #truste-consent-track, [class*="cookie-consent" i], [id*="cookie-consent" i], [class*="gdpr" i], footer, nav, script, style, noscript'
+            }),
             signal: controller.signal
         });
         clearTimeout(timeout);
-        if (!response.ok) throw new Error(`抓取錯誤碼: ${response.status}`);
-        const markdown = await response.text();
+        if (!response.ok) {
+            const errBody = await response.json().catch(() => ({}));
+            throw new Error(errBody?.error?.message || `抓取錯誤碼: ${response.status}`);
+        }
+        const items = await response.json();
+        const markdown = items?.[0]?.markdown || items?.[0]?.text || '';
         res.json({ text: markdown });
     } catch (error) {
         clearTimeout(timeout);
@@ -77,5 +101,5 @@ app.post('/api/generate', async (req, res) => {
 // 啟動伺服器
 app.listen(PORT, () => {
     console.log(`GEO Azure 企業版伺服器已啟動！Port: ${PORT}`);
-    console.log(`請確保在 Azure 後台設定了 GEMINI_API_KEY 環境變數。`);
+    console.log(`請確保在 Azure 後台設定了 GEMINI_API_KEY 與 APIFY_API_KEY 環境變數。`);
 });

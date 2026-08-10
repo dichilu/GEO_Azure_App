@@ -1,6 +1,6 @@
 # GEO 內容生成系統 (GEO Azure App)
 
-**當前版本**: v1.19.0
+**當前版本**: v1.19.1
 
 ## 專案簡介
 這是一個部署於 Azure App Service 的全端網頁應用程式，專門用於產生與優化 SEO 友善的企業級產品內容。系統整合了 AI 內容生成策略，並允許使用者透過拖放參考文件與設定目標網址，快速產出符合品牌規範的行銷文案。
@@ -30,4 +30,6 @@
 ## 部署與運行
 - **後端環境**: Node.js (Express)
 - **部署平台**: Microsoft Azure App Service
-- **部署方式**: 透過 GitHub 自動觸發部署（由 `.deployment` 檔案指定行為）
+- **部署方式**: Azure Zip Deploy（OneDeploy）—— 打包後以 `az webapp deploy --src-path appdeploy.zip --type zip` 上傳，建置行為由 `.deployment` 指定（`SCM_DO_BUILD_DURING_DEPLOYMENT=true`）
+- **注意**: GitHub 與 Azure **無自動連動**。推送至 GitHub 僅進版控，不會更新正式站；上線需另外執行 Zip Deploy
+- **正式站**: https://adv-ai-geo.azurewebsites.net （Resource Group: `Adv-Sales-Marketing-Services`）

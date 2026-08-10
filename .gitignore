@@ -1,2 +1,14 @@
 node_modules/
 .env
+
+# 部署產物與憑證（publish_profiles 可能含 Azure 部署密碼，嚴禁進版控）
+appdeploy.zip
+publish_profiles.json
+*.PublishSettings
+
+# 除錯用暫存檔（歷史版本匯出、一次性 patch 腳本）
+*_index.html
+*_server.js
+*_server_diff.txt
+compare_js.py
+fix_*.py

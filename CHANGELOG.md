@@ -1,5 +1,18 @@
 # 版本控管紀錄 (Changelog)
 
+## [v1.19.1] - 2026-08-10
+### 修復
+- **產品型號／關鍵字幻覺修正 (commit `ca98b17`)**：
+  - 目標網址與參考網址欄位改為逐行 `trim()`，避免多餘空白造成判讀錯誤。
+  - 輸入若非 `http` 開頭，判定為「產品型號或關鍵字」，直接跳過爬蟲並改以提示語引導 AI 使用內建知識庫，解決過去因抓取失敗而輸出 `N/A` 的問題。
+  - 爬取失敗時的提示語改為引導 AI 以內建知識庫為主，不再插入干擾性的失敗標記。
+- **編碼修復 (commit `299092e`)**：修正 `index.html` 中文字元毀損問題，同時保留 8 月的排版與版號更新。
+
+### 維護
+- **版號全面對齊**：`package.json` 自 `1.18.0` 補正至 `1.19.1`，與 `index.html`、`README.md` 一致。
+- **文件校正**：README 部署說明更正為實際使用的 Azure Zip Deploy（OneDeploy），原「GitHub 自動觸發部署」敘述與 Azure 實際設定不符（`deployment source` 未綁定 GitHub，專案亦無 GitHub Actions）。
+- **`.gitignore` 強化**：排除 `appdeploy.zip`、`publish_profiles.json` 與除錯用暫存檔，避免部署憑證與比對檔誤入版控。
+
 ## [v1.19.0] - 2026-08-03
 ### 新增與優化
 - **行動版排版全面優化 (Mobile UI Overhaul)**：

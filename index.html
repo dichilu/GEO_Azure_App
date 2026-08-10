@@ -954,19 +954,32 @@
                     document.getElementById('process-sub-msg').innerText = "系統正在自動抓取目標網址內容...";
                     const urls = targetUrls.split('\n').filter(u => u.trim() !== "");
                     for (let i = 0; i < urls.length; i++) {
-                        const url = urls[i];
+                        const url = urls[i].trim();
+                        if (!url.startsWith('http')) {
+                            targetFileText += `
+--- [產品型號/關鍵字 ${i+1}: ${url}] ---
+(未提供網址，此為關鍵字或型號，請直接使用您的內建知識庫針對此項目進行發想)
+`;
+                            continue;
+                        }
                         try {
                             const scrapeRes = await fetchWithRetry('/api/scrape', {
                                 method: 'POST',
                                 headers: { 'Content-Type': 'application/json' },
                                 body: JSON.stringify({ url })
-                            }, 3); // 給最多3次重試
+                            }, 3); 
                             if (scrapeRes && scrapeRes.text) {
-                                targetFileText += `\n--- [目標網頁抓取 ${i+1}: ${url}] ---\n${scrapeRes.text}\n`;
+                                targetFileText += `
+--- [目標網址 ${i+1}: ${url}] ---
+${scrapeRes.text}
+`;
                             }
                         } catch (err) {
-                            console.warn(`網址抓取失敗: ${url}`, err);
-                            targetFileText += `\n--- [目標網頁抓取 ${i+1}: ${url}] 失敗 ---\n(請確保網址正確或由人工上傳規格表)\n`;
+                            console.warn(`爬取失敗: ${url}`, err);
+                            targetFileText += `
+--- [目標網址 ${i+1}: ${url}] 失敗 ---
+(網頁無法存取，請以內建知識庫為主)
+`;
                         }
                     }
                 }
@@ -974,9 +987,17 @@
                 // --- 新增：自動透過後端抓取 Reference URLs (KB) 的真實內容 ---
                 if (kbUrls.trim()) {
                     document.getElementById('process-sub-msg').innerText = "系統正在擷取大量企業知識庫網址 (可能需要較長時間)...";
-                    const urls = kbUrls.split('\n').filter(u => u.trim() !== "");
+                    const urls = kbUrls.split('
+').filter(u => u.trim() !== "");
                     for (let i = 0; i < urls.length; i++) {
-                        const url = urls[i];
+                        const url = urls[i].trim();
+                        if (!url.startsWith('http')) {
+                            referenceFileText += `
+--- [參考關鍵字 ${i+1}: ${url}] ---
+(未提供網址，此為關鍵字，請以此作為參考發想)
+`;
+                            continue;
+                        }
                         try {
                             const scrapeRes = await fetchWithRetry('/api/scrape', {
                                 method: 'POST',
@@ -984,10 +1005,17 @@
                                 body: JSON.stringify({ url })
                             }, 2);
                             if (scrapeRes && scrapeRes.text) {
-                                referenceFileText += `\n--- [參考網頁抓取 ${i+1}: ${url}] ---\n${scrapeRes.text}\n`;
+                                referenceFileText += `
+--- [參考網址 ${i+1}: ${url}] ---
+${scrapeRes.text}
+`;
                             }
                         } catch (err) {
-                            console.warn(`參考網址抓取失敗: ${url}`, err);
+                            console.warn(`爬取失敗: ${url}`, err);
+                            referenceFileText += `
+--- [參考網址 ${i+1}: ${url}] 失敗 ---
+(網頁無法存取，請略過此參考網址)
+`;
                         }
                     }
                 }

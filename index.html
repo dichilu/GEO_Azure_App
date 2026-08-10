@@ -987,8 +987,7 @@ ${scrapeRes.text}
                 // --- 新增：自動透過後端抓取 Reference URLs (KB) 的真實內容 ---
                 if (kbUrls.trim()) {
                     document.getElementById('process-sub-msg').innerText = "系統正在擷取大量企業知識庫網址 (可能需要較長時間)...";
-                    const urls = kbUrls.split('
-').filter(u => u.trim() !== "");
+                    const urls = kbUrls.split('\n').filter(u => u.trim() !== "");
                     for (let i = 0; i < urls.length; i++) {
                         const url = urls[i].trim();
                         if (!url.startsWith('http')) {

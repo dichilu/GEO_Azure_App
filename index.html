@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GEO 內容優化系統 v1.19.2 爬蟲引擎升級版</title>
+    <title>GEO 內容優化系統 v1.19.3 使用追蹤修正版</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
@@ -54,7 +54,7 @@
         const i18n = {
             'zh-TW': {
                 navTitle: "GEO 內容生成系統",
-                navVer: "v1.19.2 爬蟲引擎升級版",
+                navVer: "v1.19.3 使用追蹤修正版",
                 authConnecting: "正在連接雲端...",
                 authSuccess: "雲端已連線",
                 authError: "連線異常",
@@ -115,7 +115,7 @@
             },
             'zh-CN': {
                 navTitle: "GEO 内容生成系统",
-                navVer: "v1.19.2 爬蟲引擎升級版",
+                navVer: "v1.19.3 使用追蹤修正版",
                 authConnecting: "正在连接云端...",
                 authSuccess: "云端已连线",
                 authError: "连线异常",
@@ -176,7 +176,7 @@
             },
             'en': {
                 navTitle: "GEO Content System",
-                navVer: "v1.19.2 爬蟲引擎升級版",
+                navVer: "v1.19.3 使用追蹤修正版",
                 authConnecting: "Connecting...",
                 authSuccess: "Cloud Connected",
                 authError: "Auth Error",
@@ -445,6 +445,36 @@
             }, 1000);
         };
 
+        // 記錄實際使用頻率：每次成功產出內容才更新，跟「登入」次數分開統計
+        window.trackUsage = async () => {
+            if (!isAuthReady || !localUserEmail) return;
+            try {
+                const statsDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'user_stats', localUserEmail);
+                const docSnap = await getDoc(statsDocRef);
+                const nowIso = new Date().toISOString();
+
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    await setDoc(statsDocRef, {
+                        ...data,
+                        generationCount: (data.generationCount || 0) + 1,
+                        lastUsedAt: nowIso
+                    }, { merge: true });
+                } else {
+                    await setDoc(statsDocRef, {
+                        email: localUserEmail,
+                        loginCount: 0,
+                        firstLoginAt: nowIso,
+                        lastLoginAt: nowIso,
+                        generationCount: 1,
+                        lastUsedAt: nowIso
+                    });
+                }
+            } catch (e) {
+                console.error("Usage tracker sync failed:", e);
+            }
+        };
+
         window.openFeedbackModal = () => {
             const modal = document.getElementById('feedback-modal');
             const content = document.getElementById('feedback-modal-content');
@@ -565,7 +595,7 @@
             
             const loadingMsg = currentLang === 'en' ? 'Loading data...' : (currentLang === 'zh-CN' ? '读取数据中...' : '讀取數據中...');
             
-            tbodyUsers.innerHTML = `<tr><td colspan="4" class="text-center py-8 text-slate-400"><i class="fas fa-circle-notch fa-spin text-xl text-blue-500 mb-2 block"></i>${loadingMsg}</td></tr>`;
+            tbodyUsers.innerHTML = `<tr><td colspan="6" class="text-center py-8 text-slate-400"><i class="fas fa-circle-notch fa-spin text-xl text-blue-500 mb-2 block"></i>${loadingMsg}</td></tr>`;
             tbodyFb.innerHTML = `<tr><td colspan="3" class="text-center py-8 text-slate-400"><i class="fas fa-circle-notch fa-spin text-xl text-blue-500 mb-2 block"></i>${loadingMsg}</td></tr>`;
             
             window.switchAdminTab('users');
@@ -576,31 +606,36 @@
                 const qUsers = await getDocs(collection(db, 'artifacts', appId, 'public', 'data', 'user_stats'));
                 const stats = [];
                 qUsers.forEach((doc) => stats.push(doc.data()));
-                stats.sort((a, b) => new Date(b.lastLoginAt) - new Date(a.lastLoginAt));
+                stats.sort((a, b) => new Date(b.lastUsedAt || b.lastLoginAt) - new Date(a.lastUsedAt || a.lastLoginAt));
 
                 const now = new Date();
                 let htmlUsers = '';
                 const daySuffix = currentLang === 'en' ? 'days' : '天';
                 const timesSuffix = currentLang === 'en' ? 'times' : '次';
+                const naStr = currentLang === 'en' ? 'Never' : '尚未使用';
+                const fmtDateTime = (d) => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
 
                 stats.forEach((data) => {
                     const firstLogin = new Date(data.firstLoginAt || data.lastLoginAt);
                     const diffTime = Math.abs(now - firstLogin);
-                    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1; 
-                    
-                    const lastD = new Date(data.lastLoginAt);
-                    const lastLoginStr = `${lastD.getFullYear()}-${String(lastD.getMonth()+1).padStart(2,'0')}-${String(lastD.getDate()).padStart(2,'0')} ${String(lastD.getHours()).padStart(2,'0')}:${String(lastD.getMinutes()).padStart(2,'0')}`;
+                    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24)) + 1;
+
+                    const lastLoginStr = fmtDateTime(new Date(data.lastLoginAt));
+                    const generationCount = data.generationCount || 0;
+                    const lastUsedStr = data.lastUsedAt ? fmtDateTime(new Date(data.lastUsedAt)) : naStr;
 
                     htmlUsers += `<tr class="border-b border-slate-100 hover:bg-blue-50/50 transition-colors">
                         <td class="py-3 px-4 text-sm font-bold text-slate-700"><i class="fas fa-user-circle text-slate-300 mr-2"></i>${data.email}</td>
                         <td class="py-3 px-4 text-sm text-center font-black text-blue-600">${diffDays} <span class="text-xs text-blue-400 font-normal">${daySuffix}</span></td>
                         <td class="py-3 px-4 text-sm text-center font-black text-emerald-600">${data.loginCount} <span class="text-xs text-emerald-400 font-normal">${timesSuffix}</span></td>
+                        <td class="py-3 px-4 text-sm text-center font-black text-purple-600">${generationCount} <span class="text-xs text-purple-400 font-normal">${timesSuffix}</span></td>
                         <td class="py-3 px-4 text-xs text-slate-500 text-right font-mono">${lastLoginStr}</td>
+                        <td class="py-3 px-4 text-xs text-slate-500 text-right font-mono">${lastUsedStr}</td>
                     </tr>`;
                 });
-                
+
                 const noRecordMsg = currentLang === 'en' ? 'No records found' : (currentLang === 'zh-CN' ? '目前无任何纪录' : '目前無任何紀錄');
-                if(stats.length === 0) htmlUsers = `<tr><td colspan="4" class="text-center py-8 text-slate-400 font-bold">${noRecordMsg}</td></tr>`;
+                if(stats.length === 0) htmlUsers = `<tr><td colspan="6" class="text-center py-8 text-slate-400 font-bold">${noRecordMsg}</td></tr>`;
                 tbodyUsers.innerHTML = htmlUsers;
 
                 const qFb = await getDocs(collection(db, 'artifacts', appId, 'public', 'data', 'user_feedback'));
@@ -627,7 +662,7 @@
                 
             } catch (e) {
                 const failMsg = currentLang === 'en' ? 'Load Failed' : (currentLang === 'zh-CN' ? '载入失败' : '載入失敗');
-                tbodyUsers.innerHTML = `<tr><td colspan="4" class="text-center py-8 text-red-500 font-bold"><i class="fas fa-exclamation-triangle block text-2xl mb-2"></i>${failMsg}: ${e.message}</td></tr>`;
+                tbodyUsers.innerHTML = `<tr><td colspan="6" class="text-center py-8 text-red-500 font-bold"><i class="fas fa-exclamation-triangle block text-2xl mb-2"></i>${failMsg}: ${e.message}</td></tr>`;
                 tbodyFb.innerHTML = `<tr><td colspan="3" class="text-center py-8 text-red-500 font-bold">${failMsg}</td></tr>`;
             }
         };
@@ -1324,6 +1359,7 @@ ${scrapeRes.text}
                 }
                 
                 renderCards(outputText, currentEngineMode);
+                window.trackUsage();
             } catch (e) {
                 outputContainer.innerHTML = `
                     <div class="p-8 border-2 border-red-200 bg-red-50 rounded-2xl max-w-2xl mx-auto mt-10 shadow-lg">
@@ -1588,7 +1624,7 @@ ${scrapeRes.text}
                 <div class="w-10 h-10 bg-[#005bac] rounded-lg flex items-center justify-center shadow-md"><i class="fas fa-microchip text-white text-lg"></i></div>
                 <div>
                     <h1 class="text-base sm:text-xl font-bold text-slate-800 leading-tight" data-i18n="navTitle">GEO 內容生成系統</h1>
-                    <p class="text-[10px] sm:text-xs text-slate-500 font-medium tracking-wide mt-0.5 hidden sm:block" data-i18n="navVer">v1.19.2 爬蟲引擎升級版</p>
+                    <p class="text-[10px] sm:text-xs text-slate-500 font-medium tracking-wide mt-0.5 hidden sm:block" data-i18n="navVer">v1.19.3 使用追蹤修正版</p>
                 </div>
             </div>
             <div class="flex items-center gap-4">
@@ -1835,7 +1871,9 @@ ${scrapeRes.text}
                             <th class="py-3 px-4 rounded-tl-lg">User Email</th>
                             <th class="py-3 px-4 text-center">使用天數</th>
                             <th class="py-3 px-4 text-center">總登入次數</th>
-                            <th class="py-3 px-4 text-right rounded-tr-lg">最後登入時間</th>
+                            <th class="py-3 px-4 text-center">生成次數</th>
+                            <th class="py-3 px-4 text-right">最後登入時間</th>
+                            <th class="py-3 px-4 text-right rounded-tr-lg">最後使用時間</th>
                         </tr>
                     </thead>
                     <tbody id="admin-table-body-users"></tbody>

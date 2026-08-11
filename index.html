@@ -82,6 +82,7 @@
                 contentTypeArticle: "SEO/GEO文章",
                 articleStep1Title: "AI 正在分析內容並規劃主題組合...",
                 articleStep1Failed: "主題規劃失敗，回傳內容無法解析，請重試或減少輸入內容。",
+                articleStep2Failed: "文章生成失敗，回傳內容無法解析，請重試。",
                 articleChooseBundle: "請選擇一套主文＋欉集組合（標題可點擊修改）：",
                 articlePillarBadge: "主文",
                 articleClusterBadge: "欉集",
@@ -179,6 +180,7 @@
                 contentTypeArticle: "SEO/GEO文章",
                 articleStep1Title: "AI 正在分析内容并规划主题组合...",
                 articleStep1Failed: "主题规划失败，回传内容无法解析，请重试或减少输入内容。",
+                articleStep2Failed: "文章生成失败，回传内容无法解析，请重试。",
                 articleChooseBundle: "请选择一套主文＋丛集组合（标题可点击修改）：",
                 articlePillarBadge: "主文",
                 articleClusterBadge: "丛集",
@@ -276,6 +278,7 @@
                 contentTypeArticle: "SEO/GEO Article",
                 articleStep1Title: "AI is analyzing content and planning topic bundles...",
                 articleStep1Failed: "Topic planning failed — the response could not be parsed. Please retry or reduce input content.",
+                articleStep2Failed: "Article generation failed — the response could not be parsed. Please retry.",
                 articleChooseBundle: "Choose a Pillar + Cluster bundle (titles are editable):",
                 articlePillarBadge: "Pillar",
                 articleClusterBadge: "Cluster",
@@ -373,6 +376,7 @@
                 contentTypeArticle: "SEO/GEO記事",
                 articleStep1Title: "AIがコンテンツを分析し、トピック候補を作成しています...",
                 articleStep1Failed: "トピック企画に失敗しました。回答内容を解析できません。入力内容を減らして再試行してください。",
+                articleStep2Failed: "記事生成に失敗しました。回答内容を解析できません。再試行してください。",
                 articleChooseBundle: "ピラー＋クラスター記事の組み合わせを選択してください（タイトルはクリックして編集可能）：",
                 articlePillarBadge: "ピラー記事",
                 articleClusterBadge: "クラスター記事",
@@ -470,6 +474,7 @@
                 contentTypeArticle: "SEO/GEO 아티클",
                 articleStep1Title: "AI가 콘텐츠를 분석하고 주제 조합을 기획하는 중...",
                 articleStep1Failed: "주제 기획에 실패했습니다. 응답 내용을 분석할 수 없습니다. 입력 내용을 줄이고 다시 시도해 주세요.",
+                articleStep2Failed: "기사 생성에 실패했습니다. 응답 내용을 분석할 수 없습니다. 다시 시도해 주세요.",
                 articleChooseBundle: "필러 + 클러스터 조합을 선택하세요 (제목은 클릭하여 수정 가능):",
                 articlePillarBadge: "필러 아티클",
                 articleClusterBadge: "클러스터 아티클",
@@ -1796,7 +1801,7 @@ A5: {Answer}
                     const payload = { contents: [{ parts: partsArray }], systemInstruction: { parts: [{ text: systemPrompt }] } };
                     const responseData = await fetchWithRetry('/api/generate', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
                     const outputText = responseData.candidates?.[0]?.content?.parts?.[0]?.text;
-                    if (!outputText) throw new Error('Empty response');
+                    if (!outputText) throw new Error(t.articleStep2Failed);
 
                     const parsed = parseArticleOutput(outputText);
                     parsed.role = roles[i].role;

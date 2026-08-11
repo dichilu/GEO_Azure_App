@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GEO 內容優化系統 v1.21.1 品牌識別更新版</title>
+    <title>GEO 內容優化系統 v1.21.2 主題選擇排版修正版</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
@@ -54,7 +54,7 @@
         const i18n = {
             'zh-TW': {
                 navTitle: "GEO 內容生成系統",
-                navVer: "v1.21.1 品牌識別更新版",
+                navVer: "v1.21.2 主題選擇排版修正版",
                 authConnecting: "正在連接雲端...",
                 authSuccess: "雲端已連線",
                 authError: "連線異常",
@@ -144,11 +144,12 @@
                 scrapingKbMsg: "系統正在擷取大量企業知識庫網址 (可能需要較長時間)...",
                 imgReadFailedTarget: "目標圖片讀取失敗",
                 imgReadFailedRef: "競品圖片讀取失敗",
-                fileParseErrorTitle: "檔案解析攔截或失敗"
+                fileParseErrorTitle: "檔案解析攔截或失敗",
+                articleBundleLabel: "組合"
             },
             'zh-CN': {
                 navTitle: "GEO 内容生成系统",
-                navVer: "v1.21.1 品牌識別更新版",
+                navVer: "v1.21.2 主题选择排版修正版",
                 authConnecting: "正在连接云端...",
                 authSuccess: "云端已连线",
                 authError: "连线异常",
@@ -238,11 +239,12 @@
                 scrapingKbMsg: "系统正在抓取大量企业知识库网址 (可能需要较长时间)...",
                 imgReadFailedTarget: "目标图片读取失败",
                 imgReadFailedRef: "竞品图片读取失败",
-                fileParseErrorTitle: "档案解析拦截或失败"
+                fileParseErrorTitle: "档案解析拦截或失败",
+                articleBundleLabel: "组合"
             },
             'en': {
                 navTitle: "GEO Content System",
-                navVer: "v1.21.1 品牌識別更新版",
+                navVer: "v1.21.2 Bundle Picker Layout Fix",
                 authConnecting: "Connecting...",
                 authSuccess: "Cloud Connected",
                 authError: "Auth Error",
@@ -332,11 +334,12 @@
                 scrapingKbMsg: "Fetching multiple knowledge-base URLs (this may take a while)...",
                 imgReadFailedTarget: "Failed to read target image",
                 imgReadFailedRef: "Failed to read competitor image",
-                fileParseErrorTitle: "File Parsing Blocked or Failed"
+                fileParseErrorTitle: "File Parsing Blocked or Failed",
+                articleBundleLabel: "Bundle"
             },
             'ja': {
                 navTitle: "GEO コンテンツ生成システム",
-                navVer: "v1.21.1 ブランドロゴ更新版",
+                navVer: "v1.21.2 比較表レイアウト修正版",
                 authConnecting: "クラウドに接続中...",
                 authSuccess: "クラウド接続済み",
                 authError: "接続エラー",
@@ -426,11 +429,12 @@
                 scrapingKbMsg: "企業ナレッジベースの複数URLを取得しています（時間がかかる場合があります）...",
                 imgReadFailedTarget: "対象画像の読み込みに失敗しました",
                 imgReadFailedRef: "競合画像の読み込みに失敗しました",
-                fileParseErrorTitle: "ファイル解析がブロックされたか失敗しました"
+                fileParseErrorTitle: "ファイル解析がブロックされたか失敗しました",
+                articleBundleLabel: "組み合わせ"
             },
             'ko': {
                 navTitle: "GEO 콘텐츠 생성 시스템",
-                navVer: "v1.21.1 브랜드 로고 업데이트",
+                navVer: "v1.21.2 비교 표 레이아웃 수정판",
                 authConnecting: "클라우드 연결 중...",
                 authSuccess: "클라우드 연결됨",
                 authError: "연결 오류",
@@ -520,7 +524,8 @@
                 scrapingKbMsg: "기업 지식 베이스의 여러 URL을 수집하는 중입니다 (시간이 다소 걸릴 수 있습니다)...",
                 imgReadFailedTarget: "대상 이미지를 읽는 데 실패했습니다",
                 imgReadFailedRef: "경쟁사 이미지를 읽는 데 실패했습니다",
-                fileParseErrorTitle: "파일 분석이 차단되었거나 실패했습니다"
+                fileParseErrorTitle: "파일 분석이 차단되었거나 실패했습니다",
+                articleBundleLabel: "조합"
             }
         };
 
@@ -1522,52 +1527,70 @@ For each of the 3 chosen pillar angles, select the 3 highest content-fit-scoring
             }
         };
 
+        const escapeHtml = (s) => (s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+        // 比較表格排版：橫軸＝3 套組合，縱軸＝角色（主文／欉集1-3）。
+        // 同一列只需容納「同角色 3 個標題裡最長的那個」，不會像卡片一樣把 4 個標題疊加成超高卡片。
         function renderArticleBundlePicker(bundles) {
             const t = i18n[currentLang];
-            const cardHtml = bundles.map((b, idx) => {
-                const clusterRows = b.clusters.map((c, ci) => `
-                    <div class="pl-4 border-l-2 border-slate-200 mt-3">
-                        <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest bg-slate-100 px-2 py-0.5 rounded">${angleLabel(c.type)}</span>
-                        <input type="text" data-bundle="${idx}" data-role="cluster" data-idx="${ci}" value="${(c.title || '').replace(/"/g, '&quot;')}" class="w-full mt-1 px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm font-semibold text-slate-700 focus:border-[#005bac] outline-none">
-                        <p class="text-xs text-slate-400 mt-1 leading-relaxed">${c.reason || ''}</p>
+            const titleBoxClass = "w-full mt-1 px-2.5 py-2 bg-white border border-slate-300 rounded-lg text-sm font-semibold text-slate-800 focus:border-[#005bac] outline-none leading-snug whitespace-pre-wrap break-words";
+
+            const headerCells = bundles.map((b, idx) => `
+                <button data-bundle-col="${idx}" onclick="window.selectArticleBundle(${idx})" class="bundle-col select-bundle-btn border-2 border-slate-200 rounded-xl py-3 font-black text-sm text-slate-500 hover:border-blue-300 hover:text-blue-600 transition-all bg-slate-50">
+                    <i class="far fa-circle mr-2"></i>${t.articleBundleLabel} ${idx + 1}
+                </button>
+            `).join('');
+
+            const cellHtml = (idx, type, role, dataIdx, titleAttrs, title, reason, extraClass) => `
+                <div data-bundle-col="${idx}" class="bundle-col border border-slate-200 rounded-xl p-3 bg-white transition-colors">
+                    <div class="flex items-center gap-1.5 mb-1.5">
+                        <span class="text-[9px] font-black text-blue-600 uppercase tracking-wider bg-blue-50 px-1.5 py-0.5 rounded border border-blue-100">${angleLabel(type)}</span>
+                        ${extraClass ? `<span class="text-[9px] font-black text-slate-400 uppercase">${t.articlePillarBadge}</span>` : ''}
+                        <i class="fas fa-info-circle text-slate-300 hover:text-slate-500 ml-auto cursor-help" title="${escapeHtml(reason)}"></i>
                     </div>
-                `).join('');
-                return `
-                <div id="bundle-card-${idx}" data-bundle-card="${idx}" class="bundle-card border-2 border-slate-200 rounded-2xl p-6 cursor-pointer hover:border-blue-300 transition-all bg-white">
-                    <div class="flex items-center gap-2 mb-2">
-                        <span class="text-[10px] font-black text-blue-600 uppercase tracking-widest bg-blue-50 px-2 py-0.5 rounded border border-blue-100">${angleLabel(b.pillar.type)}</span>
-                        <span class="text-[10px] font-black text-slate-400 uppercase">${t.articlePillarBadge}</span>
-                    </div>
-                    <input type="text" data-bundle="${idx}" data-role="pillar" value="${(b.pillar.title || '').replace(/"/g, '&quot;')}" class="w-full px-3 py-2.5 bg-white border border-slate-300 rounded-lg text-base font-black text-slate-800 focus:border-[#005bac] outline-none">
-                    <p class="text-xs text-slate-400 mt-1 leading-relaxed">${b.pillar.reason || ''}</p>
-                    ${clusterRows}
-                </div>`;
-            }).join('');
+                    <div contenteditable="true" ${titleAttrs} class="${titleBoxClass} ${extraClass || ''}">${escapeHtml(title)}</div>
+                </div>
+            `;
+
+            const pillarRow = bundles.map((b, idx) => cellHtml(idx, b.pillar.type, 'pillar', null, `data-bundle="${idx}" data-role="pillar"`, b.pillar.title, b.pillar.reason, 'text-base font-black')).join('');
+            const clusterRowsHtml = [0, 1, 2].map(ci =>
+                bundles.map((b, idx) => cellHtml(idx, b.clusters[ci].type, 'cluster', ci, `data-bundle="${idx}" data-role="cluster" data-idx="${ci}"`, b.clusters[ci].title, b.clusters[ci].reason, '')).join('')
+            ).join('');
 
             document.getElementById('output-container').innerHTML = `
                 <p class="text-sm font-bold text-slate-600 mb-4">${t.articleChooseBundle}</p>
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">${cardHtml}</div>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    ${headerCells}
+                    ${pillarRow}
+                    ${clusterRowsHtml}
+                </div>
                 <div class="flex justify-center mt-8">
                     <button id="confirm-bundle-btn" onclick="window.confirmArticleGeneration()" disabled class="opacity-50 cursor-not-allowed bg-[#005bac] text-white px-8 py-3.5 rounded-lg font-bold text-sm shadow-md flex items-center gap-3 transition-all">
                         <i class="fas fa-magic"></i> ${t.articleConfirmGenerate}
                     </button>
                 </div>`;
 
-            document.querySelectorAll('.bundle-card').forEach(card => {
-                card.addEventListener('click', () => window.selectArticleBundle(parseInt(card.dataset.bundleCard, 10)));
+            document.querySelectorAll('.bundle-col:not(.select-bundle-btn)').forEach(cell => {
+                cell.addEventListener('click', () => window.selectArticleBundle(parseInt(cell.dataset.bundleCol, 10)));
             });
-            document.querySelectorAll('.bundle-card input').forEach(inp => inp.addEventListener('click', e => e.stopPropagation()));
+            document.querySelectorAll('[contenteditable]').forEach(el => {
+                el.addEventListener('click', e => e.stopPropagation());
+                el.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); el.blur(); } });
+            });
         }
 
         window.selectArticleBundle = (idx) => {
             articleWorkflowState.selectedIndex = idx;
-            document.querySelectorAll('.bundle-card').forEach((card, i) => {
-                if (i === idx) {
-                    card.classList.add('border-blue-500', 'ring-2', 'ring-blue-200', 'bg-blue-50/30');
-                    card.classList.remove('border-slate-200');
-                } else {
-                    card.classList.remove('border-blue-500', 'ring-2', 'ring-blue-200', 'bg-blue-50/30');
-                    card.classList.add('border-slate-200');
+            document.querySelectorAll('.bundle-col').forEach(cell => {
+                const isSelected = parseInt(cell.dataset.bundleCol, 10) === idx;
+                cell.classList.toggle('border-blue-500', isSelected);
+                cell.classList.toggle('ring-2', isSelected);
+                cell.classList.toggle('ring-blue-200', isSelected);
+                cell.classList.toggle('bg-blue-50/30', isSelected);
+                cell.classList.toggle('border-slate-200', !isSelected);
+                if (cell.classList.contains('select-bundle-btn')) {
+                    const icon = cell.querySelector('i');
+                    if (icon) icon.className = isSelected ? 'fas fa-check-circle mr-2' : 'far fa-circle mr-2';
                 }
             });
             const confirmBtn = document.getElementById('confirm-bundle-btn');
@@ -1657,15 +1680,16 @@ A5: {Answer}
             if (idx < 0) return;
             const t = i18n[currentLang];
 
-            const pillarInput = document.querySelector(`input[data-bundle="${idx}"][data-role="pillar"]`);
-            const clusterInputs = [0, 1, 2].map(ci => document.querySelector(`input[data-bundle="${idx}"][data-role="cluster"][data-idx="${ci}"]`));
+            const readTitle = (el) => (el.innerText || '').replace(/\s+/g, ' ').trim();
+            const pillarInput = document.querySelector(`[contenteditable][data-bundle="${idx}"][data-role="pillar"]`);
+            const clusterInputs = [0, 1, 2].map(ci => document.querySelector(`[contenteditable][data-bundle="${idx}"][data-role="cluster"][data-idx="${ci}"]`));
             const bundle = articleWorkflowState.bundles[idx];
 
             const roles = [
-                { role: 'pillar', title: pillarInput.value.trim(), type: bundle.pillar.type },
-                { role: 'cluster', title: clusterInputs[0].value.trim(), type: bundle.clusters[0].type },
-                { role: 'cluster', title: clusterInputs[1].value.trim(), type: bundle.clusters[1].type },
-                { role: 'cluster', title: clusterInputs[2].value.trim(), type: bundle.clusters[2].type }
+                { role: 'pillar', title: readTitle(pillarInput), type: bundle.pillar.type },
+                { role: 'cluster', title: readTitle(clusterInputs[0]), type: bundle.clusters[0].type },
+                { role: 'cluster', title: readTitle(clusterInputs[1]), type: bundle.clusters[1].type },
+                { role: 'cluster', title: readTitle(clusterInputs[2]), type: bundle.clusters[2].type }
             ];
             const allTitles = roles.map(r => r.title);
             const outputContainer = document.getElementById('output-container');
@@ -2530,7 +2554,7 @@ ${scrapeRes.text}
                 <img src="advantech-logo.png" alt="Advantech" class="h-8 sm:h-10 w-auto rounded-lg shadow-md">
                 <div>
                     <h1 class="text-base sm:text-xl font-bold text-slate-800 leading-tight" data-i18n="navTitle">GEO 內容生成系統</h1>
-                    <p class="text-[10px] sm:text-xs text-slate-500 font-medium tracking-wide mt-0.5 hidden sm:block" data-i18n="navVer">v1.21.1 品牌識別更新版</p>
+                    <p class="text-[10px] sm:text-xs text-slate-500 font-medium tracking-wide mt-0.5 hidden sm:block" data-i18n="navVer">v1.21.2 主題選擇排版修正版</p>
                 </div>
             </div>
             <div class="flex items-center gap-4">

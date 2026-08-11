@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GEO 內容優化系統 v1.19.5 選單排版修正版</title>
+    <title>GEO 內容優化系統 v1.19.6 選單排版優化版</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
@@ -54,7 +54,7 @@
         const i18n = {
             'zh-TW': {
                 navTitle: "GEO 內容生成系統",
-                navVer: "v1.19.5 選單排版修正版",
+                navVer: "v1.19.6 選單排版優化版",
                 authConnecting: "正在連接雲端...",
                 authSuccess: "雲端已連線",
                 authError: "連線異常",
@@ -121,7 +121,7 @@
             },
             'zh-CN': {
                 navTitle: "GEO 内容生成系统",
-                navVer: "v1.19.5 選單排版修正版",
+                navVer: "v1.19.6 選單排版優化版",
                 authConnecting: "正在连接云端...",
                 authSuccess: "云端已连线",
                 authError: "连线异常",
@@ -188,7 +188,7 @@
             },
             'en': {
                 navTitle: "GEO Content System",
-                navVer: "v1.19.5 選單排版修正版",
+                navVer: "v1.19.6 選單排版優化版",
                 authConnecting: "Connecting...",
                 authSuccess: "Cloud Connected",
                 authError: "Auth Error",
@@ -1703,7 +1703,7 @@ ${scrapeRes.text}
                 <div class="w-10 h-10 bg-[#005bac] rounded-lg flex items-center justify-center shadow-md"><i class="fas fa-microchip text-white text-lg"></i></div>
                 <div>
                     <h1 class="text-base sm:text-xl font-bold text-slate-800 leading-tight" data-i18n="navTitle">GEO 內容生成系統</h1>
-                    <p class="text-[10px] sm:text-xs text-slate-500 font-medium tracking-wide mt-0.5 hidden sm:block" data-i18n="navVer">v1.19.5 選單排版修正版</p>
+                    <p class="text-[10px] sm:text-xs text-slate-500 font-medium tracking-wide mt-0.5 hidden sm:block" data-i18n="navVer">v1.19.6 選單排版優化版</p>
                 </div>
             </div>
             <div class="flex items-center gap-4">
@@ -1826,9 +1826,9 @@ ${scrapeRes.text}
             </div>
         </section>
 
-        <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4 sm:p-8 flex flex-col gap-5">
-            <div class="action-bar-selects grid grid-cols-2 lg:grid-cols-4 gap-3">
-                <div>
+        <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4 sm:p-8 flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4">
+            <div class="action-bar-selects grid grid-cols-2 sm:flex sm:flex-wrap gap-3">
+                <div class="sm:w-28">
                     <label class="block text-xs font-semibold text-slate-500 uppercase mb-2" data-i18n="rbuLabel">RBU</label>
                     <select id="pref-rbu" onchange="window.onRbuChange()" class="w-full px-3 sm:px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm font-semibold text-slate-700 focus:border-[#005bac] outline-none cursor-pointer shadow-sm">
                         <option value="ANA">ANA</option>
@@ -1843,7 +1843,7 @@ ${scrapeRes.text}
                         <option value="Others">Others</option>
                     </select>
                 </div>
-                <div>
+                <div class="sm:w-48">
                     <label class="block text-xs font-semibold text-slate-500 uppercase mb-2" data-i18n="contentTypeLabel">生成內容</label>
                     <select id="pref-content-type" onchange="window.onContentTypeChange()" class="w-full px-3 sm:px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm font-semibold text-slate-700 focus:border-[#005bac] outline-none cursor-pointer shadow-sm">
                         <option value="product" data-i18n="contentTypeProduct">網站產品文案</option>
@@ -1851,7 +1851,7 @@ ${scrapeRes.text}
                         <option value="article" data-i18n="contentTypeArticle">SEO/GEO文章</option>
                     </select>
                 </div>
-                <div>
+                <div class="sm:w-40">
                     <label class="block text-xs font-semibold text-slate-500 uppercase mb-2" data-i18n="geoLabel">目標優化引擎</label>
                     <select id="pref-geo" class="w-full px-3 sm:px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm font-semibold text-slate-700 focus:border-[#005bac] outline-none cursor-pointer shadow-sm">
                         <option value="Standard SEO">標準SEO優化</option>
@@ -1861,7 +1861,7 @@ ${scrapeRes.text}
                         <option value="Perplexity">Perplexity</option>
                     </select>
                 </div>
-                <div>
+                <div class="sm:w-56">
                     <label class="block text-xs font-semibold text-slate-500 uppercase mb-2" data-i18n="titleStrategyLabel">生成策略</label>
                     <select id="title-strategy" class="w-full px-3 sm:px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm font-semibold text-slate-700 focus:border-[#005bac] outline-none cursor-pointer shadow-sm">
                         <option value="smart_auto">智慧動態平衡</option>
@@ -1870,11 +1870,9 @@ ${scrapeRes.text}
                     </select>
                 </div>
             </div>
-            <div class="flex justify-end">
-                <button id="submit-btn" onclick="window.executeOptimization()" class="w-full sm:w-auto bg-[#005bac] hover:bg-[#004a8d] text-white px-6 sm:px-8 py-3.5 rounded-lg font-bold text-sm shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-3">
-                    <i class="fas fa-magic"></i><span id="submit-btn-text" data-i18n="btnSubmit">執行 AI 內容生成</span>
-                </button>
-            </div>
+            <button id="submit-btn" onclick="window.executeOptimization()" class="w-full lg:w-auto bg-[#005bac] hover:bg-[#004a8d] text-white px-6 sm:px-8 py-3.5 rounded-lg font-bold text-sm shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-3">
+                <i class="fas fa-magic"></i><span id="submit-btn-text" data-i18n="btnSubmit">執行 AI 內容生成</span>
+            </button>
         </div>
 
         <section id="result-area" class="hidden mt-6 sm:mt-12 scroll-mt-24">

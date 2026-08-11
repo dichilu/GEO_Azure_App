@@ -84,6 +84,7 @@
                 articleStep1Failed: "主題規劃失敗，回傳內容無法解析，請重試或減少輸入內容。",
                 articleChooseBundle: "請選擇一套主文＋欉集組合（標題可點擊修改）：",
                 articlePillarBadge: "主文",
+                articleClusterBadge: "欉集",
                 articleConfirmGenerate: "確認並生成 4 篇文章",
                 articleGenerating: "正在生成第 {n}/{total} 篇：",
                 articleTldrLabel: "重點摘要 (Key Takeaways)",
@@ -98,6 +99,7 @@
                 processing: "處理中...",
                 resTitle: "優化產出結果",
                 btnExport: "匯出 Excel 報告",
+                btnExportWord: "匯出 Word 文章",
                 procTitle: "GEO Engine Active...",
                 procSub: "正在分析品牌定位與價值鏈特徵...",
                 copyAll: "複製全部",
@@ -179,6 +181,7 @@
                 articleStep1Failed: "主题规划失败，回传内容无法解析，请重试或减少输入内容。",
                 articleChooseBundle: "请选择一套主文＋丛集组合（标题可点击修改）：",
                 articlePillarBadge: "主文",
+                articleClusterBadge: "丛集",
                 articleConfirmGenerate: "确认并生成 4 篇文章",
                 articleGenerating: "正在生成第 {n}/{total} 篇：",
                 articleTldrLabel: "重点摘要 (Key Takeaways)",
@@ -193,6 +196,7 @@
                 processing: "处理中...",
                 resTitle: "优化产出结果",
                 btnExport: "汇出 Excel 报告",
+                btnExportWord: "汇出 Word 文章",
                 procTitle: "GEO Engine Active...",
                 procSub: "正在分析品牌定位与价值链特征...",
                 copyAll: "复制全部",
@@ -274,6 +278,7 @@
                 articleStep1Failed: "Topic planning failed — the response could not be parsed. Please retry or reduce input content.",
                 articleChooseBundle: "Choose a Pillar + Cluster bundle (titles are editable):",
                 articlePillarBadge: "Pillar",
+                articleClusterBadge: "Cluster",
                 articleConfirmGenerate: "Confirm & Generate 4 Articles",
                 articleGenerating: "Generating article {n}/{total}:",
                 articleTldrLabel: "Key Takeaways",
@@ -288,6 +293,7 @@
                 processing: "Processing...",
                 resTitle: "Optimization Results",
                 btnExport: "Export Excel",
+                btnExportWord: "Export Word",
                 procTitle: "GEO Engine Active...",
                 procSub: "Analyzing brand positioning & value chain...",
                 copyAll: "Copy All",
@@ -369,6 +375,7 @@
                 articleStep1Failed: "トピック企画に失敗しました。回答内容を解析できません。入力内容を減らして再試行してください。",
                 articleChooseBundle: "ピラー＋クラスター記事の組み合わせを選択してください（タイトルはクリックして編集可能）：",
                 articlePillarBadge: "ピラー記事",
+                articleClusterBadge: "クラスター記事",
                 articleConfirmGenerate: "確定して4記事を生成",
                 articleGenerating: "第 {n}/{total} 記事を生成中：",
                 articleTldrLabel: "重要ポイント (Key Takeaways)",
@@ -383,6 +390,7 @@
                 processing: "処理中...",
                 resTitle: "最適化結果",
                 btnExport: "Excelレポートを出力",
+                btnExportWord: "Wordで記事を出力",
                 procTitle: "GEO Engine Active...",
                 procSub: "ブランドポジショニングと価値チェーンの特徴を分析中...",
                 copyAll: "すべてコピー",
@@ -464,6 +472,7 @@
                 articleStep1Failed: "주제 기획에 실패했습니다. 응답 내용을 분석할 수 없습니다. 입력 내용을 줄이고 다시 시도해 주세요.",
                 articleChooseBundle: "필러 + 클러스터 조합을 선택하세요 (제목은 클릭하여 수정 가능):",
                 articlePillarBadge: "필러 아티클",
+                articleClusterBadge: "클러스터 아티클",
                 articleConfirmGenerate: "확인 후 4편 생성",
                 articleGenerating: "{n}/{total}번째 아티클 생성 중:",
                 articleTldrLabel: "핵심 요약 (Key Takeaways)",
@@ -478,6 +487,7 @@
                 processing: "처리 중...",
                 resTitle: "최적화 결과",
                 btnExport: "엑셀 보고서 내보내기",
+                btnExportWord: "Word로 아티클 내보내기",
                 procTitle: "GEO Engine Active...",
                 procSub: "브랜드 포지셔닝과 가치사슬 특징을 분석하는 중...",
                 copyAll: "전체 복사",
@@ -1097,6 +1107,70 @@
             XLSX.writeFile(workbook, `GEO_Report_${date}.xlsx`);
         };
 
+        // 「匯出」按鈕依情境切換：產品/廣告文案模式匯出 Excel，SEO/GEO 文章模式匯出 Word
+        let articleResultsData = [];
+        window.setExportMode = (mode) => {
+            const exportBtn = document.getElementById('export-btn-container');
+            const btnIcon = document.getElementById('export-btn-icon');
+            const btnText = document.getElementById('export-btn-text');
+            const btn = document.getElementById('export-btn-main');
+            if (!exportBtn) return;
+            exportBtn.classList.remove('hidden');
+            if (mode === 'word') {
+                btn.onclick = window.exportArticlesToWord;
+                btnIcon.className = 'fas fa-file-word';
+                btnText.innerText = i18n[currentLang].btnExportWord;
+            } else {
+                btn.onclick = window.exportToExcel;
+                btnIcon.className = 'fas fa-file-excel';
+                btnText.innerText = i18n[currentLang].btnExport;
+            }
+        };
+
+        window.exportArticlesToWord = () => {
+            if (articleResultsData.length === 0) return;
+            const t = i18n[currentLang];
+            const sections = articleResultsData.map((r, i) => {
+                if (r.error) return '';
+                const tldrItems = (r.tldr || '').split('\n').map(l => l.replace(/^[-*•]\s*/, '').trim()).filter(Boolean);
+                const tldrHtml = tldrItems.map(item => `<li>${escapeHtml(item)}</li>`).join('');
+                const faqPairs = [];
+                let curQ = null;
+                (r.faq || '').split('\n').forEach(line => {
+                    const qMatch = line.match(/^Q\d*[:：]\s*(.+)/i);
+                    const aMatch = line.match(/^A\d*[:：]\s*(.+)/i);
+                    if (qMatch) curQ = qMatch[1].trim();
+                    else if (aMatch && curQ) { faqPairs.push({ q: curQ, a: aMatch[1].trim() }); curQ = null; }
+                });
+                const faqHtml = faqPairs.map(p => `<p><b>Q: ${escapeHtml(p.q)}</b><br>A: ${escapeHtml(p.a)}</p>`).join('');
+                return `
+                    <div${i > 0 ? ' style="page-break-before:always;margin-top:40px;"' : ''}>
+                        <p style="font-size:10pt;color:#888;text-transform:uppercase;">${escapeHtml(angleLabel(r.angleType))}${r.role === 'pillar' ? ' · ' + escapeHtml(t.articlePillarBadge) : ''}</p>
+                        <h1 style="font-size:20pt;">${escapeHtml(r.title)}</h1>
+                        <p style="font-style:italic;color:#555;">${escapeHtml(r.metaDescription || '')}</p>
+                        <h3>${escapeHtml(t.articleTldrLabel)}</h3>
+                        <ul>${tldrHtml}</ul>
+                        <div>${simpleMarkdownToHtml(r.body).replace(/<h3 id="[^"]*"/g, '<h2').replace(/<\/h3>/g, '</h2>').replace(/<h4/g, '<h3').replace(/<\/h4>/g, '</h3>')}</div>
+                        <h3>${escapeHtml(t.articleFaqLabel)}</h3>
+                        ${faqHtml}
+                        <p style="font-size:10pt;color:#888;">${escapeHtml(t.tagLabel)} ${escapeHtml(r.tags || '')} ｜ ${escapeHtml(t.catLabel)} ${escapeHtml(r.category || '')}</p>
+                    </div>`;
+            }).join('');
+
+            const htmlDoc = `<!DOCTYPE html><html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">
+                <head><meta charset="utf-8"><title>GEO Articles</title></head>
+                <body style="font-family:Calibri, Arial, 'Microsoft JhengHei', sans-serif;">${sections}</body></html>`;
+
+            const blob = new Blob(['﻿' + htmlDoc], { type: 'application/msword' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            const date = new Date().toISOString().split('T')[0];
+            link.download = `GEO_Articles_${date}.doc`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        };
+
         window.copyToClip = (btn, type = 'single') => {
             const content = decodeURIComponent(btn.getAttribute('data-content'));
             const el = document.createElement('textarea');
@@ -1536,13 +1610,16 @@ For each of the 3 chosen pillar angles, select the 3 highest content-fit-scoring
             const titleBoxClass = "w-full mt-1 px-2.5 py-2 bg-white border border-slate-300 rounded-lg text-sm font-semibold text-slate-800 focus:border-[#005bac] outline-none leading-snug whitespace-pre-wrap break-words";
 
             const cellHtml = (idx, rowStart, type, titleAttrs, title, reason, isPillar) => `
-                <div data-bundle-col="${idx}" class="bundle-col border border-slate-200 rounded-xl p-3 bg-white transition-colors sm:col-start-${idx + 1} sm:row-start-${rowStart}">
-                    <div class="flex items-center gap-1.5 mb-1.5">
+                <div data-bundle-col="${idx}" data-cell-role="${isPillar ? 'pillar' : 'cluster'}" class="bundle-col ${isPillar ? 'bg-amber-50 border-amber-200' : 'bg-white border-slate-200'} border rounded-xl p-3 transition-colors sm:col-start-${idx + 1} sm:row-start-${rowStart}">
+                    <div class="flex items-center gap-1.5 mb-1.5 flex-wrap">
+                        ${isPillar
+                            ? `<span class="text-[10px] font-black text-white uppercase tracking-wider bg-amber-500 px-2 py-0.5 rounded shadow-sm"><i class="fas fa-star mr-1"></i>${t.articlePillarBadge}</span>`
+                            : `<span class="text-[10px] font-black text-slate-400 uppercase tracking-wider bg-slate-100 px-2 py-0.5 rounded">${t.articleClusterBadge}</span>`
+                        }
                         <span class="text-[9px] font-black text-blue-600 uppercase tracking-wider bg-blue-50 px-1.5 py-0.5 rounded border border-blue-100">${angleLabel(type)}</span>
-                        ${isPillar ? `<span class="text-[9px] font-black text-slate-400 uppercase">${t.articlePillarBadge}</span>` : ''}
-                        <i class="fas fa-info-circle text-slate-300 hover:text-slate-500 ml-auto cursor-help" title="${escapeHtml(reason)}"></i>
                     </div>
                     <div contenteditable="true" ${titleAttrs} class="${titleBoxClass} ${isPillar ? 'text-base font-black' : ''}">${escapeHtml(title)}</div>
+                    <p class="text-xs text-slate-500 mt-1.5 leading-relaxed">${escapeHtml(reason)}</p>
                 </div>
             `;
 
@@ -1578,11 +1655,17 @@ For each of the 3 chosen pillar angles, select the 3 highest content-fit-scoring
             articleWorkflowState.selectedIndex = idx;
             document.querySelectorAll('.bundle-col').forEach(cell => {
                 const isSelected = parseInt(cell.dataset.bundleCol, 10) === idx;
+                const role = cell.dataset.cellRole; // 'pillar' | 'cluster' | undefined(=header)
+                const baseBg = role === 'pillar' ? 'bg-amber-50' : role === 'cluster' ? 'bg-white' : 'bg-slate-50';
+                const baseBorder = role === 'pillar' ? 'border-amber-200' : 'border-slate-200';
+
+                cell.classList.remove(baseBg, baseBorder, 'bg-blue-100', 'border-blue-500');
+                cell.classList.toggle('bg-blue-100', isSelected);
                 cell.classList.toggle('border-blue-500', isSelected);
                 cell.classList.toggle('ring-2', isSelected);
-                cell.classList.toggle('ring-blue-200', isSelected);
-                cell.classList.toggle('bg-blue-50/30', isSelected);
-                cell.classList.toggle('border-slate-200', !isSelected);
+                cell.classList.toggle('ring-blue-300', isSelected);
+                if (!isSelected) cell.classList.add(baseBg, baseBorder);
+
                 if (cell.classList.contains('select-bundle-btn')) {
                     const icon = cell.querySelector('i');
                     if (icon) icon.className = isSelected ? 'fas fa-check-circle mr-2' : 'far fa-circle mr-2';
@@ -1731,6 +1814,8 @@ A5: {Answer}
         function renderArticleResults(results) {
             const t = i18n[currentLang];
             const container = document.getElementById('output-container');
+            articleResultsData = results;
+            if (results.some(r => !r.error)) window.setExportMode('word');
 
             const tabsHtml = results.map((r, i) => `
                 <button onclick="window.showArticleTab(${i})" class="article-tab-btn px-4 py-2.5 rounded-lg text-xs font-black uppercase tracking-wide transition-all ${i === 0 ? 'bg-[#005bac] text-white' : 'bg-slate-100 text-slate-500 hover:bg-slate-200'}">
@@ -2493,8 +2578,7 @@ ${scrapeRes.text}
                 container.appendChild(card);
             });
             if (lastResultsData.length > 0) {
-                const exportBtn = document.getElementById('export-btn-container');
-                if(exportBtn) exportBtn.classList.remove('hidden');
+                window.setExportMode('excel');
             }
         }
 
@@ -2721,8 +2805,8 @@ ${scrapeRes.text}
                     <div class="h-1 w-16 bg-[#005bac] rounded-full mt-2 sm:mt-3"></div>
                 </div>
                 <div id="export-btn-container" class="hidden animate-in fade-in zoom-in duration-300">
-                    <button onclick="window.exportToExcel()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm px-4 sm:px-6 py-2.5 rounded-lg flex items-center gap-2 shadow-sm">
-                        <i class="fas fa-file-excel"></i><span id="export-btn-text" data-i18n="btnExport">匯出 Excel 報告</span>
+                    <button id="export-btn-main" onclick="window.exportToExcel()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm px-4 sm:px-6 py-2.5 rounded-lg flex items-center gap-2 shadow-sm">
+                        <i id="export-btn-icon" class="fas fa-file-excel"></i><span id="export-btn-text" data-i18n="btnExport">匯出 Excel 報告</span>
                     </button>
                 </div>
             </div>

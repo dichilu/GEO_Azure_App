@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GEO 內容優化系統 v1.21.2 主題選擇排版修正版</title>
+    <title>GEO 內容優化系統 v1.21.3 手機版全面修正版</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
@@ -54,7 +54,7 @@
         const i18n = {
             'zh-TW': {
                 navTitle: "GEO 內容生成系統",
-                navVer: "v1.21.2 主題選擇排版修正版",
+                navVer: "v1.21.3 手機版全面修正版",
                 authConnecting: "正在連接雲端...",
                 authSuccess: "雲端已連線",
                 authError: "連線異常",
@@ -149,7 +149,7 @@
             },
             'zh-CN': {
                 navTitle: "GEO 内容生成系统",
-                navVer: "v1.21.2 主题选择排版修正版",
+                navVer: "v1.21.3 手机版全面修正版",
                 authConnecting: "正在连接云端...",
                 authSuccess: "云端已连线",
                 authError: "连线异常",
@@ -244,7 +244,7 @@
             },
             'en': {
                 navTitle: "GEO Content System",
-                navVer: "v1.21.2 Bundle Picker Layout Fix",
+                navVer: "v1.21.3 Mobile RWD Fixes",
                 authConnecting: "Connecting...",
                 authSuccess: "Cloud Connected",
                 authError: "Auth Error",
@@ -339,7 +339,7 @@
             },
             'ja': {
                 navTitle: "GEO コンテンツ生成システム",
-                navVer: "v1.21.2 比較表レイアウト修正版",
+                navVer: "v1.21.3 モバイル表示修正版",
                 authConnecting: "クラウドに接続中...",
                 authSuccess: "クラウド接続済み",
                 authError: "接続エラー",
@@ -434,7 +434,7 @@
             },
             'ko': {
                 navTitle: "GEO 콘텐츠 생성 시스템",
-                navVer: "v1.21.2 비교 표 레이아웃 수정판",
+                navVer: "v1.21.3 모바일 화면 수정판",
                 authConnecting: "클라우드 연결 중...",
                 authSuccess: "클라우드 연결됨",
                 authError: "연결 오류",
@@ -562,14 +562,14 @@
             if (!statusEl) return;
             const t = i18n[currentLang];
             if (currentAuthStatusState === 'connected') {
-                statusEl.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse mr-2"></span>${t.authSuccess}`;
-                statusEl.className = "text-xs font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 px-4 py-2 rounded-full flex items-center shadow-inner transition-colors duration-500";
+                statusEl.innerHTML = `<span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse sm:mr-2"></span><span class="hidden sm:inline">${t.authSuccess}</span>`;
+                statusEl.className = "text-xs font-semibold text-emerald-700 bg-emerald-50 border border-emerald-200 px-2.5 sm:px-4 py-2 rounded-full flex items-center shadow-inner transition-colors duration-500";
             } else if (currentAuthStatusState === 'error') {
-                statusEl.innerHTML = `<span class="w-2 h-2 rounded-full bg-red-500 mr-2"></span>${t.authError}`;
-                statusEl.className = "text-xs font-semibold text-red-700 bg-red-50 border border-red-200 px-4 py-2 rounded-full flex items-center shadow-inner transition-colors duration-500";
+                statusEl.innerHTML = `<span class="w-2 h-2 rounded-full bg-red-500 sm:mr-2"></span><span class="hidden sm:inline">${t.authError}</span>`;
+                statusEl.className = "text-xs font-semibold text-red-700 bg-red-50 border border-red-200 px-2.5 sm:px-4 py-2 rounded-full flex items-center shadow-inner transition-colors duration-500";
             } else {
-                statusEl.innerHTML = `<i class="fas fa-circle-notch fa-spin mr-2"></i>${t.authConnecting}`;
-                statusEl.className = "text-xs font-semibold text-slate-500 bg-slate-100 border border-slate-200 px-4 py-2 rounded-full flex items-center shadow-inner transition-colors duration-500";
+                statusEl.innerHTML = `<i class="fas fa-circle-notch fa-spin sm:mr-2"></i><span class="hidden sm:inline">${t.authConnecting}</span>`;
+                statusEl.className = "text-xs font-semibold text-slate-500 bg-slate-100 border border-slate-200 px-2.5 sm:px-4 py-2 rounded-full flex items-center shadow-inner transition-colors duration-500";
             }
         };
 
@@ -1214,9 +1214,7 @@
                 const bLen = getByteLen(item);
                 const isOver = bLen > maxBytes;
                 return `<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-4 ${isOver ? 'bg-red-50 border-red-200' : 'bg-white border-slate-200'} border rounded-xl hover:border-blue-300 transition-all shadow-sm"><div class="flex-grow font-bold ${isOver ? 'text-red-700' : 'text-slate-700'} text-sm leading-relaxed">${item}</div><div class="flex items-center gap-4">
-                <button onclick="document.getElementById('mobile-menu').classList.toggle('hidden')" class="md:hidden text-slate-500 hover:text-[#005bac] focus:outline-none p-2 rounded-lg hover:bg-slate-100 transition-colors">
-                    <i class="fas fa-bars text-xl"></i>
-                </button><span class="text-xs font-black ${isOver ? 'text-red-600 bg-red-100' : 'text-slate-500 bg-slate-100'} px-3 py-1.5 rounded-lg shadow-inner">${bLen} / ${maxBytes}</span><button onclick="window.copyToClip(this)" data-content="${encodeURIComponent(item)}" class="text-slate-400 hover:text-blue-600 transition-colors p-2 bg-slate-50 hover:bg-blue-50 rounded-lg"><i class="far fa-copy text-lg"></i></button></div></div>`;
+                <span class="text-xs font-black ${isOver ? 'text-red-600 bg-red-100' : 'text-slate-500 bg-slate-100'} px-3 py-1.5 rounded-lg shadow-inner">${bLen} / ${maxBytes}</span><button onclick="window.copyToClip(this)" data-content="${encodeURIComponent(item)}" class="text-slate-400 hover:text-blue-600 transition-colors p-2 bg-slate-50 hover:bg-blue-50 rounded-lg"><i class="far fa-copy text-lg"></i></button></div></div>`;
             }).join('');
         };
 
@@ -1529,40 +1527,37 @@ For each of the 3 chosen pillar angles, select the 3 highest content-fit-scoring
 
         const escapeHtml = (s) => (s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
-        // 比較表格排版：橫軸＝3 套組合，縱軸＝角色（主文／欉集1-3）。
-        // 同一列只需容納「同角色 3 個標題裡最長的那個」，不會像卡片一樣把 4 個標題疊加成超高卡片。
+        // 排版邏輯：DOM 依「一套組合接一套組合」自然排列，手機版（grid-cols-1）直接照這個順序
+        // 堆疊即可完整讀完一套。桌面版（sm:grid-cols-3）改用 col-start/row-start 把同一套組合的
+        // 5 個項目分別定位到同一欄的 5 列，視覺上排成「橫軸=組合、縱軸=角色」的比較表格，
+        // 不需要另外維護一份手機專用的 DOM 結構。
         function renderArticleBundlePicker(bundles) {
             const t = i18n[currentLang];
             const titleBoxClass = "w-full mt-1 px-2.5 py-2 bg-white border border-slate-300 rounded-lg text-sm font-semibold text-slate-800 focus:border-[#005bac] outline-none leading-snug whitespace-pre-wrap break-words";
 
-            const headerCells = bundles.map((b, idx) => `
-                <button data-bundle-col="${idx}" onclick="window.selectArticleBundle(${idx})" class="bundle-col select-bundle-btn border-2 border-slate-200 rounded-xl py-3 font-black text-sm text-slate-500 hover:border-blue-300 hover:text-blue-600 transition-all bg-slate-50">
-                    <i class="far fa-circle mr-2"></i>${t.articleBundleLabel} ${idx + 1}
-                </button>
-            `).join('');
-
-            const cellHtml = (idx, type, role, dataIdx, titleAttrs, title, reason, extraClass) => `
-                <div data-bundle-col="${idx}" class="bundle-col border border-slate-200 rounded-xl p-3 bg-white transition-colors">
+            const cellHtml = (idx, rowStart, type, titleAttrs, title, reason, isPillar) => `
+                <div data-bundle-col="${idx}" class="bundle-col border border-slate-200 rounded-xl p-3 bg-white transition-colors sm:col-start-${idx + 1} sm:row-start-${rowStart}">
                     <div class="flex items-center gap-1.5 mb-1.5">
                         <span class="text-[9px] font-black text-blue-600 uppercase tracking-wider bg-blue-50 px-1.5 py-0.5 rounded border border-blue-100">${angleLabel(type)}</span>
-                        ${extraClass ? `<span class="text-[9px] font-black text-slate-400 uppercase">${t.articlePillarBadge}</span>` : ''}
+                        ${isPillar ? `<span class="text-[9px] font-black text-slate-400 uppercase">${t.articlePillarBadge}</span>` : ''}
                         <i class="fas fa-info-circle text-slate-300 hover:text-slate-500 ml-auto cursor-help" title="${escapeHtml(reason)}"></i>
                     </div>
-                    <div contenteditable="true" ${titleAttrs} class="${titleBoxClass} ${extraClass || ''}">${escapeHtml(title)}</div>
+                    <div contenteditable="true" ${titleAttrs} class="${titleBoxClass} ${isPillar ? 'text-base font-black' : ''}">${escapeHtml(title)}</div>
                 </div>
             `;
 
-            const pillarRow = bundles.map((b, idx) => cellHtml(idx, b.pillar.type, 'pillar', null, `data-bundle="${idx}" data-role="pillar"`, b.pillar.title, b.pillar.reason, 'text-base font-black')).join('');
-            const clusterRowsHtml = [0, 1, 2].map(ci =>
-                bundles.map((b, idx) => cellHtml(idx, b.clusters[ci].type, 'cluster', ci, `data-bundle="${idx}" data-role="cluster" data-idx="${ci}"`, b.clusters[ci].title, b.clusters[ci].reason, '')).join('')
-            ).join('');
+            const groupsHtml = bundles.map((b, idx) => `
+                <button data-bundle-col="${idx}" onclick="window.selectArticleBundle(${idx})" class="bundle-col select-bundle-btn border-2 border-slate-200 rounded-xl py-3 font-black text-sm text-slate-500 hover:border-blue-300 hover:text-blue-600 transition-all bg-slate-50 sm:col-start-${idx + 1} sm:row-start-1">
+                    <i class="far fa-circle mr-2"></i>${t.articleBundleLabel} ${idx + 1}
+                </button>
+                ${cellHtml(idx, 2, b.pillar.type, `data-bundle="${idx}" data-role="pillar"`, b.pillar.title, b.pillar.reason, true)}
+                ${[0, 1, 2].map(ci => cellHtml(idx, ci + 3, b.clusters[ci].type, `data-bundle="${idx}" data-role="cluster" data-idx="${ci}"`, b.clusters[ci].title, b.clusters[ci].reason, false)).join('')}
+            `).join('');
 
             document.getElementById('output-container').innerHTML = `
                 <p class="text-sm font-bold text-slate-600 mb-4">${t.articleChooseBundle}</p>
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                    ${headerCells}
-                    ${pillarRow}
-                    ${clusterRowsHtml}
+                <div class="grid grid-cols-1 sm:grid-cols-3 sm:grid-rows-5 gap-3">
+                    ${groupsHtml}
                 </div>
                 <div class="flex justify-center mt-8">
                     <button id="confirm-bundle-btn" onclick="window.confirmArticleGeneration()" disabled class="opacity-50 cursor-not-allowed bg-[#005bac] text-white px-8 py-3.5 rounded-lg font-bold text-sm shadow-md flex items-center gap-3 transition-all">
@@ -2434,9 +2429,6 @@ ${scrapeRes.text}
                     card.innerHTML = `
                         <div class="bg-slate-50 border-b border-slate-200 px-8 py-5 flex flex-col sm:flex-row justify-between sm:items-center gap-4">
                             <div class="flex items-center gap-4">
-                <button onclick="document.getElementById('mobile-menu').classList.toggle('hidden')" class="md:hidden text-slate-500 hover:text-[#005bac] focus:outline-none p-2 rounded-lg hover:bg-slate-100 transition-colors">
-                    <i class="fas fa-bars text-xl"></i>
-                </button>
                                 <div class="w-10 h-10 rounded-xl bg-[#005bac]/10 text-[#005bac] flex items-center justify-center text-lg"><i class="fas fa-microchip"></i></div>
                                 <div><h4 class="font-black text-slate-800 text-base">${detox(model) || 'IPC MODEL'} (v1.18.3)</h4><p class="text-xs text-slate-500 truncate max-w-md mt-1">${url}</p></div>
                             </div>
@@ -2546,30 +2538,24 @@ ${scrapeRes.text}
     <div id="custom-toast" class="fixed top-5 left-1/2 transform -translate-x-1/2 z-[200] px-6 py-3 rounded-full shadow-xl font-bold text-sm transition-all duration-300 opacity-0 -translate-y-full pointer-events-none"></div>
 
     <nav class="bg-white border-b border-slate-200 px-6 py-4 sticky top-0 z-50 shadow-sm">
-        <div class="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
-            <div class="flex items-center gap-4">
-                <button onclick="document.getElementById('mobile-menu').classList.toggle('hidden')" class="md:hidden text-slate-500 hover:text-[#005bac] focus:outline-none p-2 rounded-lg hover:bg-slate-100 transition-colors">
-                    <i class="fas fa-bars text-xl"></i>
-                </button>
-                <img src="advantech-logo.png" alt="Advantech" class="h-8 sm:h-10 w-auto rounded-lg shadow-md">
-                <div>
-                    <h1 class="text-base sm:text-xl font-bold text-slate-800 leading-tight" data-i18n="navTitle">GEO 內容生成系統</h1>
-                    <p class="text-[10px] sm:text-xs text-slate-500 font-medium tracking-wide mt-0.5 hidden sm:block" data-i18n="navVer">v1.21.2 主題選擇排版修正版</p>
+        <div class="max-w-6xl mx-auto flex flex-wrap sm:flex-nowrap justify-between items-center gap-3">
+            <div class="flex items-center gap-2 sm:gap-4 min-w-0">
+                <img src="advantech-logo.png" alt="Advantech" class="h-8 sm:h-10 w-auto rounded-lg shadow-md flex-shrink-0">
+                <div class="min-w-0">
+                    <h1 class="text-sm sm:text-xl font-bold text-slate-800 leading-tight truncate" data-i18n="navTitle">GEO 內容生成系統</h1>
+                    <p class="text-[10px] sm:text-xs text-slate-500 font-medium tracking-wide mt-0.5 hidden sm:block" data-i18n="navVer">v1.21.3 手機版全面修正版</p>
                 </div>
             </div>
-            <div class="flex items-center gap-4">
-                <button onclick="document.getElementById('mobile-menu').classList.toggle('hidden')" class="md:hidden text-slate-500 hover:text-[#005bac] focus:outline-none p-2 rounded-lg hover:bg-slate-100 transition-colors">
-                    <i class="fas fa-bars text-xl"></i>
+            <div class="flex items-center gap-1.5 sm:gap-4 flex-shrink-0">
+                <button id="login-btn-display" onclick="window.toggleApiModal()" class="bg-white hover:bg-slate-50 text-slate-600 font-semibold text-xs px-2.5 sm:px-4 py-2 rounded-md border border-slate-200 shadow-sm flex items-center gap-2 transition-all active:scale-95">
+                    <i class="fas fa-user-circle text-blue-500"></i> <span class="hidden sm:inline" data-i18n="btnApiKey">公司信箱登入</span>
                 </button>
-                <button id="login-btn-display" onclick="window.toggleApiModal()" class="bg-white hover:bg-slate-50 text-slate-600 font-semibold text-xs px-4 py-2 rounded-md border border-slate-200 shadow-sm flex items-center gap-2 transition-all active:scale-95">
-                    <i class="fas fa-user-circle text-blue-500"></i> <span data-i18n="btnApiKey">公司信箱登入</span>
+                <button onclick="window.openFeedbackModal()" class="bg-white hover:bg-yellow-50 text-slate-600 hover:text-yellow-600 font-semibold text-xs px-2.5 sm:px-4 py-2 rounded-md border border-slate-200 hover:border-yellow-200 shadow-sm flex items-center gap-2 transition-all active:scale-95">
+                    <i class="fas fa-lightbulb text-yellow-500"></i> <span class="hidden sm:inline" data-i18n="btnFeedback">系統建議</span>
                 </button>
-                <button onclick="window.openFeedbackModal()" class="bg-white hover:bg-yellow-50 text-slate-600 hover:text-yellow-600 font-semibold text-xs px-4 py-2 rounded-md border border-slate-200 hover:border-yellow-200 shadow-sm flex items-center gap-2 transition-all active:scale-95">
-                    <i class="fas fa-lightbulb text-yellow-500"></i> <span data-i18n="btnFeedback">系統建議</span>
-                </button>
-                
+
                 <div class="relative group">
-                    <select id="lang-selector" onchange="window.changeLanguage()" class="appearance-none bg-white hover:bg-slate-50 text-slate-600 font-semibold text-xs pl-4 pr-8 py-2 rounded-md border border-slate-200 shadow-sm transition-all outline-none focus:border-blue-500 cursor-pointer active:scale-95">
+                    <select id="lang-selector" onchange="window.changeLanguage()" class="appearance-none bg-white hover:bg-slate-50 text-slate-600 font-semibold text-xs pl-2.5 sm:pl-4 pr-6 sm:pr-8 py-2 rounded-md border border-slate-200 shadow-sm transition-all outline-none focus:border-blue-500 cursor-pointer active:scale-95">
                         <option value="en" selected>English</option>
                         <option value="ja">日本語</option>
                         <option value="ko">한국어</option>
@@ -2581,8 +2567,8 @@ ${scrapeRes.text}
                     </div>
                 </div>
 
-                <div id="auth-status" class="text-xs font-semibold text-slate-500 bg-slate-100 border border-slate-200 px-4 py-2 rounded-full flex items-center shadow-inner transition-colors duration-500">
-                    <i class="fas fa-circle-notch fa-spin mr-2"></i> Connecting...
+                <div id="auth-status" class="text-xs font-semibold text-slate-500 bg-slate-100 border border-slate-200 px-2.5 sm:px-4 py-2 rounded-full flex items-center shadow-inner transition-colors duration-500">
+                    <i class="fas fa-circle-notch fa-spin sm:mr-2"></i> <span class="hidden sm:inline">Connecting...</span>
                 </div>
             </div>
         </div>
@@ -2819,7 +2805,8 @@ ${scrapeRes.text}
             </div>
 
             <div id="admin-tab-users" class="p-6 overflow-y-auto custom-scrollbar flex-grow bg-white rounded-b-2xl">
-                <table class="w-full text-left border-collapse">
+                <div class="overflow-x-auto custom-scrollbar">
+                <table class="w-full min-w-[640px] text-left border-collapse">
                     <thead>
                         <tr class="bg-slate-100 border-y border-slate-200 text-xs font-black text-slate-500 uppercase tracking-widest">
                             <th class="py-3 px-4 rounded-tl-lg">User Email</th>
@@ -2832,10 +2819,12 @@ ${scrapeRes.text}
                     </thead>
                     <tbody id="admin-table-body-users"></tbody>
                 </table>
+                </div>
             </div>
 
             <div id="admin-tab-feedback" class="hidden p-6 overflow-y-auto custom-scrollbar flex-grow bg-white rounded-b-2xl">
-                <table class="w-full text-left border-collapse">
+                <div class="overflow-x-auto custom-scrollbar">
+                <table class="w-full min-w-[480px] text-left border-collapse">
                     <thead>
                         <tr class="bg-slate-100 border-y border-slate-200 text-xs font-black text-slate-500 uppercase tracking-widest">
                             <th class="py-3 px-4 rounded-tl-lg w-32">提交時間</th>
@@ -2845,6 +2834,7 @@ ${scrapeRes.text}
                     </thead>
                     <tbody id="admin-table-body-feedback"></tbody>
                 </table>
+                </div>
             </div>
         </div>
     </div>

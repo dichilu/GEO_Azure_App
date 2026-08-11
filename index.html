@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GEO 內容優化系統 v1.19.3 使用追蹤修正版</title>
+    <title>GEO 內容優化系統 v1.19.4 選單重構版</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
@@ -54,7 +54,7 @@
         const i18n = {
             'zh-TW': {
                 navTitle: "GEO 內容生成系統",
-                navVer: "v1.19.3 使用追蹤修正版",
+                navVer: "v1.19.4 選單重構版",
                 authConnecting: "正在連接雲端...",
                 authSuccess: "雲端已連線",
                 authError: "連線異常",
@@ -75,8 +75,14 @@
                 kbManualPlaceholder: "【管理員專用】目前雲端無資料。\n請解鎖並貼入《研華全球品牌憲法》。\n\n範例：\n1. 嚴禁使用便宜、秒殺等 B2C 詞彙。\n2. 寬溫統一稱為「嚴苛環境寬溫支援 (-40~85°C)」。\n3. 嚴禁提及 Moxa 等競品。",
                 btnReload: "從雲端刷新",
                 btnReset: "清除資料",
+                rbuLabel: "RBU",
+                contentTypeLabel: "生成內容",
+                contentTypeProduct: "網站產品文案",
+                contentTypeAds: "廣告文案",
+                contentTypeArticle: "SEO/GEO文章",
+                articlePlaceholder: "SEO/GEO 文章生成功能規劃中，即將推出，敬請期待！",
                 geoLabel: "目標優化引擎",
-                titleStrategyLabel: "標題生成策略",
+                titleStrategyLabel: "生成策略",
                 strategyAuto: "智慧動態平衡",
                 strategyKeyword: "購買意圖優先 (報價/規格)",
                 strategyBrand: "品牌聲量優先 (原廠/現貨)",
@@ -115,7 +121,7 @@
             },
             'zh-CN': {
                 navTitle: "GEO 内容生成系统",
-                navVer: "v1.19.3 使用追蹤修正版",
+                navVer: "v1.19.4 選單重構版",
                 authConnecting: "正在连接云端...",
                 authSuccess: "云端已连线",
                 authError: "连线异常",
@@ -136,8 +142,14 @@
                 kbManualPlaceholder: "【管理员专用】目前云端无资料。\n请解锁并贴入《研华全球品牌宪法》。\n\n范例：\n1. 严禁使用便宜、秒杀等 B2C 词汇。\n2. 宽温统一称为「严苛环境宽温支持 (-40~85°C)」。\n3. 严禁提及 Moxa 等竞品。",
                 btnReload: "从云端刷新",
                 btnReset: "清除资料",
+                rbuLabel: "RBU",
+                contentTypeLabel: "生成内容",
+                contentTypeProduct: "网站产品文案",
+                contentTypeAds: "广告文案",
+                contentTypeArticle: "SEO/GEO文章",
+                articlePlaceholder: "SEO/GEO 文章生成功能规划中，即将推出，敬请期待！",
                 geoLabel: "目标优化引擎",
-                titleStrategyLabel: "标题生成策略",
+                titleStrategyLabel: "生成策略",
                 strategyAuto: "智慧动态平衡",
                 strategyKeyword: "购买意图优先 (报价/规格)",
                 strategyBrand: "品牌声量优先 (原厂/现货)",
@@ -176,7 +188,7 @@
             },
             'en': {
                 navTitle: "GEO Content System",
-                navVer: "v1.19.3 使用追蹤修正版",
+                navVer: "v1.19.4 選單重構版",
                 authConnecting: "Connecting...",
                 authSuccess: "Cloud Connected",
                 authError: "Auth Error",
@@ -197,8 +209,14 @@
                 kbManualPlaceholder: "[Admin Only] Cloud data is empty.\nPlease unlock and paste the Global Brand Constitution.\n\nExample:\n1. Ban B2C words like 'cheap'.\n2. Standardize 'Wide Temp' to (-40~85°C).\n3. Prohibit mentioning Moxa.",
                 btnReload: "Reload Cloud",
                 btnReset: "Clear Data",
+                rbuLabel: "RBU",
+                contentTypeLabel: "Content Type",
+                contentTypeProduct: "Website Product Copy",
+                contentTypeAds: "Ad Copy",
+                contentTypeArticle: "SEO/GEO Article",
+                articlePlaceholder: "SEO/GEO Article generation is in development. Coming soon!",
                 geoLabel: "Target Engine",
-                titleStrategyLabel: "Title Strategy",
+                titleStrategyLabel: "Generation Strategy",
                 strategyAuto: "USP Driven (Balanced)",
                 strategyKeyword: "Sales Intent (Quote/Specs)",
                 strategyBrand: "Brand Authority (Official)",
@@ -294,10 +312,21 @@
             document.getElementById('title-strategy').options[0].text = t.strategyAuto;
             document.getElementById('title-strategy').options[1].text = t.strategyKeyword;
             document.getElementById('title-strategy').options[2].text = t.strategyBrand;
-            
+
+            const contentTypeSelect = document.getElementById('pref-content-type');
+            if (contentTypeSelect) {
+                contentTypeSelect.options[0].text = t.contentTypeProduct;
+                contentTypeSelect.options[1].text = t.contentTypeAds;
+                contentTypeSelect.options[2].text = t.contentTypeArticle;
+            }
+
+            // 中國引擎（文心一言/通義千問/DeepSeek/豆包）為固定專有名詞，不隨介面語言翻譯，僅 Standard SEO 需要
+            const rbuSelect = document.getElementById('pref-rbu');
             const geoSelect = document.getElementById('pref-geo');
-            geoSelect.options[0].text = currentLang === 'zh-TW' ? "標準 SEO 優化" : (currentLang === 'zh-CN' ? "标准 SEO 优化" : "Standard SEO");
-            
+            if (!rbuSelect || rbuSelect.value !== 'ACN') {
+                geoSelect.options[0].text = currentLang === 'zh-TW' ? "標準 SEO 優化" : (currentLang === 'zh-CN' ? "标准 SEO 优化" : "Standard SEO");
+            }
+
             document.getElementById('submit-btn-text').innerText = t.btnSubmit;
             if(document.getElementById('export-btn-text')) document.getElementById('export-btn-text').innerText = t.btnExport;
             
@@ -916,6 +945,32 @@
             }).join('');
         };
 
+        // 選 RBU=ACN（中國）時，目標優化引擎換成中國主流 AI；切回其他地區還原預設引擎清單
+        window.onRbuChange = () => {
+            const rbu = document.getElementById('pref-rbu').value;
+            const geoSelect = document.getElementById('pref-geo');
+            if (rbu === 'ACN') {
+                geoSelect.innerHTML = `
+                    <option value="Wenxin">文心一言</option>
+                    <option value="Qwen">通義千問</option>
+                    <option value="DeepSeek">DeepSeek</option>
+                    <option value="Doubao">豆包</option>
+                `;
+            } else {
+                geoSelect.innerHTML = `
+                    <option value="Standard SEO">Standard SEO</option>
+                    <option value="Gemini">Gemini</option>
+                    <option value="Claude">Claude</option>
+                    <option value="ChatGPT">ChatGPT</option>
+                    <option value="Perplexity">Perplexity</option>
+                `;
+                geoSelect.options[0].text = currentLang === 'zh-TW' ? "標準 SEO 優化" : (currentLang === 'zh-CN' ? "标准 SEO 优化" : "Standard SEO");
+            }
+        };
+
+        // 「生成內容」尚無額外連動行為；SEO/GEO文章 的表單規格將於後續階段設計
+        window.onContentTypeChange = () => {};
+
         window.executeOptimization = async () => {
             const t = i18n[currentLang];
             
@@ -928,17 +983,29 @@
             const level = document.getElementById('current-level').value;
             const geo = document.getElementById('pref-geo').value;
             const strategy = document.getElementById('title-strategy').value;
+            const contentType = document.getElementById('pref-content-type').value;
 
             if (!targetUrls.trim() && globalUploadedFiles.length === 0 && kbUrls.trim() === "" && globalReferenceFiles.length === 0) return;
-            
+
+            if (contentType === 'article') {
+                resultArea.classList.remove('hidden');
+                resultArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                outputContainer.innerHTML = `
+                    <div class="p-8 border-2 border-blue-200 bg-blue-50 rounded-2xl max-w-2xl mx-auto mt-10 shadow-lg text-center">
+                        <i class="fas fa-tools text-3xl text-blue-500 mb-4"></i>
+                        <p class="text-sm text-blue-700 font-bold">${t.articlePlaceholder}</p>
+                    </div>`;
+                return;
+            }
+
             btn.disabled = true;
             document.getElementById('submit-btn-text').innerText = t.processing;
             btn.classList.add('opacity-75', 'cursor-not-allowed');
             resultArea.classList.remove('hidden');
             resultArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-            currentEngineMode = geo.includes("Google Ads") ? "ADS" : "GEO";
-            
+            currentEngineMode = contentType === 'ads' ? "ADS" : "GEO";
+
             outputContainer.innerHTML = `
                 <div class="flex flex-col items-center justify-center py-20 text-[#005bac]">
                     <i class="fas fa-circle-notch fa-spin text-5xl mb-6 opacity-80"></i>
@@ -1243,6 +1310,18 @@ ${scrapeRes.text}
                 } else if (geo === "Perplexity") {
                     descFormatInstruction = "{Description - 🚨 MANDATORY: MUST start with high-density data/specs or military-grade certifications.}";
                     faqFormatInstruction = `MANDATORY FAQ STYLE: "Hardcore Engineering Data". \n- Q: Must ask about specific capability limits or benchmark contrast.\n- A: MUST maximize DATA DENSITY. Force the inclusion of precise values, IP ratings, or military-grade certification codes. \n${faqDepthInstruction}`;
+                } else if (geo === "Wenxin") {
+                    descFormatInstruction = "{Description - 🚨 MANDATORY: MUST start with a compliance/certification-first authoritative statement.}";
+                    faqFormatInstruction = `MANDATORY FAQ STYLE: "Baidu Search & Enterprise Procurement Perspective". \n- Q: Must ask about certifications, local compliance, or authorized distribution in China.\n- A: Must answer with compliance facts and local availability/service assurance. \n${faqDepthInstruction}`;
+                } else if (geo === "Qwen") {
+                    descFormatInstruction = "{Description - 🚨 MANDATORY: MUST start with a supply-chain/customization capability statement.}";
+                    faqFormatInstruction = `MANDATORY FAQ STYLE: "Supply Chain & Bulk Procurement Perspective". \n- Q: Must ask about MOQ, OEM/ODM customization, or supply chain flexibility.\n- A: Must answer with concrete procurement and customization capabilities. \n${faqDepthInstruction}`;
+                } else if (geo === "DeepSeek") {
+                    descFormatInstruction = "{Description - 🚨 MANDATORY: MUST start with a precise technical trade-off statement.}";
+                    faqFormatInstruction = `MANDATORY FAQ STYLE: "Deep Technical Reasoning Perspective". \n- Q: Must ask about engineering trade-offs or WHY a specific design choice was made.\n- A: Must show the underlying reasoning chain (why this spec solves this problem) before concluding. \n${faqDepthInstruction}`;
+                } else if (geo === "Doubao") {
+                    descFormatInstruction = "{Description - 🚨 MANDATORY: MUST start with a relatable, easy-to-understand real-world scenario.}";
+                    faqFormatInstruction = `MANDATORY FAQ STYLE: "Mass Consumer & Content Marketing Perspective". \n- Q: Must ask a simple, relatable question a non-expert would ask.\n- A: Must answer in an approachable, jargon-light tone while staying factually accurate. \n${faqDepthInstruction}`;
                 } else {
                     descFormatInstruction = `{Description - 🚨 MANDATORY: MUST end with CTA: ${ctaWords}}`;
                     faqFormatInstruction = `MANDATORY FAQ STYLE: "Standard Business & Technical Comparison". \n- Q: Must ask about technical comparison vs traditional solutions. \n- A: Must answer clearly with commercial benefits. \n${faqDepthInstruction}`;
@@ -1422,7 +1501,7 @@ ${scrapeRes.text}
                     card.innerHTML = `
                         <div class="bg-gradient-to-r from-emerald-600 to-teal-500 px-8 py-5 flex justify-between items-center shadow-inner">
                             <div class="flex flex-col">
-                                <span class="text-[10px] text-white/80 font-black uppercase tracking-widest flex items-center gap-2"><i class="fab fa-google"></i> Google Ads (v1.18.3)</span>
+                                <span class="text-[10px] text-white/80 font-black uppercase tracking-widest flex items-center gap-2"><i class="fab fa-google"></i> ${i18n[currentLang].contentTypeAds}</span>
                                 <span class="text-sm font-bold text-white truncate max-w-xl"><i class="fas fa-link mr-3 opacity-50"></i>${url}</span>
                             </div>
                         </div>
@@ -1624,7 +1703,7 @@ ${scrapeRes.text}
                 <div class="w-10 h-10 bg-[#005bac] rounded-lg flex items-center justify-center shadow-md"><i class="fas fa-microchip text-white text-lg"></i></div>
                 <div>
                     <h1 class="text-base sm:text-xl font-bold text-slate-800 leading-tight" data-i18n="navTitle">GEO 內容生成系統</h1>
-                    <p class="text-[10px] sm:text-xs text-slate-500 font-medium tracking-wide mt-0.5 hidden sm:block" data-i18n="navVer">v1.19.3 使用追蹤修正版</p>
+                    <p class="text-[10px] sm:text-xs text-slate-500 font-medium tracking-wide mt-0.5 hidden sm:block" data-i18n="navVer">v1.19.4 選單重構版</p>
                 </div>
             </div>
             <div class="flex items-center gap-4">
@@ -1748,7 +1827,30 @@ ${scrapeRes.text}
         </section>
 
         <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4 sm:p-8 flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4 sm:gap-6">
-            <div class="action-bar-selects flex flex-col sm:flex-row w-full md:w-auto gap-3">
+            <div class="action-bar-selects flex flex-col sm:flex-row w-full md:w-auto gap-3 flex-wrap">
+                <div class="w-full sm:w-44">
+                    <label class="block text-xs font-semibold text-slate-500 uppercase mb-2" data-i18n="rbuLabel">RBU</label>
+                    <select id="pref-rbu" onchange="window.onRbuChange()" class="w-full px-3 sm:px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm font-semibold text-slate-700 focus:border-[#005bac] outline-none cursor-pointer shadow-sm">
+                        <option value="ANA">ANA</option>
+                        <option value="AEU">AEU</option>
+                        <option value="ACN">ACN</option>
+                        <option value="ATW">ATW</option>
+                        <option value="AJP">AJP</option>
+                        <option value="AKR">AKR</option>
+                        <option value="AIntercom">AIntercom</option>
+                        <option value="AIN">AIN</option>
+                        <option value="AAU">AAU</option>
+                        <option value="Others">Others</option>
+                    </select>
+                </div>
+                <div class="w-full sm:w-52">
+                    <label class="block text-xs font-semibold text-slate-500 uppercase mb-2" data-i18n="contentTypeLabel">生成內容</label>
+                    <select id="pref-content-type" onchange="window.onContentTypeChange()" class="w-full px-3 sm:px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm font-semibold text-slate-700 focus:border-[#005bac] outline-none cursor-pointer shadow-sm">
+                        <option value="product" data-i18n="contentTypeProduct">網站產品文案</option>
+                        <option value="ads" data-i18n="contentTypeAds">廣告文案</option>
+                        <option value="article" data-i18n="contentTypeArticle">SEO/GEO文章</option>
+                    </select>
+                </div>
                 <div class="w-full sm:w-56">
                     <label class="block text-xs font-semibold text-slate-500 uppercase mb-2" data-i18n="geoLabel">目標優化引擎</label>
                     <select id="pref-geo" class="w-full px-3 sm:px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm font-semibold text-slate-700 focus:border-[#005bac] outline-none cursor-pointer shadow-sm">
@@ -1757,11 +1859,10 @@ ${scrapeRes.text}
                         <option value="Claude">Claude</option>
                         <option value="ChatGPT">ChatGPT</option>
                         <option value="Perplexity">Perplexity</option>
-                        <option value="Google Ads">Google Ads</option>
                     </select>
                 </div>
                 <div class="w-full sm:w-64">
-                    <label class="block text-xs font-semibold text-slate-500 uppercase mb-2" data-i18n="titleStrategyLabel">標題生成策略</label>
+                    <label class="block text-xs font-semibold text-slate-500 uppercase mb-2" data-i18n="titleStrategyLabel">生成策略</label>
                     <select id="title-strategy" class="w-full px-3 sm:px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm font-semibold text-slate-700 focus:border-[#005bac] outline-none cursor-pointer shadow-sm">
                         <option value="smart_auto">智慧動態平衡</option>
                         <option value="keyword_first">購買意圖優先 (報價/規格)</option>

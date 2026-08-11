@@ -1,6 +1,6 @@
 # GEO 內容生成系統 (GEO Azure App)
 
-**當前版本**: v1.19.6
+**當前版本**: v1.20.0
 
 ## 專案簡介
 這是一個部署於 Azure App Service 的全端網頁應用程式，專門用於產生與優化 SEO 友善的企業級產品內容。系統整合了 AI 內容生成策略，並允許使用者透過拖放參考文件與設定目標網址，快速產出符合品牌規範的行銷文案。
@@ -8,11 +8,13 @@
 ## 核心功能介紹
 
 1. **AI 內容生成與優化引擎**
-   - 支援多種優化模式（Standard SEO, Gemini, Claude, ChatGPT, Perplexity, Google Ads）。
-   - 支援三種標題生成策略：智慧動態平衡、購買意圖優先、品牌聲量優先。
-   
+   - 選單順序：RBU（地區/事業群）＞生成內容（網站產品文案／廣告文案／SEO-GEO文章）＞目標優化引擎＞生成策略。
+   - 目標優化引擎支援 Standard SEO, Gemini, Claude, ChatGPT, Perplexity；RBU 選 ACN（中國）時自動切換為文心一言、通義千問、DeepSeek、豆包。
+   - 生成策略三種：智慧動態平衡、購買意圖優先、品牌聲量優先。
+   - **SEO/GEO 文章（主文＋欉集叢集架構）**：兩階段生成——AI 先依 8 種內容角度評分規劃 3 套「主文＋3篇欉集」主題組合供選擇與微調標題，確認後正式生成 4 篇互相交叉引用的完整文章（含 TL;DR、H2/H3 目錄、FAQ）。
+
 2. **網頁內容爬蟲通道 (Scraping Proxy)**
-   - 透過後端 `/api/scrape` 整合 Jina Reader，突破前端瀏覽器的 CORS 跨網域限制。
+   - 透過後端 `/api/scrape` 整合 Apify Website Content Crawler，突破前端瀏覽器的 CORS 跨網域限制與一般爬蟲的反爬蟲防護。
    - 自動抓取競品或參考網址的 Markdown 內容，做為 AI 生成的參考語境。
 
 3. **企業知識庫與品牌規範**

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GEO 內容優化系統 v1.19.6 選單排版優化版</title>
+    <title>GEO 內容優化系統 v1.20.0 SEO/GEO文章叢集版</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
@@ -54,7 +54,7 @@
         const i18n = {
             'zh-TW': {
                 navTitle: "GEO 內容生成系統",
-                navVer: "v1.19.6 選單排版優化版",
+                navVer: "v1.20.0 SEO/GEO文章叢集版",
                 authConnecting: "正在連接雲端...",
                 authSuccess: "雲端已連線",
                 authError: "連線異常",
@@ -80,7 +80,15 @@
                 contentTypeProduct: "網站產品文案",
                 contentTypeAds: "廣告文案",
                 contentTypeArticle: "SEO/GEO文章",
-                articlePlaceholder: "SEO/GEO 文章生成功能規劃中，即將推出，敬請期待！",
+                articleStep1Title: "AI 正在分析內容並規劃主題組合...",
+                articleStep1Failed: "主題規劃失敗，回傳內容無法解析，請重試或減少輸入內容。",
+                articleChooseBundle: "請選擇一套主文＋欉集組合（標題可點擊修改）：",
+                articlePillarBadge: "主文",
+                articleConfirmGenerate: "確認並生成 4 篇文章",
+                articleGenerating: "正在生成第 {n}/{total} 篇：",
+                articleTldrLabel: "重點摘要 (Key Takeaways)",
+                articleTocLabel: "本文目錄",
+                articleFaqLabel: "常見問題 (FAQ)",
                 geoLabel: "目標優化引擎",
                 titleStrategyLabel: "生成策略",
                 strategyAuto: "智慧動態平衡",
@@ -121,7 +129,7 @@
             },
             'zh-CN': {
                 navTitle: "GEO 内容生成系统",
-                navVer: "v1.19.6 選單排版優化版",
+                navVer: "v1.20.0 SEO/GEO文章叢集版",
                 authConnecting: "正在连接云端...",
                 authSuccess: "云端已连线",
                 authError: "连线异常",
@@ -147,7 +155,15 @@
                 contentTypeProduct: "网站产品文案",
                 contentTypeAds: "广告文案",
                 contentTypeArticle: "SEO/GEO文章",
-                articlePlaceholder: "SEO/GEO 文章生成功能规划中，即将推出，敬请期待！",
+                articleStep1Title: "AI 正在分析内容并规划主题组合...",
+                articleStep1Failed: "主题规划失败，回传内容无法解析，请重试或减少输入内容。",
+                articleChooseBundle: "请选择一套主文＋丛集组合（标题可点击修改）：",
+                articlePillarBadge: "主文",
+                articleConfirmGenerate: "确认并生成 4 篇文章",
+                articleGenerating: "正在生成第 {n}/{total} 篇：",
+                articleTldrLabel: "重点摘要 (Key Takeaways)",
+                articleTocLabel: "本文目录",
+                articleFaqLabel: "常见问题 (FAQ)",
                 geoLabel: "目标优化引擎",
                 titleStrategyLabel: "生成策略",
                 strategyAuto: "智慧动态平衡",
@@ -188,7 +204,7 @@
             },
             'en': {
                 navTitle: "GEO Content System",
-                navVer: "v1.19.6 選單排版優化版",
+                navVer: "v1.20.0 SEO/GEO文章叢集版",
                 authConnecting: "Connecting...",
                 authSuccess: "Cloud Connected",
                 authError: "Auth Error",
@@ -214,7 +230,15 @@
                 contentTypeProduct: "Website Product Copy",
                 contentTypeAds: "Ad Copy",
                 contentTypeArticle: "SEO/GEO Article",
-                articlePlaceholder: "SEO/GEO Article generation is in development. Coming soon!",
+                articleStep1Title: "AI is analyzing content and planning topic bundles...",
+                articleStep1Failed: "Topic planning failed — the response could not be parsed. Please retry or reduce input content.",
+                articleChooseBundle: "Choose a Pillar + Cluster bundle (titles are editable):",
+                articlePillarBadge: "Pillar",
+                articleConfirmGenerate: "Confirm & Generate 4 Articles",
+                articleGenerating: "Generating article {n}/{total}:",
+                articleTldrLabel: "Key Takeaways",
+                articleTocLabel: "Table of Contents",
+                articleFaqLabel: "FAQ",
                 geoLabel: "Target Engine",
                 titleStrategyLabel: "Generation Strategy",
                 strategyAuto: "USP Driven (Balanced)",
@@ -945,6 +969,38 @@
             }).join('');
         };
 
+        // ===== SEO/GEO 文章：主題角度池（8 種，4 廣 4 窄），Step1 主題提案 / Step2 正式生成共用 =====
+        const ARTICLE_ANGLE_POOL = [
+            { key: 'buying_guide', broad: true, 'zh-TW': '選購指南型', 'zh-CN': '选购指南型', en: 'Buying Guide' },
+            { key: 'pain_point', broad: true, 'zh-TW': '痛點解決型', 'zh-CN': '痛点解决型', en: 'Pain-Point Solution' },
+            { key: 'authority_definition', broad: true, 'zh-TW': '定義權威型', 'zh-CN': '定义权威型', en: 'Category Authority' },
+            { key: 'vertical_application', broad: true, 'zh-TW': '產業應用型', 'zh-CN': '产业应用型', en: 'Vertical Application' },
+            { key: 'use_case_scenario', broad: false, 'zh-TW': '應用場景型', 'zh-CN': '应用场景型', en: 'Use-Case Scenario' },
+            { key: 'technical_deep_dive', broad: false, 'zh-TW': '技術深挖型', 'zh-CN': '技术深挖型', en: 'Technical Deep-Dive' },
+            { key: 'comparison_decision', broad: false, 'zh-TW': '比較決策型', 'zh-CN': '比较决策型', en: 'Comparison & Decision' },
+            { key: 'faq_digest', broad: false, 'zh-TW': 'FAQ大全型', 'zh-CN': 'FAQ大全型', en: 'FAQ Digest' }
+        ];
+        const angleLabel = (key) => {
+            const item = ARTICLE_ANGLE_POOL.find(a => a.key === key);
+            if (!item) return key;
+            return item[currentLang] || item.en;
+        };
+        const slugify = (text) => (text || '').toLowerCase().trim().replace(/[^a-z0-9一-鿿]+/g, '-').replace(/(^-|-$)/g, '') || 'section';
+        const extractH2Headings = (md) => Array.from((md || '').matchAll(/^## (.+)$/gm)).map(m => ({ text: m[1].trim(), id: slugify(m[1].trim()) }));
+        const simpleMarkdownToHtml = (md) => {
+            let html = (md || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+            html = html.replace(/^### (.+)$/gm, '<h4 class="text-base font-black text-slate-800 mt-6 mb-2">$1</h4>');
+            html = html.replace(/^## (.+)$/gm, (m, p1) => `<h3 id="${slugify(p1.trim())}" class="text-lg font-black text-slate-800 mt-8 mb-3 pb-2 border-b border-slate-100 scroll-mt-24">${p1.trim()}</h3>`);
+            html = html.replace(/\*\*(.+?)\*\*/g, '<strong class="text-slate-900">$1</strong>');
+            html = html.split(/\n\s*\n/).map(block => {
+                const trimmed = block.trim();
+                if (!trimmed) return '';
+                if (trimmed.startsWith('<h3') || trimmed.startsWith('<h4')) return trimmed;
+                return `<p class="text-sm text-slate-600 leading-relaxed mb-4">${trimmed}</p>`;
+            }).join('');
+            return html;
+        };
+
         // 選 RBU=ACN（中國）時，目標優化引擎換成中國主流 AI；切回其他地區還原預設引擎清單
         window.onRbuChange = () => {
             const rbu = document.getElementById('pref-rbu').value;
@@ -971,6 +1027,505 @@
         // 「生成內容」尚無額外連動行為；SEO/GEO文章 的表單規格將於後續階段設計
         window.onContentTypeChange = () => {};
 
+        // ===== SEO/GEO 文章：主文＋欉集雙階段生成流程 =====
+        let articleWorkflowState = { source: null, geo: '', strategy: '', kbManual: '', bundles: [], selectedIndex: -1 };
+
+        const getLangContext = () => {
+            const isZhTW = currentLang === 'zh-TW';
+            const isZhCN = currentLang === 'zh-CN';
+            const isZh = isZhTW || isZhCN;
+            const targetLangLabel = isZhTW ? 'Traditional Chinese (繁體中文)' : (isZhCN ? 'Simplified Chinese (简体中文). STRICTLY FORBIDDEN to use Traditional Chinese characters.' : 'English');
+            const brandName = isZh ? (isZhCN ? '研华' : '研華') : 'Advantech';
+            const grammarRule = isZh ? (isZhCN ? 'NATIVE SIMPLIFIED CHINESE GRAMMAR' : 'NATIVE CHINESE GRAMMAR') : 'NATIVE ENGLISH GRAMMAR';
+            return { isZhTW, isZhCN, isZh, targetLangLabel, brandName, grammarRule };
+        };
+
+        const parseTaggedField = (text, tag) => {
+            const m = (text || '').match(new RegExp(`\\[${tag}\\]([\\s\\S]*?)\\[/${tag}\\]`, 'i'));
+            return m ? m[1].trim() : '';
+        };
+
+        async function gatherAllSourceContent(subMsgEl) {
+            let targetFileText = "";
+            let referenceFileText = "";
+            let imageParts = [];
+            let refImageParts = [];
+
+            for (let i = 0; i < globalUploadedFiles.length; i++) {
+                const file = globalUploadedFiles[i];
+                if (file.type.startsWith('image/')) {
+                    const base64Data = await new Promise((resolve, reject) => {
+                        const reader = new FileReader();
+                        reader.onload = (e) => resolve(e.target.result.split(',')[1]);
+                        reader.onerror = () => reject(new Error("目標圖片讀取失敗"));
+                        reader.readAsDataURL(file);
+                    });
+                    imageParts.push({ inlineData: { mimeType: file.type, data: base64Data } });
+                } else {
+                    const fileContent = await extractTextFromFile(file);
+                    targetFileText += `\n--- [目標文檔 ${i+1}: ${file.name}] ---\n${fileContent}`;
+                }
+            }
+            for (let i = 0; i < globalReferenceFiles.length; i++) {
+                const file = globalReferenceFiles[i];
+                if (file.type.startsWith('image/')) {
+                    const base64Data = await new Promise((resolve, reject) => {
+                        const reader = new FileReader();
+                        reader.onload = (e) => resolve(e.target.result.split(',')[1]);
+                        reader.onerror = () => reject(new Error("競品圖片讀取失敗"));
+                        reader.readAsDataURL(file);
+                    });
+                    refImageParts.push({ inlineData: { mimeType: file.type, data: base64Data } });
+                } else {
+                    const fileContent = await extractTextFromFile(file);
+                    referenceFileText += `\n--- [參考文檔 ${i+1}: ${file.name}] ---\n${fileContent}`;
+                }
+            }
+
+            const targetUrls = document.getElementById('url-input').value;
+            const kbUrls = document.getElementById('kb-urls').value;
+
+            if (targetUrls.trim()) {
+                if (subMsgEl) subMsgEl.innerText = "系統正在自動抓取目標網址內容...";
+                const urls = targetUrls.split('\n').filter(u => u.trim() !== "");
+                for (let i = 0; i < urls.length; i++) {
+                    const url = urls[i].trim();
+                    if (!url.startsWith('http')) {
+                        targetFileText += `\n--- [產品型號/關鍵字 ${i+1}: ${url}] ---\n(未提供網址，此為關鍵字或型號，請直接使用您的內建知識庫針對此項目進行發想)\n`;
+                        continue;
+                    }
+                    try {
+                        const scrapeRes = await fetchWithRetry('/api/scrape', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ url }) }, 3);
+                        if (scrapeRes && scrapeRes.text) targetFileText += `\n--- [目標網址 ${i+1}: ${url}] ---\n${scrapeRes.text}\n`;
+                    } catch (err) {
+                        targetFileText += `\n--- [目標網址 ${i+1}: ${url}] 失敗 ---\n(網頁無法存取，請以內建知識庫為主)\n`;
+                    }
+                }
+            }
+
+            if (kbUrls.trim()) {
+                if (subMsgEl) subMsgEl.innerText = "系統正在擷取企業知識庫網址...";
+                const urls = kbUrls.split('\n').filter(u => u.trim() !== "");
+                for (let i = 0; i < urls.length; i++) {
+                    const url = urls[i].trim();
+                    if (!url.startsWith('http')) {
+                        referenceFileText += `\n--- [參考關鍵字 ${i+1}: ${url}] ---\n(未提供網址，此為關鍵字，請以此作為參考發想)\n`;
+                        continue;
+                    }
+                    try {
+                        const scrapeRes = await fetchWithRetry('/api/scrape', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ url }) }, 2);
+                        if (scrapeRes && scrapeRes.text) referenceFileText += `\n--- [參考網址 ${i+1}: ${url}] ---\n${scrapeRes.text}\n`;
+                    } catch (err) {
+                        referenceFileText += `\n--- [參考網址 ${i+1}: ${url}] 失敗 ---\n(網頁無法存取，請略過此參考網址)\n`;
+                    }
+                }
+            }
+
+            const MAX_CHARS = 30000;
+            if (targetFileText.length > MAX_CHARS) {
+                targetFileText = targetFileText.substring(0, MAX_CHARS);
+                referenceFileText = "";
+            } else {
+                const remainingLimit = MAX_CHARS - targetFileText.length;
+                if (referenceFileText.length > remainingLimit) referenceFileText = referenceFileText.substring(0, remainingLimit);
+            }
+
+            return { targetFileText, referenceFileText, imageParts, refImageParts };
+        }
+
+        function buildArticleStep1Prompt(targetLangLabel, strategy) {
+            const strategyBiasNote = strategy === 'keyword_first'
+                ? 'Apply a scoring bonus to angles closer to commercial/purchase-decision intent: buying_guide, comparison_decision, vertical_application.'
+                : (strategy === 'brand_first'
+                    ? 'Apply a scoring bonus to angles closer to informational/thought-leadership intent: authority_definition, pain_point, technical_deep_dive, faq_digest.'
+                    : 'Do not apply any strategy bias; score purely on content fit.');
+
+            return `You are a senior B2B content strategist specializing in Generative Engine Optimization (GEO) — structuring content so AI answer engines (ChatGPT, Perplexity, Google AI Overviews, Gemini) are likely to cite it.
+
+**OUTPUT LANGUAGE FOR TITLES/REASONS**: MUST be **${targetLangLabel}**.
+
+**YOUR TASK**: Analyze the provided source content and propose 3 complete "Pillar + Cluster" topic bundles for a topic-cluster content strategy (HubSpot's Topic Cluster Model). Each bundle = 1 Pillar article (broad, comprehensive hub) + 3 Cluster articles (narrower, each a different angle, each able to link back to the pillar).
+
+**STEP A — FACT EXTRACTION (mandatory, do this first, silently)**:
+Extract ONLY what is explicitly present in the source content: product/topic category (not the specific SKU), 3-5 genuinely differentiating specs/capabilities, and explicitly mentioned target industries/use-cases (if none mentioned, note "not mentioned" — do NOT invent any).
+
+**STEP B — ANGLE POOL SCORING (score all 8 angles below, 1-10, based ONLY on how well Step A's real facts support each — an angle with no real supporting facts MUST score low, never inflated)**:
+1. buying_guide — comprehensive category buying/selection guide
+2. pain_point — solves a category-level pain point/problem
+3. authority_definition — foundational "what is X category" definition/authority piece
+4. vertical_application — named industries/verticals that use this (only viable if industries were explicitly mentioned in Step A)
+5. use_case_scenario — one specific operational scenario/workflow (only viable if a concrete scenario is inferable from real specs)
+6. technical_deep_dive — deep dive into ONE genuinely distinctive spec/technology from Step A
+7. comparison_decision — a real technology/approach trade-off relevant to this product (only viable if a real dichotomy exists, e.g. fanless vs fan-cooled)
+8. faq_digest — comprehensive Q&A digest covering the topic (near-universally viable as a safe fallback)
+
+**STRATEGY BIAS**: ${strategyBiasNote}
+
+**STEP C — PILLAR SELECTION (exactly 3 candidates, one per bundle)**:
+- Candidate 1 (GUARANTEED SLOT): the highest-scoring angle among the 4 "broad" angles (buying_guide, pain_point, authority_definition, vertical_application), using content-fit score PLUS a flat +2 bonus for being in this broad group.
+- Candidates 2 & 3 (OPEN COMPETITION): the top 2 highest-scoring angles among the REMAINING 7 angles (all 8 minus whichever won Candidate 1), using content-fit score ONLY — no bonus. These may be broad or narrow types, whichever genuinely scores highest.
+
+**STEP D — CLUSTER SELECTION (per bundle)**:
+For each of the 3 chosen pillar angles, select the 3 highest content-fit-scoring angles among the remaining 7 (excluding that bundle's own pillar angle) as its 3 cluster angles. Never repeat an angle within the same bundle.
+
+**STEP E — TITLE WRITING**:
+- Pillar title: broad, comprehensive framing, front-loads the primary category entity.
+- Cluster titles: narrow, specific, each clearly distinct from the pillar and from each other.
+- Each title needs a one-line REASON referencing a concrete fact from Step A (never generic marketing language). If an angle's real support is thin, say so honestly rather than overstating it.
+
+🚨 DO NOT WRAP YOUR RESPONSE IN MARKDOWN CODE BLOCKS. RETURN RAW TEXT. 🚨
+
+**MANDATORY OUTPUT FORMAT (exactly, for all 3 bundles)**:
+[BUNDLE_1]
+[PILLAR_TYPE]{one of: buying_guide|pain_point|authority_definition|vertical_application|use_case_scenario|technical_deep_dive|comparison_decision|faq_digest}[/PILLAR_TYPE]
+[PILLAR_TITLE]{title}[/PILLAR_TITLE]
+[PILLAR_REASON]{reason}[/PILLAR_REASON]
+[CLUSTER_1_TYPE]{type}[/CLUSTER_1_TYPE]
+[CLUSTER_1_TITLE]{title}[/CLUSTER_1_TITLE]
+[CLUSTER_1_REASON]{reason}[/CLUSTER_1_REASON]
+[CLUSTER_2_TYPE]{type}[/CLUSTER_2_TYPE]
+[CLUSTER_2_TITLE]{title}[/CLUSTER_2_TITLE]
+[CLUSTER_2_REASON]{reason}[/CLUSTER_2_REASON]
+[CLUSTER_3_TYPE]{type}[/CLUSTER_3_TYPE]
+[CLUSTER_3_TITLE]{title}[/CLUSTER_3_TITLE]
+[CLUSTER_3_REASON]{reason}[/CLUSTER_3_REASON]
+[/BUNDLE_1]
+[BUNDLE_2]
+...same structure...
+[/BUNDLE_2]
+[BUNDLE_3]
+...same structure...
+[/BUNDLE_3]`;
+        }
+
+        function parseArticleBundles(text) {
+            const bundleBlocks = Array.from((text || '').matchAll(/\[BUNDLE_\d+\]([\s\S]*?)\[\/BUNDLE_\d+\]/g)).map(m => m[1]);
+            return bundleBlocks.map(block => ({
+                pillar: {
+                    type: parseTaggedField(block, 'PILLAR_TYPE'),
+                    title: parseTaggedField(block, 'PILLAR_TITLE'),
+                    reason: parseTaggedField(block, 'PILLAR_REASON')
+                },
+                clusters: [1, 2, 3].map(n => ({
+                    type: parseTaggedField(block, `CLUSTER_${n}_TYPE`),
+                    title: parseTaggedField(block, `CLUSTER_${n}_TITLE`),
+                    reason: parseTaggedField(block, `CLUSTER_${n}_REASON`)
+                }))
+            })).filter(b => b.pillar.title);
+        }
+
+        window.runArticleStep1 = async ({ targetUrls, kbUrls, kbManual, geo, strategy, btn, outputContainer, resultArea, t }) => {
+            btn.disabled = true;
+            document.getElementById('submit-btn-text').innerText = t.processing;
+            btn.classList.add('opacity-75', 'cursor-not-allowed');
+            resultArea.classList.remove('hidden');
+            resultArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+            outputContainer.innerHTML = `
+                <div class="flex flex-col items-center justify-center py-20 text-[#005bac]">
+                    <i class="fas fa-circle-notch fa-spin text-5xl mb-6 opacity-80"></i>
+                    <p class="font-semibold text-xl tracking-wider">${t.articleStep1Title}</p>
+                    <p id="process-sub-msg" class="text-sm text-slate-500 mt-2 font-medium">${t.procSub}</p>
+                </div>`;
+
+            try {
+                const subMsgEl = document.getElementById('process-sub-msg');
+                const source = await gatherAllSourceContent(subMsgEl);
+                articleWorkflowState.source = source;
+                articleWorkflowState.geo = geo;
+                articleWorkflowState.strategy = strategy;
+                articleWorkflowState.kbManual = kbManual;
+
+                const { targetLangLabel } = getLangContext();
+                const systemPrompt = buildArticleStep1Prompt(targetLangLabel, strategy);
+                const promptText = `Brand Guidelines (Reference): ${kbManual}\n\n[SOURCE CONTENT]\n${source.targetFileText}\n\n${source.referenceFileText ? '[ADDITIONAL REFERENCE CONTEXT]\n' + source.referenceFileText : ''}`;
+                let partsArray = [{ text: promptText }];
+                if (source.imageParts.length > 0) partsArray = partsArray.concat(source.imageParts);
+
+                const payload = { contents: [{ parts: partsArray }], systemInstruction: { parts: [{ text: systemPrompt }] } };
+                const responseData = await fetchWithRetry('/api/generate', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+                const outputText = responseData.candidates?.[0]?.content?.parts?.[0]?.text;
+                if (!outputText) throw new Error(t.articleStep1Failed);
+
+                const bundles = parseArticleBundles(outputText);
+                if (bundles.length === 0) throw new Error(t.articleStep1Failed);
+
+                articleWorkflowState.bundles = bundles;
+                articleWorkflowState.selectedIndex = -1;
+                renderArticleBundlePicker(bundles);
+            } catch (e) {
+                outputContainer.innerHTML = `
+                    <div class="p-8 border-2 border-red-200 bg-red-50 rounded-2xl max-w-2xl mx-auto mt-10 shadow-lg">
+                        <h4 class="font-black text-red-700 mb-4 text-lg flex items-center gap-3"><i class="fas fa-exclamation-triangle text-2xl"></i> ${currentLang === 'en' ? 'Generation Failed' : (currentLang === 'zh-CN' ? '生成失败' : '生成失敗')}</h4>
+                        <p class="text-sm text-red-600 font-medium leading-relaxed">${e.message}</p>
+                    </div>`;
+            } finally {
+                btn.disabled = false;
+                btn.classList.remove('opacity-75', 'cursor-not-allowed');
+                document.getElementById('submit-btn-text').innerText = t.btnSubmit;
+            }
+        };
+
+        function renderArticleBundlePicker(bundles) {
+            const t = i18n[currentLang];
+            const cardHtml = bundles.map((b, idx) => {
+                const clusterRows = b.clusters.map((c, ci) => `
+                    <div class="pl-4 border-l-2 border-slate-200 mt-3">
+                        <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest bg-slate-100 px-2 py-0.5 rounded">${angleLabel(c.type)}</span>
+                        <input type="text" data-bundle="${idx}" data-role="cluster" data-idx="${ci}" value="${(c.title || '').replace(/"/g, '&quot;')}" class="w-full mt-1 px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-sm font-semibold text-slate-700 focus:border-[#005bac] outline-none">
+                        <p class="text-xs text-slate-400 mt-1 leading-relaxed">${c.reason || ''}</p>
+                    </div>
+                `).join('');
+                return `
+                <div id="bundle-card-${idx}" data-bundle-card="${idx}" class="bundle-card border-2 border-slate-200 rounded-2xl p-6 cursor-pointer hover:border-blue-300 transition-all bg-white">
+                    <div class="flex items-center gap-2 mb-2">
+                        <span class="text-[10px] font-black text-blue-600 uppercase tracking-widest bg-blue-50 px-2 py-0.5 rounded border border-blue-100">${angleLabel(b.pillar.type)}</span>
+                        <span class="text-[10px] font-black text-slate-400 uppercase">${t.articlePillarBadge}</span>
+                    </div>
+                    <input type="text" data-bundle="${idx}" data-role="pillar" value="${(b.pillar.title || '').replace(/"/g, '&quot;')}" class="w-full px-3 py-2.5 bg-white border border-slate-300 rounded-lg text-base font-black text-slate-800 focus:border-[#005bac] outline-none">
+                    <p class="text-xs text-slate-400 mt-1 leading-relaxed">${b.pillar.reason || ''}</p>
+                    ${clusterRows}
+                </div>`;
+            }).join('');
+
+            document.getElementById('output-container').innerHTML = `
+                <p class="text-sm font-bold text-slate-600 mb-4">${t.articleChooseBundle}</p>
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">${cardHtml}</div>
+                <div class="flex justify-center mt-8">
+                    <button id="confirm-bundle-btn" onclick="window.confirmArticleGeneration()" disabled class="opacity-50 cursor-not-allowed bg-[#005bac] text-white px-8 py-3.5 rounded-lg font-bold text-sm shadow-md flex items-center gap-3 transition-all">
+                        <i class="fas fa-magic"></i> ${t.articleConfirmGenerate}
+                    </button>
+                </div>`;
+
+            document.querySelectorAll('.bundle-card').forEach(card => {
+                card.addEventListener('click', () => window.selectArticleBundle(parseInt(card.dataset.bundleCard, 10)));
+            });
+            document.querySelectorAll('.bundle-card input').forEach(inp => inp.addEventListener('click', e => e.stopPropagation()));
+        }
+
+        window.selectArticleBundle = (idx) => {
+            articleWorkflowState.selectedIndex = idx;
+            document.querySelectorAll('.bundle-card').forEach((card, i) => {
+                if (i === idx) {
+                    card.classList.add('border-blue-500', 'ring-2', 'ring-blue-200', 'bg-blue-50/30');
+                    card.classList.remove('border-slate-200');
+                } else {
+                    card.classList.remove('border-blue-500', 'ring-2', 'ring-blue-200', 'bg-blue-50/30');
+                    card.classList.add('border-slate-200');
+                }
+            });
+            const confirmBtn = document.getElementById('confirm-bundle-btn');
+            confirmBtn.disabled = false;
+            confirmBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+        };
+
+        function buildArticleStep2Prompt(role, angleTypeLabel, myTitle, siblingTitles, targetLangLabel, brandName, grammarRule, strategy) {
+            const isPillar = role === 'pillar';
+            const wordCountRule = isPillar
+                ? '1200-2000 words for the BODY (this is the comprehensive pillar/hub piece — the most in-depth of the 4 articles).'
+                : '800-1200 words for the BODY (a focused cluster piece — narrower and shorter than the pillar).';
+            const strategyToneNote = strategy === 'keyword_first'
+                ? 'Lean toward a commercial/purchase-consideration tone — help the reader move toward a decision.'
+                : (strategy === 'brand_first'
+                    ? 'Lean toward a brand-authority/thought-leadership tone — establish expertise and trust.'
+                    : 'Use a balanced, informative tone.');
+            const crossRefInstruction = siblingTitles.length > 0
+                ? `**INTERNAL CROSS-REFERENCE (CRITICAL)**: This article is part of a 4-article topic cluster. The other 3 articles are: ${siblingTitles.map(s => `"${s}"`).join(', ')}. Naturally mention at least 1-2 of them by title within the BODY (e.g., "For a deeper dive on X, see our related article '{title}'"). Do NOT invent a URL or hyperlink — mention the title in prose only. ${isPillar ? 'As the pillar, briefly summarize what each cluster article covers.' : 'As a cluster piece, reference the pillar for the comprehensive overview.'}`
+                : '';
+
+            return `You are a senior B2B content writer and GEO (Generative Engine Optimization) specialist for the industrial computing (IPC/IIoT) sector, writing on behalf of ${brandName}.
+
+**OUTPUT LANGUAGE**: MUST be **${targetLangLabel}**. ENSURE ${grammarRule}.
+**ARTICLE ROLE**: ${isPillar ? 'PILLAR (comprehensive hub article)' : 'CLUSTER (focused supporting article)'}
+**CONTENT ANGLE**: ${angleTypeLabel}
+**ASSIGNED TITLE**: "${myTitle}" — use this exact title.
+**TONE**: ${strategyToneNote}
+
+${crossRefInstruction}
+
+**GEO STRUCTURAL RULES (2026 GEO/AEO citation-driver research, follow strictly)**:
+1. 🚨 FRONT-LOAD FACTS: ~44% of AI citations come from the first 30% of an article. Put the single most important, quotable fact in the first 2 sentences of the BODY.
+2. 🚨 KEY TAKEAWAYS FIRST: The [TLDR] block needs 3-5 bullet points, each a standalone, independently-citable factual statement (not a marketing teaser — must make sense quoted alone, out of context).
+3. 🚨 HEADING DISCIPLINE: BODY must use Markdown H2 (##) for major sections and H3 (###) for sub-sections. No skipped levels, no vague/decorative headings.
+4. 🚨 SECTION-OPENING SUMMARY: Every H2/H3 section's first sentence must state that section's conclusion, not build up to it.
+5. 🚨 PARAGRAPH LENGTH: 3-4 sentences max. Bold (**text**) the single most important fact/number per paragraph.
+6. ${wordCountRule}
+7. 🚨 NO FLUFF: Forbidden subjective adjectives without a supporting fact (e.g. "強化", "專業級", "頂級", "world-class", "cutting-edge"). Every claim must be backed by a concrete spec, mechanism, or named use-case from the source content.
+8. 🚨 ANTI-HALLUCINATION: Only state facts present in the provided source content or safe, general category knowledge. If specific data is unavailable, write in general category terms rather than inventing numbers.
+
+**[FAQ] REQUIREMENTS**: Exactly 5 Q&A pairs, each independently extractable (understandable with ZERO surrounding context — maps directly to FAQPage structured data). Each answer: 2-4 factual sentences, no fluff.
+
+🚨 DO NOT WRAP YOUR RESPONSE IN MARKDOWN CODE BLOCKS. RETURN RAW TEXT. 🚨
+
+**MANDATORY OUTPUT FORMAT**:
+[TITLE]${myTitle}[/TITLE]
+[META_DESCRIPTION]{150-160 character SERP summary}[/META_DESCRIPTION]
+[TLDR]
+- {Standalone citable fact 1}
+- {Standalone citable fact 2}
+- {Standalone citable fact 3}
+[/TLDR]
+[BODY]
+{Full Markdown article body with ## and ### headings, per rules above}
+[/BODY]
+[FAQ]
+Q1: {Question}
+A1: {Answer}
+Q2: {Question}
+A2: {Answer}
+Q3: {Question}
+A3: {Answer}
+Q4: {Question}
+A4: {Answer}
+Q5: {Question}
+A5: {Answer}
+[/FAQ]
+[TAGS]{Tag1}, {Tag2}, {Tag3}, {Tag4}[/TAGS]
+[CATEGORY]{Category}[/CATEGORY]`;
+        }
+
+        function parseArticleOutput(text) {
+            return {
+                title: parseTaggedField(text, 'TITLE'),
+                metaDescription: parseTaggedField(text, 'META_DESCRIPTION'),
+                tldr: parseTaggedField(text, 'TLDR'),
+                body: parseTaggedField(text, 'BODY'),
+                faq: parseTaggedField(text, 'FAQ'),
+                tags: parseTaggedField(text, 'TAGS'),
+                category: parseTaggedField(text, 'CATEGORY')
+            };
+        }
+
+        window.confirmArticleGeneration = async () => {
+            const idx = articleWorkflowState.selectedIndex;
+            if (idx < 0) return;
+            const t = i18n[currentLang];
+
+            const pillarInput = document.querySelector(`input[data-bundle="${idx}"][data-role="pillar"]`);
+            const clusterInputs = [0, 1, 2].map(ci => document.querySelector(`input[data-bundle="${idx}"][data-role="cluster"][data-idx="${ci}"]`));
+            const bundle = articleWorkflowState.bundles[idx];
+
+            const roles = [
+                { role: 'pillar', title: pillarInput.value.trim(), type: bundle.pillar.type },
+                { role: 'cluster', title: clusterInputs[0].value.trim(), type: bundle.clusters[0].type },
+                { role: 'cluster', title: clusterInputs[1].value.trim(), type: bundle.clusters[1].type },
+                { role: 'cluster', title: clusterInputs[2].value.trim(), type: bundle.clusters[2].type }
+            ];
+            const allTitles = roles.map(r => r.title);
+            const outputContainer = document.getElementById('output-container');
+            const results = [];
+
+            for (let i = 0; i < roles.length; i++) {
+                outputContainer.innerHTML = `
+                    <div class="flex flex-col items-center justify-center py-20 text-[#005bac]">
+                        <i class="fas fa-circle-notch fa-spin text-5xl mb-6 opacity-80"></i>
+                        <p class="font-semibold text-xl tracking-wider">${t.articleGenerating.replace('{n}', i + 1).replace('{total}', roles.length)}</p>
+                        <p class="text-sm text-slate-500 mt-2 font-medium max-w-md text-center">${roles[i].title}</p>
+                        <div class="w-64 h-2 bg-slate-100 rounded-full mt-6 overflow-hidden">
+                            <div class="h-full bg-[#005bac] transition-all" style="width:${Math.round((i / roles.length) * 100)}%"></div>
+                        </div>
+                    </div>`;
+                try {
+                    const siblingTitles = allTitles.filter((title, ti) => ti !== i);
+                    const { targetLangLabel, brandName, grammarRule } = getLangContext();
+                    const systemPrompt = buildArticleStep2Prompt(roles[i].role, angleLabel(roles[i].type), roles[i].title, siblingTitles, targetLangLabel, brandName, grammarRule, articleWorkflowState.strategy);
+
+                    const source = articleWorkflowState.source;
+                    const promptText = `Brand Guidelines (Reference): ${articleWorkflowState.kbManual}\n\n[SOURCE CONTENT]\n${source.targetFileText}\n\n${source.referenceFileText ? '[ADDITIONAL REFERENCE CONTEXT]\n' + source.referenceFileText : ''}`;
+                    let partsArray = [{ text: promptText }];
+                    if (source.imageParts.length > 0) partsArray = partsArray.concat(source.imageParts);
+
+                    const payload = { contents: [{ parts: partsArray }], systemInstruction: { parts: [{ text: systemPrompt }] } };
+                    const responseData = await fetchWithRetry('/api/generate', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+                    const outputText = responseData.candidates?.[0]?.content?.parts?.[0]?.text;
+                    if (!outputText) throw new Error('Empty response');
+
+                    const parsed = parseArticleOutput(outputText);
+                    parsed.role = roles[i].role;
+                    parsed.angleType = roles[i].type;
+                    results.push(parsed);
+                } catch (e) {
+                    results.push({ role: roles[i].role, angleType: roles[i].type, title: roles[i].title, error: e.message });
+                }
+            }
+
+            window.trackUsage();
+            renderArticleResults(results);
+        };
+
+        function renderArticleResults(results) {
+            const t = i18n[currentLang];
+            const container = document.getElementById('output-container');
+
+            const tabsHtml = results.map((r, i) => `
+                <button onclick="window.showArticleTab(${i})" class="article-tab-btn px-4 py-2.5 rounded-lg text-xs font-black uppercase tracking-wide transition-all ${i === 0 ? 'bg-[#005bac] text-white' : 'bg-slate-100 text-slate-500 hover:bg-slate-200'}">
+                    ${r.role === 'pillar' ? t.articlePillarBadge : angleLabel(r.angleType)}
+                </button>
+            `).join('');
+
+            const panelsHtml = results.map((r, i) => {
+                if (r.error) {
+                    return `<div id="article-panel-${i}" class="${i === 0 ? '' : 'hidden'} p-8 border-2 border-red-200 bg-red-50 rounded-2xl">
+                        <h4 class="font-black text-red-700 mb-2">${r.title}</h4>
+                        <p class="text-sm text-red-600">${r.error}</p>
+                    </div>`;
+                }
+                const toc = extractH2Headings(r.body);
+                const tocHtml = toc.length > 0 ? `
+                    <div class="bg-slate-50 border border-slate-200 rounded-xl p-5 mb-6">
+                        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">${t.articleTocLabel}</p>
+                        <ul class="space-y-1">${toc.map(h => `<li><a href="#${h.id}" class="text-sm text-blue-600 hover:underline">${h.text}</a></li>`).join('')}</ul>
+                    </div>` : '';
+
+                const tldrItems = (r.tldr || '').split('\n').map(l => l.replace(/^[-*•]\s*/, '').trim()).filter(Boolean);
+                const tldrHtml = tldrItems.map(item => `<li class="flex items-start gap-2 text-sm text-slate-700"><i class="fas fa-check-circle text-amber-500 mt-1"></i><span>${item}</span></li>`).join('');
+
+                const faqPairs = [];
+                let curQ = null;
+                (r.faq || '').split('\n').forEach(line => {
+                    const qMatch = line.match(/^Q\d*[:：]\s*(.+)/i);
+                    const aMatch = line.match(/^A\d*[:：]\s*(.+)/i);
+                    if (qMatch) curQ = qMatch[1].trim();
+                    else if (aMatch && curQ) { faqPairs.push({ q: curQ, a: aMatch[1].trim() }); curQ = null; }
+                });
+                const faqHtml = faqPairs.map(p => `
+                    <div class="border-b border-slate-100 pb-4 mb-4 last:border-0">
+                        <p class="text-sm font-bold text-slate-800 mb-2"><i class="fas fa-question-circle text-indigo-400 mr-2"></i>${p.q}</p>
+                        <p class="text-sm text-slate-600 leading-relaxed pl-6">${p.a}</p>
+                    </div>`).join('');
+
+                return `<div id="article-panel-${i}" class="${i === 0 ? '' : 'hidden'} bg-white border border-slate-200 rounded-2xl p-6 sm:p-10">
+                    <span class="text-[10px] font-black text-blue-600 uppercase tracking-widest bg-blue-50 px-2 py-0.5 rounded border border-blue-100">${angleLabel(r.angleType)}</span>
+                    <h2 class="text-2xl font-black text-slate-800 mt-3 mb-3">${r.title}</h2>
+                    <p class="text-sm text-slate-500 mb-6 italic">${r.metaDescription || ''}</p>
+                    <div class="bg-amber-50 border border-amber-200 rounded-xl p-5 mb-6">
+                        <p class="text-[10px] font-black text-amber-600 uppercase tracking-widest mb-3">${t.articleTldrLabel}</p>
+                        <ul class="space-y-2">${tldrHtml}</ul>
+                    </div>
+                    ${tocHtml}
+                    <div class="article-body">${simpleMarkdownToHtml(r.body)}</div>
+                    <div class="border-t border-slate-100 pt-8 mt-8">
+                        <p class="text-[11px] font-black text-indigo-600 uppercase tracking-widest bg-indigo-50 px-4 py-2 rounded-lg border border-indigo-100 shadow-sm inline-block mb-4">${t.articleFaqLabel}</p>
+                        ${faqHtml}
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-100 text-xs text-slate-400">
+                        <span class="font-bold">${t.tagLabel}</span> ${r.tags || ''} &nbsp;|&nbsp; <span class="font-bold">${t.catLabel}</span> ${r.category || ''}
+                    </div>
+                </div>`;
+            }).join('');
+
+            container.innerHTML = `<div class="flex flex-wrap gap-2 mb-6">${tabsHtml}</div>${panelsHtml}`;
+        }
+
+        window.showArticleTab = (idx) => {
+            document.querySelectorAll('.article-tab-btn').forEach((btn, i) => {
+                btn.className = `article-tab-btn px-4 py-2.5 rounded-lg text-xs font-black uppercase tracking-wide transition-all ${i === idx ? 'bg-[#005bac] text-white' : 'bg-slate-100 text-slate-500 hover:bg-slate-200'}`;
+            });
+            document.querySelectorAll('[id^="article-panel-"]').forEach((panel, i) => {
+                panel.classList.toggle('hidden', i !== idx);
+            });
+        };
+
         window.executeOptimization = async () => {
             const t = i18n[currentLang];
             
@@ -988,13 +1543,7 @@
             if (!targetUrls.trim() && globalUploadedFiles.length === 0 && kbUrls.trim() === "" && globalReferenceFiles.length === 0) return;
 
             if (contentType === 'article') {
-                resultArea.classList.remove('hidden');
-                resultArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                outputContainer.innerHTML = `
-                    <div class="p-8 border-2 border-blue-200 bg-blue-50 rounded-2xl max-w-2xl mx-auto mt-10 shadow-lg text-center">
-                        <i class="fas fa-tools text-3xl text-blue-500 mb-4"></i>
-                        <p class="text-sm text-blue-700 font-bold">${t.articlePlaceholder}</p>
-                    </div>`;
+                await window.runArticleStep1({ targetUrls, kbUrls, kbManual, geo, strategy, btn, outputContainer, resultArea, t });
                 return;
             }
 
@@ -1703,7 +2252,7 @@ ${scrapeRes.text}
                 <div class="w-10 h-10 bg-[#005bac] rounded-lg flex items-center justify-center shadow-md"><i class="fas fa-microchip text-white text-lg"></i></div>
                 <div>
                     <h1 class="text-base sm:text-xl font-bold text-slate-800 leading-tight" data-i18n="navTitle">GEO 內容生成系統</h1>
-                    <p class="text-[10px] sm:text-xs text-slate-500 font-medium tracking-wide mt-0.5 hidden sm:block" data-i18n="navVer">v1.19.6 選單排版優化版</p>
+                    <p class="text-[10px] sm:text-xs text-slate-500 font-medium tracking-wide mt-0.5 hidden sm:block" data-i18n="navVer">v1.20.0 SEO/GEO文章叢集版</p>
                 </div>
             </div>
             <div class="flex items-center gap-4">

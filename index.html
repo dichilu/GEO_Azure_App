@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GEO 內容優化系統 v1.20.0 SEO/GEO文章叢集版</title>
+    <title>GEO 內容優化系統 v1.21.0 日韓語系版</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
@@ -54,7 +54,7 @@
         const i18n = {
             'zh-TW': {
                 navTitle: "GEO 內容生成系統",
-                navVer: "v1.20.0 SEO/GEO文章叢集版",
+                navVer: "v1.21.0 日韓語系版",
                 authConnecting: "正在連接雲端...",
                 authSuccess: "雲端已連線",
                 authError: "連線異常",
@@ -125,11 +125,30 @@
                 adminTabUsers: "👥 使用者追蹤",
                 adminTabFb: "💬 系統建議清單",
                 clearAllFiles: "清除所有檔案",
-                adminRequired: "請先解鎖管理員權限"
+                adminRequired: "請先解鎖管理員權限",
+                standardSeoOptionLabel: "標準 SEO 優化",
+                toastValidEmail: "請輸入正確的信箱格式",
+                toastSubmitFailed: "送出失敗，請稍後再試",
+                toastUnlocked: "已解鎖",
+                adminLoadingData: "讀取數據中...",
+                adminNoRecords: "目前無任何紀錄",
+                adminNoFeedback: "目前無任何建議",
+                adminLoadFailed: "載入失敗",
+                toastDataCleared: "資料已清除同步",
+                toastClearFailed: "清除失敗",
+                toastGenerationFailed: "生成失敗",
+                daySuffix: "天",
+                timesSuffix: "次",
+                neverUsedLabel: "尚未使用",
+                scrapingTargetMsg: "系統正在自動抓取目標網址內容...",
+                scrapingKbMsg: "系統正在擷取大量企業知識庫網址 (可能需要較長時間)...",
+                imgReadFailedTarget: "目標圖片讀取失敗",
+                imgReadFailedRef: "競品圖片讀取失敗",
+                fileParseErrorTitle: "檔案解析攔截或失敗"
             },
             'zh-CN': {
                 navTitle: "GEO 内容生成系统",
-                navVer: "v1.20.0 SEO/GEO文章叢集版",
+                navVer: "v1.21.0 日韓語系版",
                 authConnecting: "正在连接云端...",
                 authSuccess: "云端已连线",
                 authError: "连线异常",
@@ -200,11 +219,30 @@
                 adminTabUsers: "👥 使用者追踪",
                 adminTabFb: "💬 系统建议清单",
                 clearAllFiles: "清除所有档案",
-                adminRequired: "请先解锁管理员权限"
+                adminRequired: "请先解锁管理员权限",
+                standardSeoOptionLabel: "标准 SEO 优化",
+                toastValidEmail: "请输入正确的信箱格式",
+                toastSubmitFailed: "送出失败，请稍后再试",
+                toastUnlocked: "已解锁",
+                adminLoadingData: "读取数据中...",
+                adminNoRecords: "目前无任何纪录",
+                adminNoFeedback: "目前无任何建议",
+                adminLoadFailed: "载入失败",
+                toastDataCleared: "资料已清除同步",
+                toastClearFailed: "清除失败",
+                toastGenerationFailed: "生成失败",
+                daySuffix: "天",
+                timesSuffix: "次",
+                neverUsedLabel: "尚未使用",
+                scrapingTargetMsg: "系统正在自动抓取目标网址内容...",
+                scrapingKbMsg: "系统正在抓取大量企业知识库网址 (可能需要较长时间)...",
+                imgReadFailedTarget: "目标图片读取失败",
+                imgReadFailedRef: "竞品图片读取失败",
+                fileParseErrorTitle: "档案解析拦截或失败"
             },
             'en': {
                 navTitle: "GEO Content System",
-                navVer: "v1.20.0 SEO/GEO文章叢集版",
+                navVer: "v1.21.0 日韓語系版",
                 authConnecting: "Connecting...",
                 authSuccess: "Cloud Connected",
                 authError: "Auth Error",
@@ -275,7 +313,214 @@
                 adminTabUsers: "👥 Users Tracking",
                 adminTabFb: "💬 Feedback List",
                 clearAllFiles: "Clear all files",
-                adminRequired: "Admin unlock required"
+                adminRequired: "Admin unlock required",
+                standardSeoOptionLabel: "Standard SEO",
+                toastValidEmail: "Valid email required",
+                toastSubmitFailed: "Failed, try again later",
+                toastUnlocked: "Unlocked",
+                adminLoadingData: "Loading data...",
+                adminNoRecords: "No records found",
+                adminNoFeedback: "No feedback found",
+                adminLoadFailed: "Load Failed",
+                toastDataCleared: "Data Cleared",
+                toastClearFailed: "Clear Failed",
+                toastGenerationFailed: "Generation Failed",
+                daySuffix: "days",
+                timesSuffix: "times",
+                neverUsedLabel: "Never",
+                scrapingTargetMsg: "Automatically scraping target URL content...",
+                scrapingKbMsg: "Fetching multiple knowledge-base URLs (this may take a while)...",
+                imgReadFailedTarget: "Failed to read target image",
+                imgReadFailedRef: "Failed to read competitor image",
+                fileParseErrorTitle: "File Parsing Blocked or Failed"
+            },
+            'ja': {
+                navTitle: "GEO コンテンツ生成システム",
+                navVer: "v1.21.0 日韓国語対応版",
+                authConnecting: "クラウドに接続中...",
+                authSuccess: "クラウド接続済み",
+                authError: "接続エラー",
+                sec1Title: "対象最適化商品",
+                pageLevel: "ページ階層",
+                levelPDP: "商品詳細ページ (PDP)",
+                levelPLP: "商品ラインページ (PLP)",
+                levelHome: "企業ホームページ (Home)",
+                urlPlaceholder: "「対象商品URL」を入力してください。AIがこれを基に正確な型番を特定し、SEOコンテキストおよびページ階層の参考情報として使用します。",
+                pdfTitle: "「関連ファイル」をドロップ (PDF, DOCX, XLSX, 画像, TXT 対応)",
+                fileSelected: "対象ファイル：",
+                refFileSelected: "参考ファイル：",
+                sec2Title: "企業ナレッジベース (補助参考資料)",
+                kbUrlLabel: "外部参考データ (一時サンドボックス)",
+                kbManualLabel: "ブランドガイドライン (グローバル補助参考)",
+                kbUrlPlaceholder: "「同系列商品ラインURL」または「技術ホワイトペーパー」を入力してください。",
+                refPdfTitle: "📎 参考ファイルを追加 (競合スクリーンショット/PDF)",
+                kbManualPlaceholder: "【管理者専用】クラウドにデータがありません。\nロックを解除して《アドバンテック グローバルブランド憲章》を貼り付けてください。\n\n例：\n1. 「安い」「タイムセール」等のB2C表現は禁止。\n2. 「ワイド温度」は「過酷環境ワイド温度対応 (-40~85°C)」に統一。\n3. Moxa等の競合製品への言及は禁止。",
+                btnReload: "クラウドから再取得",
+                btnReset: "データを消去",
+                rbuLabel: "RBU",
+                contentTypeLabel: "生成コンテンツ",
+                contentTypeProduct: "商品ページ用コピー",
+                contentTypeAds: "広告コピー",
+                contentTypeArticle: "SEO/GEO記事",
+                articleStep1Title: "AIがコンテンツを分析し、トピック候補を作成しています...",
+                articleStep1Failed: "トピック企画に失敗しました。回答内容を解析できません。入力内容を減らして再試行してください。",
+                articleChooseBundle: "ピラー＋クラスター記事の組み合わせを選択してください（タイトルはクリックして編集可能）：",
+                articlePillarBadge: "ピラー記事",
+                articleConfirmGenerate: "確定して4記事を生成",
+                articleGenerating: "第 {n}/{total} 記事を生成中：",
+                articleTldrLabel: "重要ポイント (Key Takeaways)",
+                articleTocLabel: "目次",
+                articleFaqLabel: "よくある質問 (FAQ)",
+                geoLabel: "対象最適化エンジン",
+                titleStrategyLabel: "生成戦略",
+                strategyAuto: "スマート自動バランス",
+                strategyKeyword: "購買意図優先 (見積り/仕様)",
+                strategyBrand: "ブランド権威優先 (正規品/在庫あり)",
+                btnSubmit: "AIコンテンツ生成を実行",
+                processing: "処理中...",
+                resTitle: "最適化結果",
+                btnExport: "Excelレポートを出力",
+                procTitle: "GEO Engine Active...",
+                procSub: "ブランドポジショニングと価値チェーンの特徴を分析中...",
+                copyAll: "すべてコピー",
+                copySingle: "コピー",
+                tagLabel: "タグ (Tags):",
+                catLabel: "カテゴリ (Cat):",
+                copyMeta: "タグをコピー",
+                confirmReset: "ナレッジベースを消去してもよろしいですか？消去後、クラウドデータも同期して削除されます。",
+                btnApiKey: "会社メールでログイン",
+                modalApiTitle: "システムログイン (利用統計のみ)",
+                modalApiDesc: "本システムは社内セキュアチャネルに接続済みのため、APIキーの入力は不要です。部門別利用状況の統計のため、会社メールアドレスを入力してください。",
+                modalApiSave: "保存してログイン",
+                modalApiSuccess: "ログインに成功しました！",
+                unlockBtn: "編集ロック解除",
+                unlockPrompt: "ブランドガイドラインのロックを解除するには管理者パスワードを入力してください：",
+                unlockSuccess: "ロックを解除しました！入力欄からフォーカスが外れると自動保存されます。",
+                unlockFail: "パスワードが間違っています。解除できません。",
+                btnFeedback: "ご意見・ご要望",
+                modalFbTitle: "システム改善のご意見を送信",
+                modalFbDesc: "発生した問題や追加してほしい機能をご記入ください。フォローアップのため、送信時にログイン用メールアドレスが添付されます。",
+                modalFbPlaceholder: "ご意見・ご要望を入力してください (例：XXXエンジンの最適化オプションを追加してほしい)...",
+                modalFbSubmit: "送信",
+                modalFbSuccess: "ご意見を送信しました。ありがとうございます！",
+                modalFbEmpty: "内容を入力してください！",
+                adminTabUsers: "👥 利用者トラッキング",
+                adminTabFb: "💬 ご意見一覧",
+                clearAllFiles: "すべてのファイルを消去",
+                adminRequired: "管理者権限のロック解除が必要です",
+                standardSeoOptionLabel: "標準SEO最適化",
+                toastValidEmail: "正しいメール形式を入力してください",
+                toastSubmitFailed: "送信に失敗しました。しばらくしてから再試行してください",
+                toastUnlocked: "ロック解除済み",
+                adminLoadingData: "データを読み込み中...",
+                adminNoRecords: "現在記録はありません",
+                adminNoFeedback: "現在ご意見はありません",
+                adminLoadFailed: "読み込みに失敗しました",
+                toastDataCleared: "データを消去し同期しました",
+                toastClearFailed: "消去に失敗しました",
+                toastGenerationFailed: "生成に失敗しました",
+                daySuffix: "日",
+                timesSuffix: "回",
+                neverUsedLabel: "未使用",
+                scrapingTargetMsg: "対象URLのコンテンツを自動取得しています...",
+                scrapingKbMsg: "企業ナレッジベースの複数URLを取得しています（時間がかかる場合があります）...",
+                imgReadFailedTarget: "対象画像の読み込みに失敗しました",
+                imgReadFailedRef: "競合画像の読み込みに失敗しました",
+                fileParseErrorTitle: "ファイル解析がブロックされたか失敗しました"
+            },
+            'ko': {
+                navTitle: "GEO 콘텐츠 생성 시스템",
+                navVer: "v1.21.0 한국어/일본어 지원 버전",
+                authConnecting: "클라우드 연결 중...",
+                authSuccess: "클라우드 연결됨",
+                authError: "연결 오류",
+                sec1Title: "대상 최적화 제품",
+                pageLevel: "페이지 레벨",
+                levelPDP: "제품 상세 페이지 (PDP)",
+                levelPLP: "제품 라인 페이지 (PLP)",
+                levelHome: "기업 홈페이지 (Home)",
+                urlPlaceholder: "'대상 제품 URL'을 입력하세요. AI가 이를 기반으로 정확한 모델명을 파악하고, SEO 컨텍스트 및 페이지 레벨의 참고 정보로 활용합니다.",
+                pdfTitle: "'관련 문서' 끌어다 놓기 (PDF, DOCX, XLSX, 이미지, TXT 지원)",
+                fileSelected: "대상 파일:",
+                refFileSelected: "참고 파일:",
+                sec2Title: "기업 지식 베이스 (보조 참고 자료)",
+                kbUrlLabel: "외부 참고 데이터 (임시 샌드박스)",
+                kbManualLabel: "브랜드 가이드라인 (전역 보조 참고)",
+                kbUrlPlaceholder: "'동일 제품군 URL' 또는 '기술 백서'를 입력하세요.",
+                refPdfTitle: "📎 참고 파일 추가 (경쟁사 스크린샷/PDF)",
+                kbManualPlaceholder: "【관리자 전용】클라우드에 데이터가 없습니다.\n잠금을 해제하고 《어드밴텍 글로벌 브랜드 헌장》을 붙여넣으세요.\n\n예시:\n1. '저가', '초특가' 등 B2C 표현 금지.\n2. '와이드 온도'는 '가혹 환경 와이드 온도 지원 (-40~85°C)'으로 통일.\n3. Moxa 등 경쟁사 언급 금지.",
+                btnReload: "클라우드에서 새로고침",
+                btnReset: "데이터 삭제",
+                rbuLabel: "RBU",
+                contentTypeLabel: "생성 콘텐츠",
+                contentTypeProduct: "웹사이트 제품 카피",
+                contentTypeAds: "광고 카피",
+                contentTypeArticle: "SEO/GEO 아티클",
+                articleStep1Title: "AI가 콘텐츠를 분석하고 주제 조합을 기획하는 중...",
+                articleStep1Failed: "주제 기획에 실패했습니다. 응답 내용을 분석할 수 없습니다. 입력 내용을 줄이고 다시 시도해 주세요.",
+                articleChooseBundle: "필러 + 클러스터 조합을 선택하세요 (제목은 클릭하여 수정 가능):",
+                articlePillarBadge: "필러 아티클",
+                articleConfirmGenerate: "확인 후 4편 생성",
+                articleGenerating: "{n}/{total}번째 아티클 생성 중:",
+                articleTldrLabel: "핵심 요약 (Key Takeaways)",
+                articleTocLabel: "목차",
+                articleFaqLabel: "자주 묻는 질문 (FAQ)",
+                geoLabel: "대상 최적화 엔진",
+                titleStrategyLabel: "생성 전략",
+                strategyAuto: "스마트 자동 균형",
+                strategyKeyword: "구매 의도 우선 (견적/사양)",
+                strategyBrand: "브랜드 권위 우선 (정품/재고)",
+                btnSubmit: "AI 콘텐츠 생성 실행",
+                processing: "처리 중...",
+                resTitle: "최적화 결과",
+                btnExport: "엑셀 보고서 내보내기",
+                procTitle: "GEO Engine Active...",
+                procSub: "브랜드 포지셔닝과 가치사슬 특징을 분석하는 중...",
+                copyAll: "전체 복사",
+                copySingle: "복사",
+                tagLabel: "태그 (Tags):",
+                catLabel: "분류 (Cat):",
+                copyMeta: "태그 복사",
+                confirmReset: "지식 베이스를 삭제하시겠습니까? 삭제 후 클라우드 데이터도 함께 초기화됩니다.",
+                btnApiKey: "회사 이메일로 로그인",
+                modalApiTitle: "시스템 로그인 (이용 통계 전용)",
+                modalApiDesc: "본 시스템은 사내 보안 채널에 연결되어 있어 API 키 입력이 필요 없습니다. 부서별 이용 빈도 통계를 위해 회사 이메일을 입력해 주세요.",
+                modalApiSave: "저장 후 로그인",
+                modalApiSuccess: "로그인 성공!",
+                unlockBtn: "편집 잠금 해제",
+                unlockPrompt: "브랜드 가이드라인 잠금을 해제하려면 관리자 비밀번호를 입력하세요:",
+                unlockSuccess: "잠금이 해제되었습니다! 입력창에서 포커스가 벗어나면 자동으로 저장됩니다.",
+                unlockFail: "비밀번호가 올바르지 않습니다. 잠금 해제가 거부되었습니다.",
+                btnFeedback: "의견 보내기",
+                modalFbTitle: "시스템 개선 의견 제출",
+                modalFbDesc: "발생한 문제나 추가하고 싶은 기능을 작성해 주세요. 후속 연락을 위해 제출 시 로그인 이메일이 함께 전송됩니다.",
+                modalFbPlaceholder: "의견을 입력하세요 (예: XXX 엔진 최적화 옵션 추가를 원함)...",
+                modalFbSubmit: "의견 제출",
+                modalFbSuccess: "의견이 제출되었습니다. 소중한 의견 감사합니다!",
+                modalFbEmpty: "내용을 입력해 주세요!",
+                adminTabUsers: "👥 사용자 트래킹",
+                adminTabFb: "💬 의견 목록",
+                clearAllFiles: "모든 파일 삭제",
+                adminRequired: "관리자 권한 잠금 해제가 필요합니다",
+                standardSeoOptionLabel: "표준 SEO 최적화",
+                toastValidEmail: "올바른 이메일 형식을 입력하세요",
+                toastSubmitFailed: "제출에 실패했습니다. 잠시 후 다시 시도해 주세요",
+                toastUnlocked: "잠금 해제됨",
+                adminLoadingData: "데이터 불러오는 중...",
+                adminNoRecords: "현재 기록이 없습니다",
+                adminNoFeedback: "현재 의견이 없습니다",
+                adminLoadFailed: "불러오기 실패",
+                toastDataCleared: "데이터가 삭제되고 동기화되었습니다",
+                toastClearFailed: "삭제 실패",
+                toastGenerationFailed: "생성 실패",
+                daySuffix: "일",
+                timesSuffix: "회",
+                neverUsedLabel: "미사용",
+                scrapingTargetMsg: "대상 URL 콘텐츠를 자동으로 수집하는 중...",
+                scrapingKbMsg: "기업 지식 베이스의 여러 URL을 수집하는 중입니다 (시간이 다소 걸릴 수 있습니다)...",
+                imgReadFailedTarget: "대상 이미지를 읽는 데 실패했습니다",
+                imgReadFailedRef: "경쟁사 이미지를 읽는 데 실패했습니다",
+                fileParseErrorTitle: "파일 분석이 차단되었거나 실패했습니다"
             }
         };
 
@@ -348,7 +593,7 @@
             const rbuSelect = document.getElementById('pref-rbu');
             const geoSelect = document.getElementById('pref-geo');
             if (!rbuSelect || rbuSelect.value !== 'ACN') {
-                geoSelect.options[0].text = currentLang === 'zh-TW' ? "標準 SEO 優化" : (currentLang === 'zh-CN' ? "标准 SEO 优化" : "Standard SEO");
+                geoSelect.options[0].text = i18n[currentLang].standardSeoOptionLabel;
             }
 
             document.getElementById('submit-btn-text').innerText = t.btnSubmit;
@@ -370,6 +615,7 @@
 
         window.changeLanguage = () => {
             currentLang = document.getElementById('lang-selector').value;
+            document.documentElement.lang = currentLang;
             updateUILanguage();
         };
 
@@ -454,7 +700,7 @@
             const emailInput = document.getElementById('user-email-input').value.trim();
             
             if (emailInput && !emailInput.includes('@')) {
-                window.showToast(currentLang === 'en' ? "Valid email required" : (currentLang === 'zh-CN' ? "请输入正确的信箱格式" : "請輸入正確的信箱格式"), "error");
+                window.showToast(i18n[currentLang].toastValidEmail, "error");
                 return;
             }
 
@@ -567,7 +813,7 @@
                 window.closeFeedbackModal();
             } catch (error) {
                 console.error("Feedback error:", error);
-                window.showToast(currentLang === 'en' ? 'Failed, try again later' : (currentLang === 'zh-CN' ? '送出失败，请稍后再试' : '送出失敗，請稍後再試'), 'error');
+                window.showToast(i18n[currentLang].toastSubmitFailed, 'error');
             } finally {
                 btn.innerHTML = oldHtml;
                 btn.disabled = false;
@@ -601,7 +847,7 @@
                 ta.classList.add('bg-yellow-50', 'text-slate-800', 'border-yellow-300', 'input-focus');
                 
                 const btn = document.getElementById('unlock-btn');
-                const unlockText = currentLang === 'en' ? 'Unlocked' : (currentLang === 'zh-CN' ? '已解锁' : '已解鎖');
+                const unlockText = i18n[currentLang].toastUnlocked;
                 btn.innerHTML = `<i class="fas fa-lock-open text-emerald-600"></i> <span data-i18n="unlockBtn">${unlockText}</span>`;
                 btn.classList.remove('bg-slate-100', 'text-slate-500');
                 btn.classList.add('bg-emerald-50', 'border-emerald-200', 'border');
@@ -646,7 +892,7 @@
             const tbodyUsers = document.getElementById('admin-table-body-users');
             const tbodyFb = document.getElementById('admin-table-body-feedback');
             
-            const loadingMsg = currentLang === 'en' ? 'Loading data...' : (currentLang === 'zh-CN' ? '读取数据中...' : '讀取數據中...');
+            const loadingMsg = i18n[currentLang].adminLoadingData;
             
             tbodyUsers.innerHTML = `<tr><td colspan="6" class="text-center py-8 text-slate-400"><i class="fas fa-circle-notch fa-spin text-xl text-blue-500 mb-2 block"></i>${loadingMsg}</td></tr>`;
             tbodyFb.innerHTML = `<tr><td colspan="3" class="text-center py-8 text-slate-400"><i class="fas fa-circle-notch fa-spin text-xl text-blue-500 mb-2 block"></i>${loadingMsg}</td></tr>`;
@@ -663,9 +909,9 @@
 
                 const now = new Date();
                 let htmlUsers = '';
-                const daySuffix = currentLang === 'en' ? 'days' : '天';
-                const timesSuffix = currentLang === 'en' ? 'times' : '次';
-                const naStr = currentLang === 'en' ? 'Never' : '尚未使用';
+                const daySuffix = i18n[currentLang].daySuffix;
+                const timesSuffix = i18n[currentLang].timesSuffix;
+                const naStr = i18n[currentLang].neverUsedLabel;
                 const fmtDateTime = (d) => `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')} ${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
 
                 stats.forEach((data) => {
@@ -687,7 +933,7 @@
                     </tr>`;
                 });
 
-                const noRecordMsg = currentLang === 'en' ? 'No records found' : (currentLang === 'zh-CN' ? '目前无任何纪录' : '目前無任何紀錄');
+                const noRecordMsg = i18n[currentLang].adminNoRecords;
                 if(stats.length === 0) htmlUsers = `<tr><td colspan="6" class="text-center py-8 text-slate-400 font-bold">${noRecordMsg}</td></tr>`;
                 tbodyUsers.innerHTML = htmlUsers;
 
@@ -709,12 +955,12 @@
                     </tr>`;
                 });
                 
-                const noFbMsg = currentLang === 'en' ? 'No feedback found' : (currentLang === 'zh-CN' ? '目前无任何建议' : '目前無任何建议');
+                const noFbMsg = i18n[currentLang].adminNoFeedback;
                 if(feedbacks.length === 0) htmlFb = `<tr><td colspan="3" class="text-center py-8 text-slate-400 font-bold">${noFbMsg}</td></tr>`;
                 tbodyFb.innerHTML = htmlFb;
                 
             } catch (e) {
-                const failMsg = currentLang === 'en' ? 'Load Failed' : (currentLang === 'zh-CN' ? '载入失败' : '載入失敗');
+                const failMsg = i18n[currentLang].adminLoadFailed;
                 tbodyUsers.innerHTML = `<tr><td colspan="6" class="text-center py-8 text-red-500 font-bold"><i class="fas fa-exclamation-triangle block text-2xl mb-2"></i>${failMsg}: ${e.message}</td></tr>`;
                 tbodyFb.innerHTML = `<tr><td colspan="3" class="text-center py-8 text-red-500 font-bold">${failMsg}</td></tr>`;
             }
@@ -758,9 +1004,9 @@
                 document.getElementById('kb-urls').value = "";
                 document.getElementById('kb-manual').value = "";
                 window.updateDashboard("", "");
-                window.showToast(currentLang === 'en' ? 'Data Cleared' : (currentLang === 'zh-CN' ? '资料已清除同步' : '資料已清除同步'), 'success');
+                window.showToast(i18n[currentLang].toastDataCleared, 'success');
             } catch (e) {
-                window.showToast(currentLang === 'en' ? 'Clear Failed' : (currentLang === 'zh-CN' ? '清除失败' : '清除失敗'), 'error');
+                window.showToast(i18n[currentLang].toastClearFailed, 'error');
             }
         };
 
@@ -971,14 +1217,14 @@
 
         // ===== SEO/GEO 文章：主題角度池（8 種，4 廣 4 窄），Step1 主題提案 / Step2 正式生成共用 =====
         const ARTICLE_ANGLE_POOL = [
-            { key: 'buying_guide', broad: true, 'zh-TW': '選購指南型', 'zh-CN': '选购指南型', en: 'Buying Guide' },
-            { key: 'pain_point', broad: true, 'zh-TW': '痛點解決型', 'zh-CN': '痛点解决型', en: 'Pain-Point Solution' },
-            { key: 'authority_definition', broad: true, 'zh-TW': '定義權威型', 'zh-CN': '定义权威型', en: 'Category Authority' },
-            { key: 'vertical_application', broad: true, 'zh-TW': '產業應用型', 'zh-CN': '产业应用型', en: 'Vertical Application' },
-            { key: 'use_case_scenario', broad: false, 'zh-TW': '應用場景型', 'zh-CN': '应用场景型', en: 'Use-Case Scenario' },
-            { key: 'technical_deep_dive', broad: false, 'zh-TW': '技術深挖型', 'zh-CN': '技术深挖型', en: 'Technical Deep-Dive' },
-            { key: 'comparison_decision', broad: false, 'zh-TW': '比較決策型', 'zh-CN': '比较决策型', en: 'Comparison & Decision' },
-            { key: 'faq_digest', broad: false, 'zh-TW': 'FAQ大全型', 'zh-CN': 'FAQ大全型', en: 'FAQ Digest' }
+            { key: 'buying_guide', broad: true, 'zh-TW': '選購指南型', 'zh-CN': '选购指南型', en: 'Buying Guide', ja: '選定ガイド型', ko: '구매 가이드형' },
+            { key: 'pain_point', broad: true, 'zh-TW': '痛點解決型', 'zh-CN': '痛点解决型', en: 'Pain-Point Solution', ja: '課題解決型', ko: '페인포인트 해결형' },
+            { key: 'authority_definition', broad: true, 'zh-TW': '定義權威型', 'zh-CN': '定义权威型', en: 'Category Authority', ja: '定義権威型', ko: '정의 권위형' },
+            { key: 'vertical_application', broad: true, 'zh-TW': '產業應用型', 'zh-CN': '产业应用型', en: 'Vertical Application', ja: '業界応用型', ko: '산업 응용형' },
+            { key: 'use_case_scenario', broad: false, 'zh-TW': '應用場景型', 'zh-CN': '应用场景型', en: 'Use-Case Scenario', ja: '活用シナリオ型', ko: '활용 시나리오형' },
+            { key: 'technical_deep_dive', broad: false, 'zh-TW': '技術深挖型', 'zh-CN': '技术深挖型', en: 'Technical Deep-Dive', ja: '技術詳解型', ko: '기술 심층형' },
+            { key: 'comparison_decision', broad: false, 'zh-TW': '比較決策型', 'zh-CN': '比较决策型', en: 'Comparison & Decision', ja: '比較検討型', ko: '비교 결정형' },
+            { key: 'faq_digest', broad: false, 'zh-TW': 'FAQ大全型', 'zh-CN': 'FAQ大全型', en: 'FAQ Digest', ja: 'FAQ総まとめ型', ko: 'FAQ 총정리형' }
         ];
         const angleLabel = (key) => {
             const item = ARTICLE_ANGLE_POOL.find(a => a.key === key);
@@ -1020,7 +1266,7 @@
                     <option value="ChatGPT">ChatGPT</option>
                     <option value="Perplexity">Perplexity</option>
                 `;
-                geoSelect.options[0].text = currentLang === 'zh-TW' ? "標準 SEO 優化" : (currentLang === 'zh-CN' ? "标准 SEO 优化" : "Standard SEO");
+                geoSelect.options[0].text = i18n[currentLang].standardSeoOptionLabel;
             }
         };
 
@@ -1034,10 +1280,20 @@
             const isZhTW = currentLang === 'zh-TW';
             const isZhCN = currentLang === 'zh-CN';
             const isZh = isZhTW || isZhCN;
-            const targetLangLabel = isZhTW ? 'Traditional Chinese (繁體中文)' : (isZhCN ? 'Simplified Chinese (简体中文). STRICTLY FORBIDDEN to use Traditional Chinese characters.' : 'English');
-            const brandName = isZh ? (isZhCN ? '研华' : '研華') : 'Advantech';
-            const grammarRule = isZh ? (isZhCN ? 'NATIVE SIMPLIFIED CHINESE GRAMMAR' : 'NATIVE CHINESE GRAMMAR') : 'NATIVE ENGLISH GRAMMAR';
-            return { isZhTW, isZhCN, isZh, targetLangLabel, brandName, grammarRule };
+            const isJa = currentLang === 'ja';
+            const isKo = currentLang === 'ko';
+            const targetLangLabel = isZhTW ? 'Traditional Chinese (繁體中文)'
+                : isZhCN ? 'Simplified Chinese (简体中文). STRICTLY FORBIDDEN to use Traditional Chinese characters.'
+                : isJa ? 'Japanese (日本語)'
+                : isKo ? 'Korean (한국어)'
+                : 'English';
+            const brandName = isZhCN ? '研华' : isZh ? '研華' : isJa ? 'アドバンテック' : isKo ? '어드밴텍' : 'Advantech';
+            const grammarRule = isZhCN ? 'NATIVE SIMPLIFIED CHINESE GRAMMAR'
+                : isZh ? 'NATIVE CHINESE GRAMMAR'
+                : isJa ? 'NATIVE JAPANESE GRAMMAR'
+                : isKo ? 'NATIVE KOREAN GRAMMAR'
+                : 'NATIVE ENGLISH GRAMMAR';
+            return { isZhTW, isZhCN, isZh, isJa, isKo, targetLangLabel, brandName, grammarRule };
         };
 
         const parseTaggedField = (text, tag) => {
@@ -1057,7 +1313,7 @@
                     const base64Data = await new Promise((resolve, reject) => {
                         const reader = new FileReader();
                         reader.onload = (e) => resolve(e.target.result.split(',')[1]);
-                        reader.onerror = () => reject(new Error("目標圖片讀取失敗"));
+                        reader.onerror = () => reject(new Error(i18n[currentLang].imgReadFailedTarget));
                         reader.readAsDataURL(file);
                     });
                     imageParts.push({ inlineData: { mimeType: file.type, data: base64Data } });
@@ -1072,7 +1328,7 @@
                     const base64Data = await new Promise((resolve, reject) => {
                         const reader = new FileReader();
                         reader.onload = (e) => resolve(e.target.result.split(',')[1]);
-                        reader.onerror = () => reject(new Error("競品圖片讀取失敗"));
+                        reader.onerror = () => reject(new Error(i18n[currentLang].imgReadFailedRef));
                         reader.readAsDataURL(file);
                     });
                     refImageParts.push({ inlineData: { mimeType: file.type, data: base64Data } });
@@ -1086,7 +1342,7 @@
             const kbUrls = document.getElementById('kb-urls').value;
 
             if (targetUrls.trim()) {
-                if (subMsgEl) subMsgEl.innerText = "系統正在自動抓取目標網址內容...";
+                if (subMsgEl) subMsgEl.innerText = i18n[currentLang].scrapingTargetMsg;
                 const urls = targetUrls.split('\n').filter(u => u.trim() !== "");
                 for (let i = 0; i < urls.length; i++) {
                     const url = urls[i].trim();
@@ -1104,7 +1360,7 @@
             }
 
             if (kbUrls.trim()) {
-                if (subMsgEl) subMsgEl.innerText = "系統正在擷取企業知識庫網址...";
+                if (subMsgEl) subMsgEl.innerText = i18n[currentLang].scrapingKbMsg;
                 const urls = kbUrls.split('\n').filter(u => u.trim() !== "");
                 for (let i = 0; i < urls.length; i++) {
                     const url = urls[i].trim();
@@ -1256,7 +1512,7 @@ For each of the 3 chosen pillar angles, select the 3 highest content-fit-scoring
             } catch (e) {
                 outputContainer.innerHTML = `
                     <div class="p-8 border-2 border-red-200 bg-red-50 rounded-2xl max-w-2xl mx-auto mt-10 shadow-lg">
-                        <h4 class="font-black text-red-700 mb-4 text-lg flex items-center gap-3"><i class="fas fa-exclamation-triangle text-2xl"></i> ${currentLang === 'en' ? 'Generation Failed' : (currentLang === 'zh-CN' ? '生成失败' : '生成失敗')}</h4>
+                        <h4 class="font-black text-red-700 mb-4 text-lg flex items-center gap-3"><i class="fas fa-exclamation-triangle text-2xl"></i> ${i18n[currentLang].toastGenerationFailed}</h4>
                         <p class="text-sm text-red-600 font-medium leading-relaxed">${e.message}</p>
                     </div>`;
             } finally {
@@ -1574,7 +1830,7 @@ A5: {Answer}
                         const base64Data = await new Promise((resolve, reject) => {
                             const reader = new FileReader();
                             reader.onload = (e) => resolve(e.target.result.split(',')[1]); 
-                            reader.onerror = (e) => reject(new Error("目標圖片讀取失敗"));
+                            reader.onerror = (e) => reject(new Error(i18n[currentLang].imgReadFailedTarget));
                             reader.readAsDataURL(file);
                         });
                         imageParts.push({ inlineData: { mimeType: file.type, data: base64Data } });
@@ -1590,7 +1846,7 @@ A5: {Answer}
                         const base64Data = await new Promise((resolve, reject) => {
                             const reader = new FileReader();
                             reader.onload = (e) => resolve(e.target.result.split(',')[1]); 
-                            reader.onerror = (e) => reject(new Error("競品圖片讀取失敗"));
+                            reader.onerror = (e) => reject(new Error(i18n[currentLang].imgReadFailedRef));
                             reader.readAsDataURL(file);
                         });
                         refImageParts.push({ inlineData: { mimeType: file.type, data: base64Data } });
@@ -1602,7 +1858,7 @@ A5: {Answer}
 
                 // --- 新增：自動透過後端抓取 Target URLs 的真實內容 ---
                 if (targetUrls.trim()) {
-                    document.getElementById('process-sub-msg').innerText = "系統正在自動抓取目標網址內容...";
+                    document.getElementById('process-sub-msg').innerText = i18n[currentLang].scrapingTargetMsg;
                     const urls = targetUrls.split('\n').filter(u => u.trim() !== "");
                     for (let i = 0; i < urls.length; i++) {
                         const url = urls[i].trim();
@@ -1637,7 +1893,7 @@ ${scrapeRes.text}
 
                 // --- 新增：自動透過後端抓取 Reference URLs (KB) 的真實內容 ---
                 if (kbUrls.trim()) {
-                    document.getElementById('process-sub-msg').innerText = "系統正在擷取大量企業知識庫網址 (可能需要較長時間)...";
+                    document.getElementById('process-sub-msg').innerText = i18n[currentLang].scrapingKbMsg;
                     const urls = kbUrls.split('\n').filter(u => u.trim() !== "");
                     for (let i = 0; i < urls.length; i++) {
                         const url = urls[i].trim();
@@ -1687,7 +1943,7 @@ ${scrapeRes.text}
             } catch (e) {
                 outputContainer.innerHTML = `
                     <div class="p-8 border-2 border-red-200 bg-red-50 rounded-2xl max-w-2xl mx-auto mt-10 shadow-lg">
-                        <h4 class="font-black text-red-700 mb-4 text-lg flex items-center gap-3"><i class="fas fa-exclamation-triangle text-2xl"></i> 檔案解析攔截或失敗</h4>
+                        <h4 class="font-black text-red-700 mb-4 text-lg flex items-center gap-3"><i class="fas fa-exclamation-triangle text-2xl"></i> ${i18n[currentLang].fileParseErrorTitle}</h4>
                         <p class="text-sm text-red-600 font-medium leading-relaxed">${e.message}</p>
                     </div>`;
                 btn.disabled = false;
@@ -1699,22 +1955,36 @@ ${scrapeRes.text}
             const isZhTW = currentLang === 'zh-TW';
             const isZhCN = currentLang === 'zh-CN';
             const isZh = isZhTW || isZhCN;
-            
-            const targetLangLabel = isZhTW ? 'Traditional Chinese (繁體中文)' : 
-                                   (isZhCN ? 'Simplified Chinese (简体中文). STRICTLY FORBIDDEN to use Traditional Chinese characters.' : 'English');
-            
-            const brandName = isZh ? (isZhCN ? '研华' : '研華') : 'Advantech';
-            const chineseType = isZhTW ? 'Trad. Chinese' : 'Simp. Chinese';
-            
-            const adHeadLen = isZh ? `13-15 ${chineseType} characters (26-30 Bytes)` : '25-30 characters';
-            const adDescLen = isZh ? `40-45 ${chineseType} characters (80-90 Bytes)` : '80-90 characters';
-            
-            const titleLen = isZh ? `MAXIMUM 28 ${chineseType} characters (including symbols and the brand name). IF YOU EXCEED 28 CHARACTERS, YOU FAIL.` : 'STRICTLY UNDER 55 characters.';
-            const descLen = isZh ? `STRICTLY 70-75 ${chineseType} characters (Max 150 Bytes).` : 'STRICTLY 140-150 characters.';
-            const grammarRule = isZh ? (isZhCN ? 'NATIVE SIMPLIFIED CHINESE GRAMMAR' : 'NATIVE CHINESE GRAMMAR') : 'NATIVE ENGLISH GRAMMAR';
-            
-            const catNameEx = isZh ? (isZhCN ? "'无风扇边缘运算系统'" : "'無風扇邊緣運算系统'") : "'Compact Fanless Computer'";
-            const ctaWords = isZh ? (isZhCN ? "CTA Power Words (e.g., '立即联系专家评估', '索取专属报价')" : "CTA Power Words (e.g., '立即聯繫專家評估', '索取專屬報價')") : "Short CTA (e.g., 'Buy now', 'Learn more', 'Contact us')";
+            const isJa = currentLang === 'ja';
+            const isKo = currentLang === 'ko';
+            const isWideChar = isZh || isJa || isKo; // 全形字語言，字元數換算方式相同（1 字 = 2 Bytes）
+
+            const targetLangLabel = isZhTW ? 'Traditional Chinese (繁體中文)'
+                : isZhCN ? 'Simplified Chinese (简体中文). STRICTLY FORBIDDEN to use Traditional Chinese characters.'
+                : isJa ? 'Japanese (日本語)'
+                : isKo ? 'Korean (한국어)'
+                : 'English';
+
+            const brandName = isZhCN ? '研华' : isZh ? '研華' : isJa ? 'アドバンテック' : isKo ? '어드밴텍' : 'Advantech';
+            const wideCharLangName = isZhTW ? 'Trad. Chinese' : isZhCN ? 'Simp. Chinese' : isJa ? 'Japanese' : isKo ? 'Korean' : '';
+
+            const adHeadLen = isWideChar ? `13-15 ${wideCharLangName} characters (26-30 Bytes)` : '25-30 characters';
+            const adDescLen = isWideChar ? `40-45 ${wideCharLangName} characters (80-90 Bytes)` : '80-90 characters';
+
+            const titleLen = isWideChar ? `MAXIMUM 28 ${wideCharLangName} characters (including symbols and the brand name). IF YOU EXCEED 28 CHARACTERS, YOU FAIL.` : 'STRICTLY UNDER 55 characters.';
+            const descLen = isWideChar ? `STRICTLY 70-75 ${wideCharLangName} characters (Max 150 Bytes).` : 'STRICTLY 140-150 characters.';
+            const grammarRule = isZhCN ? 'NATIVE SIMPLIFIED CHINESE GRAMMAR'
+                : isZh ? 'NATIVE CHINESE GRAMMAR'
+                : isJa ? 'NATIVE JAPANESE GRAMMAR'
+                : isKo ? 'NATIVE KOREAN GRAMMAR'
+                : 'NATIVE ENGLISH GRAMMAR';
+
+            const catNameEx = isZhCN ? "'无风扇边缘运算系统'" : isZh ? "'無風扇邊緣運算系统'" : isJa ? "'ファンレスエッジコンピュータ'" : isKo ? "'팬리스 엣지 컴퓨터'" : "'Compact Fanless Computer'";
+            const ctaWords = isZhCN ? "CTA Power Words (e.g., '立即联系专家评估', '索取专属报价')"
+                : isZh ? "CTA Power Words (e.g., '立即聯繫專家評估', '索取專屬報價')"
+                : isJa ? "CTA Power Words (例：「今すぐ専門家に相談」「見積もりを依頼」)"
+                : isKo ? "CTA Power Words (예: '지금 전문가에게 문의', '견적 요청하기')"
+                : "Short CTA (e.g., 'Buy now', 'Learn more', 'Contact us')";
 
             let pageLevelInstruction = "";
             let featureInstruction = "";
@@ -1738,11 +2008,13 @@ ${scrapeRes.text}
 
             let systemPrompt = "";
 
-            let adsLongHeadlineRule = isZh 
+            let adsLongHeadlineRule = isZh
                 ? `🚨 IDENTITY LOCK: EVERY SINGLE line MUST explicitly start with the Brand and Product/Series name (e.g., "${brandName} [Model/Series]...").\n                   🚨 READABILITY: You MUST use full-width commas (，) to separate clauses.`
+                : isJa
+                ? `🚨 IDENTITY LOCK: EVERY SINGLE line MUST explicitly start with the Brand and Product/Series name (e.g., "${brandName} [Model/Series]...").\n                   🚨 READABILITY: You MUST use Japanese full-width commas (、) to separate clauses.`
                 : `🚨 IDENTITY LOCK: Start with "${brandName}". Keep product names brief.\n                   🚨 READABILITY: Use half-width commas (,). BE EXTREMELY CONCISE to fit under 90 chars.`;
-            
-            let adsDescRule = isZh
+
+            let adsDescRule = isWideChar
                 ? `🚨 ROLE: Appears below headlines. MUST be complete sentences elaborating on benefits and MUST end with a strong Call-To-Action (CTA).`
                 : `🚨 ROLE: Appears below headlines. Use concise phrases (not necessarily full sentences) to save space. MUST end with a SHORT CTA (e.g., 'Buy now', 'Contact us').`;
 
@@ -1838,13 +2110,15 @@ ${scrapeRes.text}
 
                 if (isZh) {
                     strategyInstruction += `\n6. **SEAMLESS FUSION (CRITICAL)**: For Chinese titles, you MUST seamlessly combine the USP and Category (or Scenario) into a single professional compound noun WITHOUT ANY spaces, colons (：), hyphens (-), or connectors like "的" between them. Use a single half-width space AFTER the Model/Series name. (e.g., "ARK-1220 極致精巧無風扇工控機 | 研華").`;
+                } else if (isJa) {
+                    strategyInstruction += `\n6. **SEAMLESS FUSION (CRITICAL)**: For Japanese titles, you MUST seamlessly combine the USP and Category (or Scenario) into a single professional compound phrase WITHOUT ANY spaces or connecting particles like "の" between them (Japanese does not use spaces between words). Use a single half-width space AFTER the Model/Series name. (e.g., "ARK-1220 高耐久ファンレス産業用PC | アドバンテック").`;
                 }
 
                 let descFormatInstruction = "{Description}";
                 let faqFormatInstruction = "";
                 
-                const faqDepthInstruction = isZh 
-                    ? `🚨 FAQ DEPTH & DENSITY REQUIREMENT: Each answer MUST be an in-depth, expert-level explanation of APPROXIMATELY 150 CHINESE CHARACTERS. 🚨 FORMAT FORCING: Output EACH answer as a SINGLE, highly condensed paragraph. ABSOLUTELY NO bullet points, numbered lists, or line breaks within a single answer. Maximize Data Density by seamlessly integrating precise specs and commercial benefits into fluid sentences. SHALLOW OR FLUFFY ANSWERS ARE STRICTLY FORBIDDEN.` 
+                const faqDepthInstruction = isWideChar
+                    ? `🚨 FAQ DEPTH & DENSITY REQUIREMENT: Each answer MUST be an in-depth, expert-level explanation of APPROXIMATELY 150 ${wideCharLangName.toUpperCase()} CHARACTERS. 🚨 FORMAT FORCING: Output EACH answer as a SINGLE, highly condensed paragraph. ABSOLUTELY NO bullet points, numbered lists, or line breaks within a single answer. Maximize Data Density by seamlessly integrating precise specs and commercial benefits into fluid sentences. SHALLOW OR FLUFFY ANSWERS ARE STRICTLY FORBIDDEN.`
                     : `🚨 FAQ DEPTH & DENSITY REQUIREMENT: Each answer MUST be an in-depth, expert-level explanation of APPROXIMATELY 75 WORDS. 🚨 FORMAT FORCING: Output EACH answer as a SINGLE, highly condensed paragraph. ABSOLUTELY NO bullet points, numbered lists, or line breaks within a single answer. Maximize Data Density by seamlessly integrating precise specs and commercial benefits into fluid sentences. SHALLOW OR FLUFFY ANSWERS ARE STRICTLY FORBIDDEN.`;
 
                 if (geo === "Claude") {
@@ -1901,7 +2175,7 @@ ${scrapeRes.text}
                 - **TITLE**: ${titleLen}
                 - **DESCRIPTION**: ${descLen}
                 
-                **[TL;DR] 核心摘要 (極限 ${isZh ? '200 Bytes / 約 100 ' + chineseType + ' characters' : '150 characters'})**: 
+                **[TL;DR] 核心摘要 (極限 ${isWideChar ? '200 Bytes / 約 100 ' + wideCharLangName + ' characters' : '150 characters'})**:
                 🚨 專為 AI 爬蟲 (Perplexity/SearchGPT) 設計的極簡摘要。精準定義「這是什麼、給誰用、最大亮點」。嚴禁任何行銷廢話。
                 
                 **ADVANCED GEO STRATEGIES**:
@@ -1991,7 +2265,7 @@ ${scrapeRes.text}
             } catch (e) {
                 outputContainer.innerHTML = `
                     <div class="p-8 border-2 border-red-200 bg-red-50 rounded-2xl max-w-2xl mx-auto mt-10 shadow-lg">
-                        <h4 class="font-black text-red-700 mb-4 text-lg flex items-center gap-3"><i class="fas fa-exclamation-triangle text-2xl"></i> ${currentLang === 'en' ? 'Generation Failed' : (currentLang === 'zh-CN' ? '生成失败' : '生成失敗')}</h4>
+                        <h4 class="font-black text-red-700 mb-4 text-lg flex items-center gap-3"><i class="fas fa-exclamation-triangle text-2xl"></i> ${i18n[currentLang].toastGenerationFailed}</h4>
                         <p class="text-sm text-red-600 font-medium leading-relaxed">${e.message}</p>
                     </div>`;
             } finally {
@@ -2007,16 +2281,20 @@ ${scrapeRes.text}
             const t = i18n[currentLang];
             const isZhTW = currentLang === 'zh-TW';
             const isZhCN = currentLang === 'zh-CN';
-            
-            const ftLabel = isZhTW ? 'FEATURES (重點特徵)' : (isZhCN ? 'FEATURES (重点特征)' : 'FEATURES');
-            const tldrLabel = isZhTW ? 'TL;DR (AI 摘要抓取點)' : (isZhCN ? 'TL;DR (AI 摘要抓取点)' : 'TL;DR (AI Summary Hook)');
-            const faqLabel = isZhTW ? 'Expert FAQ (語義對比推理)' : (isZhCN ? 'Expert FAQ (语义对比推理)' : 'Expert FAQ');
-            const metaTitleLabel = isZhTW ? 'Meta Title (意圖與權威鎖定)' : (isZhCN ? 'Meta Title (意图与权威锁定)' : 'Meta Title (Locked Intent)');
-            const metaDescLabel = isZhTW ? 'Meta Description (CTA / 痛點開場)' : (isZhCN ? 'Meta Description (CTA / 痛点开场)' : 'Meta Description (Hook)');
-            const adsKeywordLabel = isZhTW ? '廣告關鍵字矩陣 (20組)' : (isZhCN ? '广告关键字矩阵 (20组)' : 'Ads Keywords (20 terms)');
-            const adsHeadlineLabel = isZhTW ? '短標題 (上限 30 Bytes)' : (isZhCN ? '短标题 (上限 30 Bytes)' : 'Headlines (Max 30 Bytes)');
-            const adsLongLabel = isZhTW ? '長標題 (上限 90 Bytes)' : (isZhCN ? '长标题 (上限 90 Bytes)' : 'Long Headlines (Max 90 Bytes)');
-            const adsDescLabel = isZhTW ? '廣告描述 (上限 90 Bytes)' : (isZhCN ? '广告描述 (上限 90 Bytes)' : 'Ads Descriptions (Max 90 Bytes)');
+            const isJa = currentLang === 'ja';
+            const isKo = currentLang === 'ko';
+
+            const pick = (zhTW, zhCN, ja, ko, en) => isZhTW ? zhTW : isZhCN ? zhCN : isJa ? ja : isKo ? ko : en;
+
+            const ftLabel = pick('FEATURES (重點特徵)', 'FEATURES (重点特征)', 'FEATURES (主要特徴)', 'FEATURES (주요 특징)', 'FEATURES');
+            const tldrLabel = pick('TL;DR (AI 摘要抓取點)', 'TL;DR (AI 摘要抓取点)', 'TL;DR (AI 要約抽出ポイント)', 'TL;DR (AI 요약 추출 포인트)', 'TL;DR (AI Summary Hook)');
+            const faqLabel = pick('Expert FAQ (語義對比推理)', 'Expert FAQ (语义对比推理)', 'Expert FAQ (意味論的対比推論)', 'Expert FAQ (의미론적 대비 추론)', 'Expert FAQ');
+            const metaTitleLabel = pick('Meta Title (意圖與權威鎖定)', 'Meta Title (意图与权威锁定)', 'Meta Title (意図と権威のロック)', 'Meta Title (의도와 권위 고정)', 'Meta Title (Locked Intent)');
+            const metaDescLabel = pick('Meta Description (CTA / 痛點開場)', 'Meta Description (CTA / 痛点开场)', 'Meta Description (CTA / 課題提起)', 'Meta Description (CTA / 페인포인트 도입)', 'Meta Description (Hook)');
+            const adsKeywordLabel = pick('廣告關鍵字矩陣 (20組)', '广告关键字矩阵 (20组)', '広告キーワードマトリクス (20組)', '광고 키워드 매트릭스 (20개)', 'Ads Keywords (20 terms)');
+            const adsHeadlineLabel = pick('短標題 (上限 30 Bytes)', '短标题 (上限 30 Bytes)', '短見出し (上限 30 Bytes)', '짧은 헤드라인 (최대 30 Bytes)', 'Headlines (Max 30 Bytes)');
+            const adsLongLabel = pick('長標題 (上限 90 Bytes)', '长标题 (上限 90 Bytes)', '長見出し (上限 90 Bytes)', '긴 헤드라인 (최대 90 Bytes)', 'Long Headlines (Max 90 Bytes)');
+            const adsDescLabel = pick('廣告描述 (上限 90 Bytes)', '广告描述 (上限 90 Bytes)', '広告説明文 (上限 90 Bytes)', '광고 설명 (최대 90 Bytes)', 'Ads Descriptions (Max 90 Bytes)');
             
             const segments = text.split(/###\s*\[?URL_START\]?/gi).filter(s => s.trim() !== "");
             lastResultsData = []; 
@@ -2252,7 +2530,7 @@ ${scrapeRes.text}
                 <div class="w-10 h-10 bg-[#005bac] rounded-lg flex items-center justify-center shadow-md"><i class="fas fa-microchip text-white text-lg"></i></div>
                 <div>
                     <h1 class="text-base sm:text-xl font-bold text-slate-800 leading-tight" data-i18n="navTitle">GEO 內容生成系統</h1>
-                    <p class="text-[10px] sm:text-xs text-slate-500 font-medium tracking-wide mt-0.5 hidden sm:block" data-i18n="navVer">v1.20.0 SEO/GEO文章叢集版</p>
+                    <p class="text-[10px] sm:text-xs text-slate-500 font-medium tracking-wide mt-0.5 hidden sm:block" data-i18n="navVer">v1.21.0 日韓語系版</p>
                 </div>
             </div>
             <div class="flex items-center gap-4">
@@ -2268,9 +2546,11 @@ ${scrapeRes.text}
                 
                 <div class="relative group">
                     <select id="lang-selector" onchange="window.changeLanguage()" class="appearance-none bg-white hover:bg-slate-50 text-slate-600 font-semibold text-xs pl-4 pr-8 py-2 rounded-md border border-slate-200 shadow-sm transition-all outline-none focus:border-blue-500 cursor-pointer active:scale-95">
+                        <option value="en" selected>English</option>
+                        <option value="ja">日本語</option>
+                        <option value="ko">한국어</option>
                         <option value="zh-TW">繁體中文</option>
                         <option value="zh-CN">简体中文</option>
-                        <option value="en" selected>English</option>
                     </select>
                     <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-slate-500">
                         <i class="fas fa-chevron-down text-[10px]"></i>

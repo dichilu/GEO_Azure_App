@@ -1130,7 +1130,45 @@
                 btnIcon.className = 'fas fa-file-excel';
                 btnText.innerText = i18n[currentLang].btnExport;
             }
+            window.syncExportBtnToSubmitBtn();
         };
+
+        // 這幾顆按鈕（綠色匯出、文章確認生成）跟藍色生成按鈕分屬不同容器（各自的padding不同），
+        // 直接量測藍色按鈕實際渲染出來的寬度，讓其他按鈕的寬度動態對齊過去，
+        // 不用每次改版面都重新手算兩邊padding差多少。
+        window.syncWidthToSubmitBtn = (targetBtn) => {
+            const submitBtn = document.getElementById('submit-btn');
+            if (!submitBtn || !targetBtn) return;
+            const submitRect = submitBtn.getBoundingClientRect();
+            targetBtn.style.width = Math.round(submitRect.width) + 'px';
+        };
+
+        // 綠色匯出按鈕額外需要跟藍色按鈕的右邊界對齊（兩者在桌機是同一排的左右兩端），
+        // 手機版兩者各自獨立一排堆疊，不需要對齊右邊界，只需要對齊寬度。
+        window.syncExportBtnToSubmitBtn = () => {
+            const submitBtn = document.getElementById('submit-btn');
+            const exportContainer = document.getElementById('export-btn-container');
+            const exportBtn = document.getElementById('export-btn-main');
+            if (!submitBtn || !exportContainer || !exportBtn || exportContainer.classList.contains('hidden')) return;
+            window.syncWidthToSubmitBtn(exportBtn);
+            const submitRect = submitBtn.getBoundingClientRect();
+            const parentRow = exportContainer.parentElement;
+            const isRowLayout = getComputedStyle(parentRow).flexDirection === 'row';
+            if (isRowLayout) {
+                const rowRect = parentRow.getBoundingClientRect();
+                const shift = Math.max(0, rowRect.right - submitRect.right);
+                exportContainer.style.position = 'relative';
+                exportContainer.style.right = Math.round(shift) + 'px';
+            } else {
+                exportContainer.style.position = '';
+                exportContainer.style.right = '';
+            }
+        };
+        window.addEventListener('resize', () => {
+            window.syncExportBtnToSubmitBtn();
+            const confirmBtn = document.getElementById('confirm-bundle-btn');
+            if (confirmBtn) window.syncWidthToSubmitBtn(confirmBtn);
+        });
 
         window.exportArticlesToWord = () => {
             if (articleResultsData.length === 0) return;
@@ -1683,7 +1721,7 @@ For each of the 3 chosen pillar angles, select the 3 highest content-fit-scoring
                     ${groupsHtml}
                 </div>
                 <div class="flex justify-center mt-8">
-                    <button id="confirm-bundle-btn" onclick="window.confirmArticleGeneration()" disabled class="opacity-50 cursor-not-allowed bg-[#005bac] text-white px-8 py-3.5 rounded-lg font-bold text-sm shadow-md flex items-center gap-3 transition-all">
+                    <button id="confirm-bundle-btn" onclick="window.confirmArticleGeneration()" disabled class="w-full sm:w-64 opacity-50 cursor-not-allowed bg-[#005bac] hover:bg-[#004a8d] text-white px-6 sm:px-8 py-3.5 rounded-lg font-bold text-sm shadow-md hover:shadow-lg flex items-center justify-center gap-3 transition-all whitespace-nowrap">
                         <i class="fas fa-magic"></i> ${t.articleConfirmGenerate}
                     </button>
                 </div>`;
@@ -1695,6 +1733,7 @@ For each of the 3 chosen pillar angles, select the 3 highest content-fit-scoring
                 el.addEventListener('click', e => e.stopPropagation());
                 el.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); el.blur(); } });
             });
+            window.syncWidthToSubmitBtn(document.getElementById('confirm-bundle-btn'));
         }
 
         window.selectArticleBundle = (idx) => {
@@ -2851,7 +2890,7 @@ ${scrapeRes.text}
                     <div class="h-1 w-16 bg-[#005bac] rounded-full mt-2 sm:mt-3"></div>
                 </div>
                 <div id="export-btn-container" class="hidden animate-in fade-in zoom-in duration-300 w-full sm:w-auto">
-                    <button id="export-btn-main" onclick="window.exportToExcel()" class="w-[calc(100%-2rem)] mx-4 sm:mx-0 sm:w-64 bg-white hover:bg-emerald-50 text-emerald-600 border-2 border-emerald-500 font-semibold text-sm px-4 sm:px-5 py-3 rounded-lg flex items-center justify-center gap-2 transition-all whitespace-nowrap">
+                    <button id="export-btn-main" onclick="window.exportToExcel()" class="w-full sm:w-64 bg-white hover:bg-emerald-50 text-emerald-600 border-2 border-emerald-500 font-semibold text-sm px-4 sm:px-5 py-3 rounded-lg flex items-center justify-center gap-2 transition-all whitespace-nowrap">
                         <i id="export-btn-icon" class="fas fa-file-excel"></i><span id="export-btn-text" data-i18n="btnExport">匯出 Excel 報告</span>
                     </button>
                 </div>

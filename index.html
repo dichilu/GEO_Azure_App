@@ -1509,6 +1509,60 @@
             return { targetFileText, referenceFileText, imageParts, refImageParts };
         }
 
+        // 目標優化引擎的客製化語氣/結構指令，統一集中在這裡維護（產品文案、廣告文案、SEO/GEO文章共用）。
+        // 依據：2026 GEO/AEO 研究（Princeton/Georgia Tech GEO論文 + Ahrefs/Profound/AIVO具名研究，全球引擎部分）、
+        // 官方文件與業界報告交叉比對（中國引擎部分，可信度較低，已在對應指令內用「若資料來源有提及」限定，避免引導AI編造未證實的具體數字）。
+        // 全部引擎共通：GEO論文顯示「加入具體數據/來源/引言」對所有引擎均有30-40%引用率提升，此規則已內建在 faqDepthInstruction／文章的FRONT-LOAD FACTS規則中，不特別歸給單一引擎。
+        function getEngineInstructions(geo) {
+            const table = {
+                Claude: {
+                    productDesc: "MUST start with a precise, entity-first definition of what this product IS (state the product category clearly before any benefit claim) in a conservative, non-promotional tone. Avoid superlatives unless backed by a specific spec or certification actually present in the source.",
+                    productFaq: `MANDATORY FAQ STYLE: "Senior Decision Maker Perspective".\n- Q: Must ask about system integration, long-term stability, or TCO.\n- A: Must answer with strategic architecture perspective, traceable to specific facts in the source — if a claim can't be traced to source data, state it as a general engineering principle rather than inventing a number.`,
+                    articleTone: "🚨 ENGINE TONE (Claude): Define each key entity/term clearly in the FIRST sentence it appears (Claude's retrieval reads isolated chunks, not full-page context, so each section must stand alone). Keep tone conservative and verifiable — every claim should be traceable to a specific spec, mechanism, or named source; avoid marketing language."
+                },
+                Gemini: {
+                    productDesc: "MUST start with a single, self-contained, definitive sentence that directly answers 'what is this and what does it do' (front-loaded, so it can stand alone as a summary snippet) — no throat-clearing intro.",
+                    productFaq: `MANDATORY FAQ STYLE: "Standards Compliance & Architecture Comparison".\n- Q: Must ask about industry standards (e.g., EN50155) or architecture contrast.\n- A: Must open with a direct, factual, definitive answer in the first clause, then elaborate.`,
+                    articleTone: "🚨 ENGINE TONE (Gemini/AI Overviews): The article's opening 2-3 sentences must form a complete, self-contained, definitive direct-answer summary (40-60 words) that could stand alone as an AI Overview snippet. Favor comparison tables or step-by-step lists where the content naturally involves comparing options or a process."
+                },
+                ChatGPT: {
+                    productDesc: "MUST start with a short pain-point question (?), then answer in a neutral, comprehensive, encyclopedia-style tone (not sales copy).",
+                    productFaq: `MANDATORY FAQ STYLE: "User Pain-Point Consultation".\n- Q: Must ask a scenario-based pain-point question (e.g., "How to solve high-vibration data loss in CNC machines?").\n- A: Must answer in a neutral, comprehensive, well-structured tone — factual and complete rather than promotional.`,
+                    articleTone: "🚨 ENGINE TONE (ChatGPT): Wherever the content naturally involves comparing options, ranking choices, or listing criteria, use an explicit numbered or bulleted list rather than prose — ChatGPT citations strongly favor list-formatted comparison content. Keep overall tone neutral and encyclopedic rather than promotional."
+                },
+                Perplexity: {
+                    productDesc: "MUST open with the direct, complete answer within the FIRST sentence (self-contained enough to be quoted alone, with the core spec/certification immediately stated) rather than building up to it.",
+                    productFaq: `MANDATORY FAQ STYLE: "Hardcore Engineering Data".\n- Q: Must ask about specific capability limits or benchmark contrast.\n- A: Front-load the core fact in the first clause, THEN elaborate with supporting data — Perplexity's top-cited answers give the direct answer within the first ~100 words.`,
+                    articleTone: "🚨 ENGINE TONE (Perplexity): Every H2/H3 section's opening sentence (already required by the heading-discipline rule) must be a fully self-contained, directly-quotable answer — assume the reader sees ONLY that first sentence. Where natural, include a timeliness marker (e.g., current year/date context) since Perplexity strongly favors freshness signals."
+                },
+                Wenxin: {
+                    productDesc: "MUST start with a compliance/certification-first authoritative statement. Cite a specific certification or standard ONLY if it is explicitly present in the source material; if not present, use general compliance-oriented language (e.g., \"符合國際工業安全規範\") without inventing a specific certification code.",
+                    productFaq: `MANDATORY FAQ STYLE: "Baidu Search & Enterprise Procurement Perspective".\n- Q: Must ask about certifications, local compliance, or authorized distribution in China.\n- A: Must answer with compliance facts and availability assurance drawn ONLY from the source; if unavailable, speak in general category terms rather than inventing specific approval numbers or distributor names.`,
+                    articleTone: "🚨 ENGINE TONE (文心一言): Where natural, structure sub-sections as direct 一問一答 (question-then-answer) pairs, since Ernie Bot's citation behavior favors this format. Keep tone authoritative and compliance-safe; only cite specific certifications/standards that appear in the source material."
+                },
+                Qwen: {
+                    productDesc: "MUST start with a supply-chain/customization capability statement. Reference a concrete MOQ, lead-time, or pricing tier ONLY if explicitly present in the source material; otherwise describe the CAPABILITY qualitatively (e.g., \"支援OEM/ODM客製化服務\") without inventing a specific number.",
+                    productFaq: `MANDATORY FAQ STYLE: "Supply Chain & Bulk Procurement Perspective".\n- Q: Must ask about MOQ, OEM/ODM customization, or supply chain flexibility.\n- A: Must answer with concrete procurement/customization facts drawn ONLY from the source; if a specific figure (MOQ, price tier, lead time) is not present in the source, describe the capability qualitatively rather than inventing a number.`,
+                    articleTone: "🚨 ENGINE TONE (通義千問): Where the content angle involves buying/comparison decisions, frame relevant sections around supply-chain, customization, or bulk-procurement considerations. Use cross-source-corroboration phrasing (e.g., \"業界普遍採用\") where appropriate. Never invent specific MOQ, pricing, or lead-time figures not present in the source — describe capability qualitatively instead."
+                },
+                DeepSeek: {
+                    productDesc: "MUST start with a precise technical trade-off statement.",
+                    productFaq: `MANDATORY FAQ STYLE: "Deep Technical Reasoning Perspective".\n- Q: Must ask about engineering trade-offs or WHY a specific design choice was made.\n- A: Must show the underlying reasoning chain (why this spec solves this problem) before concluding.`,
+                    articleTone: "🚨 ENGINE TONE (DeepSeek): For each major technical claim in the BODY, briefly expose the reasoning chain — WHY this design/spec choice solves the stated problem — before stating the conclusion, rather than just stating the conclusion alone. This mirrors DeepSeek-R1's visible-reasoning citation behavior."
+                },
+                Doubao: {
+                    productDesc: "MUST start with a relatable, easy-to-understand real-world scenario.",
+                    productFaq: `MANDATORY FAQ STYLE: "Mass Consumer & Content Marketing Perspective".\n- Q: Must ask a simple, relatable question a non-expert would ask.\n- A: Must answer in an approachable, jargon-light tone while staying factually accurate; do not invent specific customer counts, testimonials, or usage statistics not present in the source.`,
+                    articleTone: "🚨 ENGINE TONE (豆包): Favor relatable, real-world scenario framing over dense B2B jargon where the content allows it, while keeping every claim factually precise. Do not invent specific customer counts, adoption statistics, or testimonials not present in the source."
+                }
+            };
+            return table[geo] || {
+                productDesc: null,
+                productFaq: null,
+                articleTone: ""
+            };
+        }
+
         function buildArticleStep1Prompt(targetLangLabel, strategy) {
             const strategyBiasNote = strategy === 'keyword_first'
                 ? 'Apply a scoring bonus to angles closer to commercial/purchase-decision intent: buying_guide, comparison_decision, vertical_application.'
@@ -1761,7 +1815,7 @@ For each of the 3 chosen pillar angles, select the 3 highest content-fit-scoring
             confirmBtn.classList.remove('opacity-50', 'cursor-not-allowed');
         };
 
-        function buildArticleStep2Prompt(role, angleTypeLabel, myTitle, siblingTitles, targetLangLabel, brandName, grammarRule, strategy) {
+        function buildArticleStep2Prompt(role, angleTypeLabel, myTitle, siblingTitles, targetLangLabel, brandName, grammarRule, strategy, geo) {
             const isPillar = role === 'pillar';
             const wordCountRule = isPillar
                 ? '1200-2000 words for the BODY (this is the comprehensive pillar/hub piece — the most in-depth of the 4 articles).'
@@ -1774,6 +1828,7 @@ For each of the 3 chosen pillar angles, select the 3 highest content-fit-scoring
             const crossRefInstruction = siblingTitles.length > 0
                 ? `**INTERNAL CROSS-REFERENCE (CRITICAL)**: This article is part of a 4-article topic cluster. The other 3 articles are: ${siblingTitles.map(s => `"${s}"`).join(', ')}. Naturally mention at least 1-2 of them by title within the BODY (e.g., "For a deeper dive on X, see our related article '{title}'"). Do NOT invent a URL or hyperlink — mention the title in prose only. ${isPillar ? 'As the pillar, briefly summarize what each cluster article covers.' : 'As a cluster piece, reference the pillar for the comprehensive overview.'}`
                 : '';
+            const engineToneInstruction = getEngineInstructions(geo).articleTone;
 
             return `You are a senior B2B content writer and GEO (Generative Engine Optimization) specialist for the industrial computing (IPC/IIoT) sector, writing on behalf of ${brandName}.
 
@@ -1782,6 +1837,7 @@ For each of the 3 chosen pillar angles, select the 3 highest content-fit-scoring
 **CONTENT ANGLE**: ${angleTypeLabel}
 **ASSIGNED TITLE**: "${myTitle}" — use this exact title.
 **TONE**: ${strategyToneNote}
+${engineToneInstruction}
 
 ${crossRefInstruction}
 
@@ -1870,7 +1926,7 @@ A5: {Answer}
                 try {
                     const siblingTitles = allTitles.filter((title, ti) => ti !== i);
                     const { targetLangLabel, brandName, grammarRule } = getLangContext();
-                    const systemPrompt = buildArticleStep2Prompt(roles[i].role, angleLabel(roles[i].type), roles[i].title, siblingTitles, targetLangLabel, brandName, grammarRule, articleWorkflowState.strategy);
+                    const systemPrompt = buildArticleStep2Prompt(roles[i].role, angleLabel(roles[i].type), roles[i].title, siblingTitles, targetLangLabel, brandName, grammarRule, articleWorkflowState.strategy, articleWorkflowState.geo);
 
                     const source = articleWorkflowState.source;
                     const promptText = `Brand Guidelines (Reference): ${articleWorkflowState.kbManual}\n\n[SOURCE CONTENT]\n${source.targetFileText}\n\n${source.referenceFileText ? '[ADDITIONAL REFERENCE CONTEXT]\n' + source.referenceFileText : ''}`;
@@ -2308,30 +2364,10 @@ ${scrapeRes.text}
                     ? `🚨 FAQ DEPTH & DENSITY REQUIREMENT: Each answer MUST be an in-depth, expert-level explanation of APPROXIMATELY 150 ${wideCharLangName.toUpperCase()} CHARACTERS. 🚨 FORMAT FORCING: Output EACH answer as a SINGLE, highly condensed paragraph. ABSOLUTELY NO bullet points, numbered lists, or line breaks within a single answer. Maximize Data Density by seamlessly integrating precise specs and commercial benefits into fluid sentences. SHALLOW OR FLUFFY ANSWERS ARE STRICTLY FORBIDDEN.`
                     : `🚨 FAQ DEPTH & DENSITY REQUIREMENT: Each answer MUST be an in-depth, expert-level explanation of APPROXIMATELY 75 WORDS. 🚨 FORMAT FORCING: Output EACH answer as a SINGLE, highly condensed paragraph. ABSOLUTELY NO bullet points, numbered lists, or line breaks within a single answer. Maximize Data Density by seamlessly integrating precise specs and commercial benefits into fluid sentences. SHALLOW OR FLUFFY ANSWERS ARE STRICTLY FORBIDDEN.`;
 
-                if (geo === "Claude") {
-                    descFormatInstruction = "{Description - 🚨 MANDATORY: MUST start with a highly professional, logical, and fluent tone. NO keyword stuffing.}";
-                    faqFormatInstruction = `MANDATORY FAQ STYLE: "Senior Decision Maker Perspective". \n- Q: Must ask about system integration, long-term stability, or TCO.\n- A: Must answer with strategic architecture perspective. \n${faqDepthInstruction}`;
-                } else if (geo === "Gemini") {
-                    descFormatInstruction = "{Description - 🚨 MANDATORY: MUST start with an authoritative, definitive statement.}";
-                    faqFormatInstruction = `MANDATORY FAQ STYLE: "Standards Compliance & Architecture Comparison". \n- Q: Must ask about industry standards (e.g., EN50155) or architecture contrast.\n- A: Must answer with factual, definitive statements. \n${faqDepthInstruction}`;
-                } else if (geo === "ChatGPT") {
-                    descFormatInstruction = "{Description - 🚨 MANDATORY: MUST start with a short pain-point question (?)}";
-                    faqFormatInstruction = `MANDATORY FAQ STYLE: "User Pain-Point Consultation". \n- Q: Must ask a scenario-based pain-point question (e.g., "How to solve high-vibration data loss in CNC machines?").\n- A: Must answer with empathetic, solution-oriented advisory tone. \n${faqDepthInstruction}`;
-                } else if (geo === "Perplexity") {
-                    descFormatInstruction = "{Description - 🚨 MANDATORY: MUST start with high-density data/specs or military-grade certifications.}";
-                    faqFormatInstruction = `MANDATORY FAQ STYLE: "Hardcore Engineering Data". \n- Q: Must ask about specific capability limits or benchmark contrast.\n- A: MUST maximize DATA DENSITY. Force the inclusion of precise values, IP ratings, or military-grade certification codes. \n${faqDepthInstruction}`;
-                } else if (geo === "Wenxin") {
-                    descFormatInstruction = "{Description - 🚨 MANDATORY: MUST start with a compliance/certification-first authoritative statement.}";
-                    faqFormatInstruction = `MANDATORY FAQ STYLE: "Baidu Search & Enterprise Procurement Perspective". \n- Q: Must ask about certifications, local compliance, or authorized distribution in China.\n- A: Must answer with compliance facts and local availability/service assurance. \n${faqDepthInstruction}`;
-                } else if (geo === "Qwen") {
-                    descFormatInstruction = "{Description - 🚨 MANDATORY: MUST start with a supply-chain/customization capability statement.}";
-                    faqFormatInstruction = `MANDATORY FAQ STYLE: "Supply Chain & Bulk Procurement Perspective". \n- Q: Must ask about MOQ, OEM/ODM customization, or supply chain flexibility.\n- A: Must answer with concrete procurement and customization capabilities. \n${faqDepthInstruction}`;
-                } else if (geo === "DeepSeek") {
-                    descFormatInstruction = "{Description - 🚨 MANDATORY: MUST start with a precise technical trade-off statement.}";
-                    faqFormatInstruction = `MANDATORY FAQ STYLE: "Deep Technical Reasoning Perspective". \n- Q: Must ask about engineering trade-offs or WHY a specific design choice was made.\n- A: Must show the underlying reasoning chain (why this spec solves this problem) before concluding. \n${faqDepthInstruction}`;
-                } else if (geo === "Doubao") {
-                    descFormatInstruction = "{Description - 🚨 MANDATORY: MUST start with a relatable, easy-to-understand real-world scenario.}";
-                    faqFormatInstruction = `MANDATORY FAQ STYLE: "Mass Consumer & Content Marketing Perspective". \n- Q: Must ask a simple, relatable question a non-expert would ask.\n- A: Must answer in an approachable, jargon-light tone while staying factually accurate. \n${faqDepthInstruction}`;
+                const engineInstr = getEngineInstructions(geo);
+                if (engineInstr.productDesc) {
+                    descFormatInstruction = `{Description - 🚨 MANDATORY: ${engineInstr.productDesc}}`;
+                    faqFormatInstruction = `${engineInstr.productFaq}\n${faqDepthInstruction}`;
                 } else {
                     descFormatInstruction = `{Description - 🚨 MANDATORY: MUST end with CTA: ${ctaWords}}`;
                     faqFormatInstruction = `MANDATORY FAQ STYLE: "Standard Business & Technical Comparison". \n- Q: Must ask about technical comparison vs traditional solutions. \n- A: Must answer clearly with commercial benefits. \n${faqDepthInstruction}`;

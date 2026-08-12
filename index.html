@@ -1154,14 +1154,19 @@
             const submitRect = submitBtn.getBoundingClientRect();
             const parentRow = exportContainer.parentElement;
             const isRowLayout = getComputedStyle(parentRow).flexDirection === 'row';
+            exportContainer.style.position = 'relative';
             if (isRowLayout) {
                 const rowRect = parentRow.getBoundingClientRect();
                 const shift = Math.max(0, rowRect.right - submitRect.right);
-                exportContainer.style.position = 'relative';
                 exportContainer.style.right = Math.round(shift) + 'px';
+                exportContainer.style.left = '';
             } else {
-                exportContainer.style.position = '';
+                // 手機堆疊排版：對齊左邊界（藍色按鈕在有額外內縮的卡片裡，綠色按鈕所在區塊少那層內縮，
+                // 兩者左邊界天生會有落差，直接量測後用位移修正，而不是猜padding數字）。
+                const exportRect = exportContainer.getBoundingClientRect();
+                const shift = submitRect.x - exportRect.x;
                 exportContainer.style.right = '';
+                exportContainer.style.left = Math.round(shift) + 'px';
             }
         };
         window.addEventListener('resize', () => {
@@ -2211,11 +2216,13 @@ ${scrapeRes.text}
             const brandName = isZhCN ? '研华' : isZh ? '研華' : isJa ? 'アドバンテック' : isKo ? '어드밴텍' : 'Advantech';
             const wideCharLangName = isZhTW ? 'Trad. Chinese' : isZhCN ? 'Simp. Chinese' : isJa ? 'Japanese' : isKo ? 'Korean' : '';
 
-            const adHeadLen = isWideChar ? `13-15 ${wideCharLangName} characters (26-30 Bytes)` : '25-30 characters';
-            const adDescLen = isWideChar ? `40-45 ${wideCharLangName} characters (80-90 Bytes)` : '80-90 characters';
+            const adHeadLen = isWideChar ? `TARGET 11-13 ${wideCharLangName} characters, hard MAXIMUM 15 characters — do not approach the limit, leave a safety margin.` : 'TARGET 22-27 characters, hard MAXIMUM 30 characters — leave a safety margin.';
+            const adDescLen = isWideChar ? `TARGET 34-38 ${wideCharLangName} characters, hard MAXIMUM 45 characters — leave a safety margin.` : 'TARGET 70-80 characters, hard MAXIMUM 90 characters — leave a safety margin.';
 
-            const titleLen = isWideChar ? `MAXIMUM 28 ${wideCharLangName} characters (including symbols and the brand name). IF YOU EXCEED 28 CHARACTERS, YOU FAIL.` : 'STRICTLY UNDER 55 characters.';
-            const descLen = isWideChar ? `STRICTLY 70-75 ${wideCharLangName} characters (Max 150 Bytes).` : 'STRICTLY 140-150 characters.';
+            const titleLen = isWideChar ? `TARGET 22-26 ${wideCharLangName} characters (including symbols and the brand name), hard MAXIMUM 28 characters — do not approach the limit. IF YOU EXCEED 28 CHARACTERS, YOU FAIL.` : 'TARGET 45-52 characters, hard MAXIMUM 55 characters — leave a safety margin.';
+            const descLen = isWideChar ? `TARGET 60-68 ${wideCharLangName} characters, hard MAXIMUM 75 characters — do not approach the limit.` : 'TARGET 125-138 characters, hard MAXIMUM 150 characters — leave a safety margin.';
+            const lengthSelfCheckInstruction = `🚨 LENGTH SELF-CHECK (CRITICAL): Before finalizing your output, count the EXACT character length of every length-limited field below, character by character — do not estimate. If any field exceeds its stated MAXIMUM, rewrite it shorter before outputting. This is especially error-prone for ${isWideChar ? wideCharLangName : 'this'} text — count carefully.
+                🚨 PRIORITY WHEN GOALS CONFLICT: If fully satisfying every content requirement (opener style, CTA, factual claims) for a field would push it over its character limit, the CHARACTER LIMIT WINS — cut or shorten content (e.g., drop the CTA, shorten a clause) rather than exceed the limit. A short, compliant field beats a long, complete one.`;
             const grammarRule = isZhCN ? 'NATIVE SIMPLIFIED CHINESE GRAMMAR'
                 : isZh ? 'NATIVE CHINESE GRAMMAR'
                 : isJa ? 'NATIVE JAPANESE GRAMMAR'
@@ -2267,6 +2274,8 @@ ${scrapeRes.text}
                 ${pageLevelInstruction}
                 ${rsaLevelInstruction}
                 
+                ${lengthSelfCheckInstruction}
+
                 **STRICT Google Ads RULES**:
                 1. NO MARKDOWN (except for bullet points). ENSURE ${grammarRule}.
                 2. **[ADS KEYWORDS]**: Exactly 20 lines. 🚨 KEYWORD FUNNEL MIX (3:4:3 Ratio):
@@ -2369,7 +2378,7 @@ ${scrapeRes.text}
                     descFormatInstruction = `{Description - 🚨 MANDATORY: ${engineInstr.productDesc}}`;
                     faqFormatInstruction = `${engineInstr.productFaq}\n${faqDepthInstruction}`;
                 } else {
-                    descFormatInstruction = `{Description - 🚨 MANDATORY: MUST end with CTA: ${ctaWords}}`;
+                    descFormatInstruction = `{Description - 🚨 MANDATORY: MUST end with a SHORT CTA (reuse one of these short phrases verbatim, do not elaborate or add polite/formal extensions to it): ${ctaWords}}`;
                     faqFormatInstruction = `MANDATORY FAQ STYLE: "Standard Business & Technical Comparison". \n- Q: Must ask about technical comparison vs traditional solutions. \n- A: Must answer clearly with commercial benefits. \n${faqDepthInstruction}`;
                 }
 
@@ -2393,12 +2402,14 @@ ${scrapeRes.text}
 
                 **TITLE STRUCTURE**:
                 ${strategyInstruction}
-                
+
+                ${lengthSelfCheckInstruction}
+
                 **CHARACTER LIMITS**:
                 - **TITLE**: ${titleLen}
                 - **DESCRIPTION**: ${descLen}
-                
-                **[TL;DR] 核心摘要 (極限 ${isWideChar ? '200 Bytes / 約 100 ' + wideCharLangName + ' characters' : '150 characters'})**:
+
+                **[TL;DR] 核心摘要 (${isWideChar ? 'TARGET 85-95 ' + wideCharLangName + ' characters, hard MAXIMUM 100 characters' : 'TARGET 130-145 characters, hard MAXIMUM 150 characters'})**:
                 🚨 專為 AI 爬蟲 (Perplexity/SearchGPT) 設計的極簡摘要。精準定義「這是什麼、給誰用、最大亮點」。嚴禁任何行銷廢話。
                 
                 **ADVANCED GEO STRATEGIES**:

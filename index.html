@@ -1556,15 +1556,12 @@ For each of the 3 chosen pillar angles, select the 3 highest content-fit-scoring
             btn.disabled = true;
             document.getElementById('submit-btn-text').innerText = t.processing;
             btn.classList.add('opacity-75', 'cursor-not-allowed');
+            document.getElementById('export-btn-container')?.classList.add('hidden');
             resultArea.classList.remove('hidden');
             resultArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-            outputContainer.innerHTML = `
-                <div class="flex flex-col items-center justify-center py-20 text-[#005bac]">
-                    <i class="fas fa-circle-notch fa-spin text-5xl mb-6 opacity-80"></i>
-                    <p class="font-semibold text-xl tracking-wider">${t.articleStep1Title}</p>
-                    <p id="process-sub-msg" class="text-sm text-slate-500 mt-2 font-medium">${t.procSub}</p>
-                </div>`;
+            outputContainer.innerHTML = workerLoaderHtml(t.articleStep1Title, t.procSub);
+            const fakeProgressTimer = startFakeProgress(5, 92);
 
             try {
                 const subMsgEl = document.getElementById('process-sub-msg');
@@ -1584,6 +1581,7 @@ For each of the 3 chosen pillar angles, select the 3 highest content-fit-scoring
                 const responseData = await fetchWithRetry('/api/generate', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
                 const outputText = responseData.candidates?.[0]?.content?.parts?.[0]?.text;
                 if (!outputText) throw new Error(t.articleStep1Failed);
+                finishFakeProgress(fakeProgressTimer, 100);
 
                 const bundles = parseArticleBundles(outputText);
                 if (bundles.length === 0) throw new Error(t.articleStep1Failed);
@@ -1592,6 +1590,7 @@ For each of the 3 chosen pillar angles, select the 3 highest content-fit-scoring
                 articleWorkflowState.selectedIndex = -1;
                 renderArticleBundlePicker(bundles);
             } catch (e) {
+                clearInterval(fakeProgressTimer);
                 outputContainer.innerHTML = `
                     <div class="p-8 border-2 border-red-200 bg-red-50 rounded-2xl max-w-2xl mx-auto mt-10 shadow-lg">
                         <h4 class="font-black text-red-700 mb-4 text-lg flex items-center gap-3"><i class="fas fa-exclamation-triangle text-2xl"></i> ${i18n[currentLang].toastGenerationFailed}</h4>
@@ -1604,7 +1603,49 @@ For each of the 3 chosen pillar angles, select the 3 highest content-fit-scoring
             }
         };
 
-        const escapeHtml = (s) => (s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        const escapeHtml =(s) => (s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+        // 生成中畫面：像素風工人動畫 + 進度條。3處生成中大畫面共用同一套版型與爬升邏輯。
+        const workerLoaderHtml = (titleHtml, subHtml) => `
+            <div class="flex flex-col items-center justify-center py-10 text-[#005bac]">
+                <img src="worker-writing-pixel.gif" alt="" width="180" height="180" style="image-rendering:pixelated;width:180px;height:180px;" class="mb-2">
+                <p class="font-semibold text-xl tracking-wider text-center">${titleHtml}</p>
+                <p id="process-sub-msg" class="text-sm text-slate-500 mt-2 font-medium text-center max-w-md">${subHtml || ''}</p>
+                <div class="w-64 h-2 bg-slate-100 rounded-full mt-6 overflow-hidden">
+                    <div id="loader-progress-bar" class="h-full bg-[#005bac] transition-all" style="width:0%"></div>
+                </div>
+                <p id="loader-progress-pct" class="text-xs text-slate-400 mt-2 font-mono tabular-nums">0%</p>
+            </div>`;
+
+        // 模擬爬升式進度條：沒有真實中間進度可用時（單次AI呼叫），讓進度條緩慢爬到 capPercent 卡住等待，
+        // 越接近上限爬升越慢，避免看起來卡死；真正完成時呼叫 finishFakeProgress 跳到100%。
+        function startFakeProgress(fromPercent, capPercent) {
+            const bar = document.getElementById('loader-progress-bar');
+            const pctEl = document.getElementById('loader-progress-pct');
+            if (!bar || !pctEl) return null;
+            let pct = fromPercent;
+            bar.style.width = pct + '%';
+            pctEl.innerText = Math.round(pct) + '%';
+            const timer = setInterval(() => {
+                if (pct >= capPercent) return;
+                const increment = pct < 25 ? 4 : pct < 50 ? 2.5 : pct < 72 ? 1.2 : 0.5;
+                pct = Math.min(capPercent, pct + increment);
+                const liveBar = document.getElementById('loader-progress-bar');
+                const livePctEl = document.getElementById('loader-progress-pct');
+                if (!liveBar || !livePctEl) { clearInterval(timer); return; }
+                liveBar.style.width = pct + '%';
+                livePctEl.innerText = Math.round(pct) + '%';
+            }, 600);
+            return timer;
+        }
+
+        function finishFakeProgress(timer, toPercent) {
+            if (timer) clearInterval(timer);
+            const bar = document.getElementById('loader-progress-bar');
+            const pctEl = document.getElementById('loader-progress-pct');
+            if (bar) bar.style.width = toPercent + '%';
+            if (pctEl) pctEl.innerText = Math.round(toPercent) + '%';
+        }
 
         // 排版邏輯：DOM 依「一套組合接一套組合」自然排列，手機版（grid-cols-1）直接照這個順序
         // 堆疊即可完整讀完一套。桌面版（sm:grid-cols-3）改用 col-start/row-start 把同一套組合的
@@ -1779,15 +1820,14 @@ A5: {Answer}
             const results = [];
 
             for (let i = 0; i < roles.length; i++) {
-                outputContainer.innerHTML = `
-                    <div class="flex flex-col items-center justify-center py-20 text-[#005bac]">
-                        <i class="fas fa-circle-notch fa-spin text-5xl mb-6 opacity-80"></i>
-                        <p class="font-semibold text-xl tracking-wider">${t.articleGenerating.replace('{n}', i + 1).replace('{total}', roles.length)}</p>
-                        <p class="text-sm text-slate-500 mt-2 font-medium max-w-md text-center">${roles[i].title}</p>
-                        <div class="w-64 h-2 bg-slate-100 rounded-full mt-6 overflow-hidden">
-                            <div class="h-full bg-[#005bac] transition-all" style="width:${Math.round((i / roles.length) * 100)}%"></div>
-                        </div>
-                    </div>`;
+                const segStart = Math.round((i / roles.length) * 100);
+                const segEnd = Math.round(((i + 1) / roles.length) * 100);
+                const segCeiling = segStart + (segEnd - segStart) * 0.88;
+                outputContainer.innerHTML = workerLoaderHtml(
+                    t.articleGenerating.replace('{n}', i + 1).replace('{total}', roles.length),
+                    roles[i].title
+                );
+                const segTimer = startFakeProgress(segStart, segCeiling);
                 try {
                     const siblingTitles = allTitles.filter((title, ti) => ti !== i);
                     const { targetLangLabel, brandName, grammarRule } = getLangContext();
@@ -1807,7 +1847,9 @@ A5: {Answer}
                     parsed.role = roles[i].role;
                     parsed.angleType = roles[i].type;
                     results.push(parsed);
+                    finishFakeProgress(segTimer, segEnd);
                 } catch (e) {
+                    finishFakeProgress(segTimer, segEnd);
                     results.push({ role: roles[i].role, angleType: roles[i].type, title: roles[i].title, error: e.message });
                 }
             }
@@ -1915,17 +1957,14 @@ A5: {Answer}
             btn.disabled = true;
             document.getElementById('submit-btn-text').innerText = t.processing;
             btn.classList.add('opacity-75', 'cursor-not-allowed');
+            document.getElementById('export-btn-container')?.classList.add('hidden');
             resultArea.classList.remove('hidden');
             resultArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
             currentEngineMode = contentType === 'ads' ? "ADS" : "GEO";
 
-            outputContainer.innerHTML = `
-                <div class="flex flex-col items-center justify-center py-20 text-[#005bac]">
-                    <i class="fas fa-circle-notch fa-spin text-5xl mb-6 opacity-80"></i>
-                    <p class="font-semibold text-xl tracking-wider">${t.procTitle}</p>
-                    <p id="process-sub-msg" class="text-sm text-slate-500 mt-2 font-medium">${t.procSub}</p>
-                </div>`;
+            outputContainer.innerHTML = workerLoaderHtml(t.procTitle, t.procSub);
+            const fakeProgressTimer = startFakeProgress(5, 92);
 
             let targetFileText = "";
             let referenceFileText = "";
@@ -2369,9 +2408,11 @@ ${scrapeRes.text}
                     throw new Error(`回傳資料為空 (API 中斷原因: ${finishReason})。請嘗試減少敏感詞彙或重整頁面。`);
                 }
                 
+                clearInterval(fakeProgressTimer);
                 renderCards(outputText, currentEngineMode);
                 window.trackUsage();
             } catch (e) {
+                clearInterval(fakeProgressTimer);
                 outputContainer.innerHTML = `
                     <div class="p-8 border-2 border-red-200 bg-red-50 rounded-2xl max-w-2xl mx-auto mt-10 shadow-lg">
                         <h4 class="font-black text-red-700 mb-4 text-lg flex items-center gap-3"><i class="fas fa-exclamation-triangle text-2xl"></i> ${i18n[currentLang].toastGenerationFailed}</h4>
@@ -2798,22 +2839,22 @@ ${scrapeRes.text}
                     </select>
                 </div>
             </div>
-            <button id="submit-btn" onclick="window.executeOptimization()" class="w-full lg:w-auto bg-[#005bac] hover:bg-[#004a8d] text-white px-6 sm:px-8 py-3.5 rounded-lg font-bold text-sm shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-3">
-                <i class="fas fa-magic"></i><span id="submit-btn-text" data-i18n="btnSubmit">執行 AI 內容生成</span>
-            </button>
-        </div>
-
-        <section id="result-area" class="hidden mt-6 sm:mt-12 scroll-mt-24">
-            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end mb-4 sm:mb-6 gap-3">
-                <div>
-                    <h3 class="text-xl sm:text-2xl font-bold text-slate-800" data-i18n="resTitle">優化產出結果</h3>
-                    <div class="h-1 w-16 bg-[#005bac] rounded-full mt-2 sm:mt-3"></div>
-                </div>
+            <div class="flex flex-col sm:flex-row items-stretch gap-3">
+                <button id="submit-btn" onclick="window.executeOptimization()" class="w-full lg:w-auto bg-[#005bac] hover:bg-[#004a8d] text-white px-6 sm:px-8 py-3.5 rounded-lg font-bold text-sm shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-3">
+                    <i class="fas fa-magic"></i><span id="submit-btn-text" data-i18n="btnSubmit">執行 AI 內容生成</span>
+                </button>
                 <div id="export-btn-container" class="hidden animate-in fade-in zoom-in duration-300">
-                    <button id="export-btn-main" onclick="window.exportToExcel()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm px-4 sm:px-6 py-2.5 rounded-lg flex items-center gap-2 shadow-sm">
+                    <button id="export-btn-main" onclick="window.exportToExcel()" class="w-full sm:w-auto h-full bg-white hover:bg-emerald-50 text-emerald-600 border-2 border-emerald-500 font-semibold text-sm px-4 sm:px-5 py-3 rounded-lg flex items-center justify-center gap-2 transition-all">
                         <i id="export-btn-icon" class="fas fa-file-excel"></i><span id="export-btn-text" data-i18n="btnExport">匯出 Excel 報告</span>
                     </button>
                 </div>
+            </div>
+        </div>
+
+        <section id="result-area" class="hidden mt-6 sm:mt-12 scroll-mt-24">
+            <div class="mb-4 sm:mb-6">
+                <h3 class="text-xl sm:text-2xl font-bold text-slate-800" data-i18n="resTitle">優化產出結果</h3>
+                <div class="h-1 w-16 bg-[#005bac] rounded-full mt-2 sm:mt-3"></div>
             </div>
             <div id="output-container" class="space-y-4 sm:space-y-8"></div>
         </section>

@@ -107,7 +107,6 @@
                 copySingle: "複製",
                 tagLabel: "標籤 (Tags):",
                 catLabel: "分類 (Cat):",
-                copyMeta: "複製標籤",
                 confirmReset: "確定要清除知識庫嗎？清除後雲端資料將同步清空。",
                 btnApiKey: "公司信箱登入", 
                 modalApiTitle: "系統登入 (僅作頻率統計)",
@@ -211,7 +210,6 @@
                 copySingle: "复制",
                 tagLabel: "标签 (Tags):",
                 catLabel: "分类 (Cat):",
-                copyMeta: "复制标签",
                 confirmReset: "确定要清除知识库吗？清除后云端资料将同步清空。",
                 btnApiKey: "公司信箱登录", 
                 modalApiTitle: "系统登入 (仅作频率统计)",
@@ -315,7 +313,6 @@
                 copySingle: "Copy",
                 tagLabel: "Tags:",
                 catLabel: "Category:",
-                copyMeta: "Copy Metadata",
                 confirmReset: "Are you sure you want to clear the knowledge base? Cloud data will be wiped.",
                 btnApiKey: "Corp Email Login",
                 modalApiTitle: "System Login (Stats Only)",
@@ -419,7 +416,6 @@
                 copySingle: "コピー",
                 tagLabel: "タグ (Tags):",
                 catLabel: "カテゴリ (Cat):",
-                copyMeta: "タグをコピー",
                 confirmReset: "ナレッジベースを消去してもよろしいですか？消去後、クラウドデータも同期して削除されます。",
                 btnApiKey: "会社メールでログイン",
                 modalApiTitle: "システムログイン (利用統計のみ)",
@@ -523,7 +519,6 @@
                 copySingle: "복사",
                 tagLabel: "태그 (Tags):",
                 catLabel: "분류 (Cat):",
-                copyMeta: "태그 복사",
                 confirmReset: "지식 베이스를 삭제하시겠습니까? 삭제 후 클라우드 데이터도 함께 초기화됩니다.",
                 btnApiKey: "회사 이메일로 로그인",
                 modalApiTitle: "시스템 로그인 (이용 통계 전용)",
@@ -2689,7 +2684,7 @@ ${scrapeRes.text}
                                 <div class="w-10 h-10 rounded-xl bg-[#005bac]/10 text-[#005bac] flex items-center justify-center text-lg"><i class="fas fa-microchip"></i></div>
                                 <div><h4 class="font-black text-slate-800 text-base">${detox(model) || 'IPC MODEL'} (v1.18.3)</h4><p class="text-xs text-slate-500 truncate max-w-md mt-1">${url}</p></div>
                             </div>
-                            <button onclick="window.copyToClip(this, 'all')" data-content="${encodeURIComponent(titleClean + '\n' + descClean + '\n\n' + featuresTextToCopy + '\n\n' + 'TL;DR:\n' + tldrClean + '\n\n' + faqClean)}" class="text-xs bg-white border border-slate-300 px-5 py-2.5 rounded-lg font-bold shadow-sm transition-all hover:-translate-y-0.5 hover:shadow flex items-center gap-2"><i class="far fa-copy"></i> ${t.copyAll}</button>
+                            <button onclick="window.copyToClip(this, 'all')" data-content="${encodeURIComponent(titleClean + '\n' + descClean + '\n\n' + featuresTextToCopy + '\n\n' + 'TL;DR:\n' + tldrClean + '\n\n' + faqClean + '\n\n' + t.tagLabel + ' ' + detox(tags) + '\n' + t.catLabel + ' ' + detox(cat))}" class="text-xs bg-white border border-slate-300 px-5 py-2.5 rounded-lg font-bold shadow-sm transition-all hover:-translate-y-0.5 hover:shadow flex items-center gap-2"><i class="far fa-copy"></i> ${t.copyAll}</button>
                         </div>
                         <div class="p-8 md:p-10 space-y-8">
                             
@@ -2739,12 +2734,11 @@ ${scrapeRes.text}
                             </div>
                         </div>
                         
-                        <div class="bg-slate-50 border-t border-slate-200 px-8 py-5 flex flex-col md:flex-row justify-between items-center gap-4">
+                        <div class="bg-slate-50 border-t border-slate-200 px-8 py-5">
                             <div class="text-[12px] text-slate-500 font-medium space-y-1">
                                 <p><span class="font-bold text-slate-700">${t.tagLabel}</span> <span class="text-slate-600">${detox(tags)}</span></p>
                                 <p><span class="font-bold text-slate-700">${t.catLabel}</span> <span class="text-slate-600">${detox(cat)}</span></p>
                             </div>
-                            <button onclick="window.copyToClip(this)" data-content="${encodeURIComponent((t.tagLabel || 'Tags:') + ' ' + detox(tags) + '\n' + (t.catLabel || 'Cat:') + ' ' + detox(cat))}" class="text-xs font-bold text-slate-600 hover:text-blue-600 transition-colors flex items-center gap-2 bg-white px-4 py-2.5 rounded-lg border border-slate-200 shadow-sm"><i class="far fa-copy"></i> ${t.copyMeta}</button>
                         </div>`;
                 }
                 container.appendChild(card);

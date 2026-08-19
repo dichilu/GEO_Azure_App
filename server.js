@@ -98,6 +98,88 @@ app.post('/api/generate', async (req, res) => {
     }
 });
 
+// 【GEO文章搜尋補充通道】：幫SEO/GEO文章生成流程去Tavily查詢最新事實/數據當佐證素材
+app.post('/api/tavily-search', async (req, res) => {
+    const apiKey = process.env.TAVILY_API_KEY;
+    if (!apiKey) {
+        return res.status(500).json({ error: { message: "伺服器嚴重錯誤：Azure 後台尚未設定 TAVILY_API_KEY 環境變數！" } });
+    }
+    const { query, max_results } = req.body;
+    if (!query) {
+        return res.status(400).json({ error: { message: "沒有提供查詢關鍵字" } });
+    }
+    try {
+        const response = await fetch('https://api.tavily.com/search', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${apiKey}` },
+            body: JSON.stringify({ query, max_results: max_results || 4, search_depth: 'basic' })
+        });
+        const data = await response.json();
+        if (!response.ok) {
+            return res.status(response.status).json(data);
+        }
+        res.json(data);
+    } catch (error) {
+        res.status(500).json({ error: { message: `搜尋服務連線異常: ${error.message}` } });
+    }
+});
+
+// 【產品照片轉存通道】：把爬取結果裡找到的研華產品主圖網址，轉成base64給前端當生圖參考圖（避開瀏覽器直接抓外部圖片的CORS限制）
+app.post('/api/fetch-image', async (req, res) => {
+    const { url } = req.body;
+    if (!url) {
+        return res.status(400).json({ error: { message: "沒有提供圖片網址" } });
+    }
+    try {
+        const response = await fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0' } });
+        if (!response.ok) {
+            return res.status(response.status).json({ error: { message: `圖片下載失敗: HTTP ${response.status}` } });
+        }
+        const contentType = response.headers.get('content-type') || 'image/png';
+        const buffer = Buffer.from(await response.arrayBuffer());
+        res.json({ mimeType: contentType, data: buffer.toString('base64') });
+    } catch (error) {
+        res.status(500).json({ error: { message: `圖片下載連線異常: ${error.message}` } });
+    }
+});
+
+// 【GEO文章重點配圖通道】：幫SEO/GEO文章生成流程呼叫Gemini原生圖片模型，產出文章重點示意圖
+app.post('/api/generate-image', async (req, res) => {
+    const apiKey = process.env.GEMINI_API_KEY;
+    if (!apiKey) {
+        return res.status(500).json({ error: { message: "伺服器嚴重錯誤：Azure 後台尚未設定 GEMINI_API_KEY 環境變數！" } });
+    }
+    const { prompt, refImage } = req.body;
+    if (!prompt) {
+        return res.status(400).json({ error: { message: "沒有提供圖片描述" } });
+    }
+    try {
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-image:generateContent?key=${apiKey}`;
+        const parts = [];
+        // refImage：前端從研華產品頁抓到的真實產品照片（已由/api/fetch-image轉成base64），
+        // 附上去讓生圖模型照著真實外觀畫，不是憑空想像
+        if (refImage && refImage.mimeType && refImage.data) {
+            parts.push({ inlineData: { mimeType: refImage.mimeType, data: refImage.data } });
+        }
+        parts.push({ text: prompt });
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                contents: [{ parts }],
+                generationConfig: { responseModalities: ['IMAGE', 'TEXT'] }
+            })
+        });
+        const data = await response.json();
+        if (!response.ok) {
+            return res.status(response.status).json(data);
+        }
+        res.json(data);
+    } catch (error) {
+        res.status(500).json({ error: { message: `圖片生成服務連線異常: ${error.message}` } });
+    }
+});
+
 // 啟動伺服器
 app.listen(PORT, () => {
     console.log(`GEO Azure 企業版伺服器已啟動！Port: ${PORT}`);

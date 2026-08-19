@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GEO 內容優化系統 v1.21.3 手機版全面修正版</title>
+    <title>GEO 內容優化系統 v1.24.5</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.4.21/mammoth.browser.min.js"></script>
     
@@ -54,7 +54,7 @@
         const i18n = {
             'zh-TW': {
                 navTitle: "GEO 內容生成系統",
-                navVer: "v1.21.3 手機版全面修正版",
+                navVer: "v1.24.5",
                 authConnecting: "正在連接雲端...",
                 authSuccess: "雲端已連線",
                 authError: "連線異常",
@@ -87,7 +87,9 @@
                 articlePillarBadge: "主文",
                 articleClusterBadge: "欉集",
                 articleConfirmGenerate: "確認並生成 4 篇文章",
+                articleResearching: "正在蒐集外部研究資料佐證...",
                 articleGenerating: "正在生成第 {n}/{total} 篇：",
+                articleImaging: "正在生成第 {n}/{total} 篇的重點配圖：",
                 articleTldrLabel: "重點摘要 (Key Takeaways)",
                 articleTocLabel: "本文目錄",
                 articleFaqLabel: "常見問題 (FAQ)",
@@ -134,7 +136,7 @@
                 adminTabFb: "💬 系統建議清單",
                 clearAllFiles: "清除所有檔案",
                 adminRequired: "請先解鎖管理員權限",
-                standardSeoOptionLabel: "標準 SEO 優化",
+                standardSeoOptionLabel: "標準 GEO 優化",
                 toastValidEmail: "請輸入正確的信箱格式",
                 toastSubmitFailed: "送出失敗，請稍後再試",
                 toastUnlocked: "已解鎖",
@@ -157,7 +159,7 @@
             },
             'zh-CN': {
                 navTitle: "GEO 内容生成系统",
-                navVer: "v1.21.3 手机版全面修正版",
+                navVer: "v1.24.5",
                 authConnecting: "正在连接云端...",
                 authSuccess: "云端已连线",
                 authError: "连线异常",
@@ -190,7 +192,9 @@
                 articlePillarBadge: "主文",
                 articleClusterBadge: "丛集",
                 articleConfirmGenerate: "确认并生成 4 篇文章",
+                articleResearching: "正在收集外部研究资料佐证...",
                 articleGenerating: "正在生成第 {n}/{total} 篇：",
+                articleImaging: "正在生成第 {n}/{total} 篇的重点配图：",
                 articleTldrLabel: "重点摘要 (Key Takeaways)",
                 articleTocLabel: "本文目录",
                 articleFaqLabel: "常见问题 (FAQ)",
@@ -237,7 +241,7 @@
                 adminTabFb: "💬 系统建议清单",
                 clearAllFiles: "清除所有档案",
                 adminRequired: "请先解锁管理员权限",
-                standardSeoOptionLabel: "标准 SEO 优化",
+                standardSeoOptionLabel: "标准 GEO 优化",
                 toastValidEmail: "请输入正确的信箱格式",
                 toastSubmitFailed: "送出失败，请稍后再试",
                 toastUnlocked: "已解锁",
@@ -260,7 +264,7 @@
             },
             'en': {
                 navTitle: "GEO Content System",
-                navVer: "v1.21.3 Mobile RWD Fixes",
+                navVer: "v1.24.5",
                 authConnecting: "Connecting...",
                 authSuccess: "Cloud Connected",
                 authError: "Auth Error",
@@ -293,7 +297,9 @@
                 articlePillarBadge: "Pillar",
                 articleClusterBadge: "Cluster",
                 articleConfirmGenerate: "Confirm & Generate 4 Articles",
+                articleResearching: "Gathering supplementary research data...",
                 articleGenerating: "Generating article {n}/{total}:",
+                articleImaging: "Generating key visuals for article {n}/{total}:",
                 articleTldrLabel: "Key Takeaways",
                 articleTocLabel: "Table of Contents",
                 articleFaqLabel: "FAQ",
@@ -340,7 +346,7 @@
                 adminTabFb: "💬 Feedback List",
                 clearAllFiles: "Clear all files",
                 adminRequired: "Admin unlock required",
-                standardSeoOptionLabel: "Standard SEO",
+                standardSeoOptionLabel: "Standard GEO",
                 toastValidEmail: "Valid email required",
                 toastSubmitFailed: "Failed, try again later",
                 toastUnlocked: "Unlocked",
@@ -363,7 +369,7 @@
             },
             'ja': {
                 navTitle: "GEO コンテンツ生成システム",
-                navVer: "v1.21.3 モバイル表示修正版",
+                navVer: "v1.24.5",
                 authConnecting: "クラウドに接続中...",
                 authSuccess: "クラウド接続済み",
                 authError: "接続エラー",
@@ -396,7 +402,9 @@
                 articlePillarBadge: "ピラー記事",
                 articleClusterBadge: "クラスター記事",
                 articleConfirmGenerate: "確定して4記事を生成",
+                articleResearching: "外部の裏付け資料を収集中...",
                 articleGenerating: "第 {n}/{total} 記事を生成中：",
+                articleImaging: "第 {n}/{total} 記事の主要画像を生成中：",
                 articleTldrLabel: "重要ポイント (Key Takeaways)",
                 articleTocLabel: "目次",
                 articleFaqLabel: "よくある質問 (FAQ)",
@@ -443,7 +451,7 @@
                 adminTabFb: "💬 ご意見一覧",
                 clearAllFiles: "すべてのファイルを消去",
                 adminRequired: "管理者権限のロック解除が必要です",
-                standardSeoOptionLabel: "標準SEO最適化",
+                standardSeoOptionLabel: "標準GEO最適化",
                 toastValidEmail: "正しいメール形式を入力してください",
                 toastSubmitFailed: "送信に失敗しました。しばらくしてから再試行してください",
                 toastUnlocked: "ロック解除済み",
@@ -466,7 +474,7 @@
             },
             'ko': {
                 navTitle: "GEO 콘텐츠 생성 시스템",
-                navVer: "v1.21.3 모바일 화면 수정판",
+                navVer: "v1.24.5",
                 authConnecting: "클라우드 연결 중...",
                 authSuccess: "클라우드 연결됨",
                 authError: "연결 오류",
@@ -499,7 +507,9 @@
                 articlePillarBadge: "필러 아티클",
                 articleClusterBadge: "클러스터 아티클",
                 articleConfirmGenerate: "확인 후 4편 생성",
+                articleResearching: "외부 근거 자료 수집 중...",
                 articleGenerating: "{n}/{total}번째 아티클 생성 중:",
+                articleImaging: "{n}/{total}번째 아티클의 주요 이미지 생성 중:",
                 articleTldrLabel: "핵심 요약 (Key Takeaways)",
                 articleTocLabel: "목차",
                 articleFaqLabel: "자주 묻는 질문 (FAQ)",
@@ -546,7 +556,7 @@
                 adminTabFb: "💬 의견 목록",
                 clearAllFiles: "모든 파일 삭제",
                 adminRequired: "관리자 권한 잠금 해제가 필요합니다",
-                standardSeoOptionLabel: "표준 SEO 최적화",
+                standardSeoOptionLabel: "표준 GEO 최적화",
                 toastValidEmail: "올바른 이메일 형식을 입력하세요",
                 toastSubmitFailed: "제출에 실패했습니다. 잠시 후 다시 시도해 주세요",
                 toastUnlocked: "잠금 해제됨",
@@ -634,10 +644,10 @@
                 contentTypeSelect.options[2].text = t.contentTypeArticle;
             }
 
-            // 中國引擎（文心一言/通義千問/DeepSeek/豆包）為固定專有名詞，不隨介面語言翻譯，僅 Standard SEO 需要
-            const rbuSelect = document.getElementById('pref-rbu');
+            // 中國引擎（文心一言/通義千問/DeepSeek/豆包）為固定專有名詞，不隨介面語言翻譯；
+            // 但兩個地區清單的第一項都是共用的「標準GEO優化」，切換語言時都要更新
             const geoSelect = document.getElementById('pref-geo');
-            if (!rbuSelect || rbuSelect.value !== 'ACN') {
+            if (geoSelect && geoSelect.options.length > 0) {
                 geoSelect.options[0].text = i18n[currentLang].standardSeoOptionLabel;
             }
 
@@ -1141,6 +1151,27 @@
         window.exportToExcel = () => {
             if (lastResultsData.length === 0) return;
             const worksheet = XLSX.utils.json_to_sheet(lastResultsData);
+            const headers = Object.keys(lastResultsData[0]);
+            const range = XLSX.utils.decode_range(worksheet['!ref']);
+
+            // 欄寬：長篇說明性文字欄位給寬欄，型號/網址等短欄位維持窄欄
+            const wideCols = new Set(["Meta Description", "TL;DR Summary", "GEO Features", "Expert FAQ", "Ads Keywords", "Ads Headlines", "Ads Long Headlines", "Ads Descriptions"]);
+            worksheet['!cols'] = headers.map(h => ({ wch: wideCols.has(h) ? 50 : (h === "Target URL" ? 40 : 20) }));
+
+            // 標頭列：品牌藍底＋白色粗體，方便一眼分辨欄位
+            for (let c = range.s.c; c <= range.e.c; c++) {
+                const cell = worksheet[XLSX.utils.encode_cell({ r: 0, c })];
+                if (cell) cell.s = { font: { bold: true, color: { rgb: "FFFFFF" } }, fill: { fgColor: { rgb: "005BAC" } }, alignment: { vertical: "center", horizontal: "center" } };
+            }
+
+            // 內文列：全部自動換行＋靠上對齊，避免長文字被截斷或蓋住相鄰欄位
+            for (let r = range.s.r + 1; r <= range.e.r; r++) {
+                for (let c = range.s.c; c <= range.e.c; c++) {
+                    const cell = worksheet[XLSX.utils.encode_cell({ r, c })];
+                    if (cell) cell.s = { alignment: { wrapText: true, vertical: "top" } };
+                }
+            }
+
             const workbook = XLSX.utils.book_new();
             XLSX.utils.book_append_sheet(workbook, worksheet, "Export");
             const date = new Date().toISOString().split('T')[0];
@@ -1213,6 +1244,10 @@
         window.exportArticlesToWord = () => {
             if (articleResultsData.length === 0) return;
             const t = i18n[currentLang];
+            const pageCss = articleResultsData.map((r, i) =>
+                `@page WordSection${i + 1} { size:8.5in 11.0in; margin:1.0in 1.0in 1.0in 1.0in; mso-header-margin:.5in; mso-footer-margin:.5in; mso-paper-source:0; }\n                        div.WordSection${i + 1} { page:WordSection${i + 1}; }`
+            ).join('\n                        ');
+
             const sections = articleResultsData.map((r, i) => {
                 if (r.error) return '';
                 const tldrItems = (r.tldr || '').split('\n').map(l => l.replace(/^[-*•]\s*/, '').trim()).filter(Boolean);
@@ -1226,23 +1261,43 @@
                     else if (aMatch && curQ) { faqPairs.push({ q: curQ, a: aMatch[1].trim() }); curQ = null; }
                 });
                 const faqHtml = faqPairs.map(p => `<p><b>Q: ${escapeHtml(p.q)}</b><br>A: ${escapeHtml(p.a)}</p>`).join('');
-                return `
-                    <div${i > 0 ? ' style="page-break-before:always;margin-top:40px;"' : ''}>
+                // Word的HTML轉檔引擎不認inline的page-break-before套在<div>上（會整個亂套到裡面每個段落，變成一段一頁）。
+                // Word原生「另存為網頁」輸出多節文件時，是每節各自一個 WordSectionN class，節與節之間用特殊的<br>字元觸發換頁，
+                // 不是把換頁樣式寫在section的div本身——沿用這個Word看得懂的寫法，換頁才會只發生在文章與文章之間。
+                const sectionBreak = i > 0 ? `<br clear="all" style="mso-special-character:line-break;page-break-before:always">\n                    ` : '';
+                const image1Html = r.image1 ? `<p><img src="${r.image1}" width="600" height="314" style="width:6.25in;height:3.27in;"></p>` : '';
+                const image2Html = r.image2 ? `<p><img src="${r.image2}" width="600" height="314" style="width:6.25in;height:3.27in;"></p>` : '';
+                return `${sectionBreak}<div class="WordSection${i + 1}">
                         <p style="font-size:10pt;color:#888;text-transform:uppercase;">${escapeHtml(angleLabel(r.angleType))}${r.role === 'pillar' ? ' · ' + escapeHtml(t.articlePillarBadge) : ''}</p>
                         <h1 style="font-size:20pt;">${escapeHtml(r.title)}</h1>
                         <p style="font-style:italic;color:#555;">${escapeHtml(r.metaDescription || '')}</p>
+                        ${image1Html}
                         <h3>${escapeHtml(t.articleTldrLabel)}</h3>
                         <ul>${tldrHtml}</ul>
+                        ${image2Html}
                         <div>${simpleMarkdownToHtml(r.body).replace(/<h3 id="[^"]*"/g, '<h2').replace(/<\/h3>/g, '</h2>').replace(/<h4/g, '<h3').replace(/<\/h4>/g, '</h3>')}</div>
                         <h3>${escapeHtml(t.articleFaqLabel)}</h3>
                         ${faqHtml}
                         <p style="font-size:10pt;color:#888;">${escapeHtml(t.tagLabel)} ${escapeHtml(r.tags || '')} ｜ ${escapeHtml(t.catLabel)} ${escapeHtml(r.category || '')}</p>
                     </div>`;
-            }).join('');
+            }).join('\n                    ');
 
             const htmlDoc = `<!DOCTYPE html><html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40">
-                <head><meta charset="utf-8"><title>GEO Articles</title></head>
-                <body style="font-family:Calibri, Arial, 'Microsoft JhengHei', sans-serif;">${sections}</body></html>`;
+                <head>
+                    <meta charset="utf-8"><title>GEO Articles</title>
+                    <style>
+                        ${pageCss}
+                        body { font-family:Calibri, Arial, 'Microsoft JhengHei', sans-serif; font-size:11pt; color:#333333; }
+                        h1 { font-size:20pt; color:#111111; margin:0 0 8pt 0; }
+                        h2 { font-size:16pt; color:#1a1a1a; margin:20pt 0 8pt 0; padding-bottom:4pt; border-bottom:1pt solid #cccccc; }
+                        h3 { font-size:13pt; color:#1a1a1a; margin:14pt 0 6pt 0; }
+                        p { font-size:11pt; line-height:1.5; margin:0 0 10pt 0; }
+                        ul, ol { margin:0 0 10pt 24pt; padding:0; }
+                        li { font-size:11pt; line-height:1.5; margin:0 0 4pt 0; }
+                        strong { color:#111111; }
+                    </style>
+                </head>
+                <body>${sections}</body></html>`;
 
             const blob = new Blob(['﻿' + htmlDoc], { type: 'application/msword' });
             const link = document.createElement('a');
@@ -1397,11 +1452,26 @@
             let html = (md || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
             html = html.replace(/^### (.+)$/gm, '<h4 class="text-base font-black text-slate-800 mt-6 mb-2">$1</h4>');
             html = html.replace(/^## (.+)$/gm, (m, p1) => `<h3 id="${slugify(p1.trim())}" class="text-lg font-black text-slate-800 mt-8 mb-3 pb-2 border-b border-slate-100 scroll-mt-24">${p1.trim()}</h3>`);
+            // 強制讓標題永遠自成一個區塊：如果AI生成的內文把標題跟緊接著的內文寫在同一行段落裡（中間沒空行），
+            // 下面用空行分段的邏輯會把兩者當同一塊，導致內文沒被包進<p>標籤、用瀏覽器預設字級顯示（比正常段落大），
+            // 直到下一個真正有空行分隔的段落才恢復正常——這裡在標題後面補一個空行，確保內文永遠會被切成獨立區塊。
+            html = html.replace(/(<\/h[34]>)\n(?!\n)/g, '$1\n\n');
             html = html.replace(/\*\*(.+?)\*\*/g, '<strong class="text-slate-900">$1</strong>');
             html = html.split(/\n\s*\n/).map(block => {
                 const trimmed = block.trim();
                 if (!trimmed) return '';
                 if (trimmed.startsWith('<h3') || trimmed.startsWith('<h4')) return trimmed;
+                const lines = trimmed.split('\n').map(l => l.trim()).filter(Boolean);
+                const isUnordered = lines.every(l => /^[-*•]\s+/.test(l));
+                const isOrdered = lines.every(l => /^\d+[.)]\s+/.test(l));
+                if (isUnordered) {
+                    const items = lines.map(l => `<li>${l.replace(/^[-*•]\s+/, '')}</li>`).join('');
+                    return `<ul class="list-disc pl-5 text-sm text-slate-600 leading-relaxed mb-4">${items}</ul>`;
+                }
+                if (isOrdered) {
+                    const items = lines.map(l => `<li>${l.replace(/^\d+[.)]\s+/, '')}</li>`).join('');
+                    return `<ol class="list-decimal pl-5 text-sm text-slate-600 leading-relaxed mb-4">${items}</ol>`;
+                }
                 return `<p class="text-sm text-slate-600 leading-relaxed mb-4">${trimmed}</p>`;
             }).join('');
             return html;
@@ -1413,6 +1483,7 @@
             const geoSelect = document.getElementById('pref-geo');
             if (rbu === 'ACN') {
                 geoSelect.innerHTML = `
+                    <option value="Standard SEO">Standard GEO</option>
                     <option value="Wenxin">文心一言</option>
                     <option value="Qwen">通義千問</option>
                     <option value="DeepSeek">DeepSeek</option>
@@ -1420,14 +1491,14 @@
                 `;
             } else {
                 geoSelect.innerHTML = `
-                    <option value="Standard SEO">Standard SEO</option>
+                    <option value="Standard SEO">Standard GEO</option>
                     <option value="Gemini">Gemini</option>
                     <option value="Claude">Claude</option>
                     <option value="ChatGPT">ChatGPT</option>
                     <option value="Perplexity">Perplexity</option>
                 `;
-                geoSelect.options[0].text = i18n[currentLang].standardSeoOptionLabel;
             }
+            geoSelect.options[0].text = i18n[currentLang].standardSeoOptionLabel;
         };
 
         // 「生成內容」尚無額外連動行為；SEO/GEO文章 的表單規格將於後續階段設計
@@ -1461,9 +1532,32 @@
             return m ? m[1].trim() : '';
         };
 
+        // 從爬蟲抓回的Markdown內容裡找出「像是產品主圖」的圖片網址（供文章配圖當參考圖用）：
+        // 排除svg小圖示，優先挑網址路徑或說明文字裡含「photo/main/product」字樣的（研華官網慣用命名，例如
+        // "Product - Photo(Main)"），沒有明確標記時退而求其次收錄其他圖片但排到後面，非必要就不會被選用。
+        function extractProductPhotoCandidates(markdownText, sourceLabel) {
+            if (!markdownText) return [];
+            const candidates = [];
+            // 圖片網址裡常有跳脫過的括號（例如研華網址常見的 Photo\(Main\)），URL擷取群組用
+            // (?:\\.|[^)])+ 讓「反斜線+任意字元」整組被吃掉，才不會在跳脫過的 ) 那裡就提早截斷網址
+            const imgRegex = /!\[([^\]]*)\]\(((?:\\.|[^)])+)\)/g;
+            let m;
+            while ((m = imgRegex.exec(markdownText)) !== null) {
+                const alt = (m[1] || '').trim();
+                const url = m[2].replace(/\\([()])/g, '$1'); // 去掉markdown跳脫用的反斜線，還原成真正的網址
+                if (/\.svg(\?|$)/i.test(url)) continue;
+                if (!/\.(png|jpe?g|webp)(\?|$)/i.test(url)) continue;
+                const isLikelyMainPhoto = /photo|main|product/i.test(url) || /photo|main/i.test(alt);
+                candidates.push({ url, alt, sourceLabel, isLikelyMainPhoto });
+            }
+            candidates.sort((a, b) => (b.isLikelyMainPhoto ? 1 : 0) - (a.isLikelyMainPhoto ? 1 : 0));
+            return candidates;
+        }
+
         async function gatherAllSourceContent(subMsgEl) {
             let targetFileText = "";
             let referenceFileText = "";
+            let photoCandidates = [];
             let imageParts = [];
             let refImageParts = [];
 
@@ -1512,7 +1606,10 @@
                     }
                     try {
                         const scrapeRes = await fetchWithRetry('/api/scrape', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ url }) }, 3);
-                        if (scrapeRes && scrapeRes.text) targetFileText += `\n--- [目標網址 ${i+1}: ${url}] ---\n${scrapeRes.text}\n`;
+                        if (scrapeRes && scrapeRes.text) {
+                            targetFileText += `\n--- [目標網址 ${i+1}: ${url}] ---\n${scrapeRes.text}\n`;
+                            photoCandidates.push(...extractProductPhotoCandidates(scrapeRes.text, `目標產品 ${i+1}`));
+                        }
                     } catch (err) {
                         targetFileText += `\n--- [目標網址 ${i+1}: ${url}] 失敗 ---\n(網頁無法存取，請以內建知識庫為主)\n`;
                     }
@@ -1530,12 +1627,23 @@
                     }
                     try {
                         const scrapeRes = await fetchWithRetry('/api/scrape', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ url }) }, 2);
-                        if (scrapeRes && scrapeRes.text) referenceFileText += `\n--- [參考網址 ${i+1}: ${url}] ---\n${scrapeRes.text}\n`;
+                        if (scrapeRes && scrapeRes.text) {
+                            referenceFileText += `\n--- [參考網址 ${i+1}: ${url}] ---\n${scrapeRes.text}\n`;
+                            photoCandidates.push(...extractProductPhotoCandidates(scrapeRes.text, `參考產品 ${i+1}`));
+                        }
                     } catch (err) {
                         referenceFileText += `\n--- [參考網址 ${i+1}: ${url}] 失敗 ---\n(網頁無法存取，請略過此參考網址)\n`;
                     }
                 }
             }
+
+            // 每個來源只留信心度最高的1張候選（避免同一產品頁多張圖同時入選），最多留5張候選給AI挑選
+            const seenSources = new Set();
+            photoCandidates = photoCandidates.filter(c => {
+                if (seenSources.has(c.sourceLabel)) return false;
+                seenSources.add(c.sourceLabel);
+                return true;
+            }).slice(0, 5);
 
             const MAX_CHARS = 30000;
             if (targetFileText.length > MAX_CHARS) {
@@ -1546,7 +1654,7 @@
                 if (referenceFileText.length > remainingLimit) referenceFileText = referenceFileText.substring(0, remainingLimit);
             }
 
-            return { targetFileText, referenceFileText, imageParts, refImageParts };
+            return { targetFileText, referenceFileText, imageParts, refImageParts, photoCandidates };
         }
 
         // 目標優化引擎的客製化語氣/結構指令，統一集中在這裡維護（產品文案、廣告文案、SEO/GEO文章共用）。
@@ -1690,9 +1798,11 @@ For each of the 3 chosen pillar angles, select the 3 highest content-fit-scoring
             btn.classList.add('opacity-75', 'cursor-not-allowed');
             document.getElementById('export-btn-container')?.classList.add('hidden');
             resultArea.classList.remove('hidden');
-            resultArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
             outputContainer.innerHTML = workerLoaderHtml(t.articleStep1Title, t.procSub);
+            // 捲到頁面實際最底部（而非只對齊結果區塊頂部），桌機手機共用同一套邏輯；
+            // 等loading動畫塞進outputContainer後才量測高度，確保捲動位置有算進新內容
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
             const fakeProgressTimer = startFakeProgress(5, 92);
 
             try {
@@ -1855,7 +1965,212 @@ For each of the 3 chosen pillar angles, select the 3 highest content-fit-scoring
             confirmBtn.classList.remove('opacity-50', 'cursor-not-allowed');
         };
 
-        function buildArticleStep2Prompt(role, angleTypeLabel, myTitle, siblingTitles, targetLangLabel, brandName, grammarRule, strategy, geo) {
+        // ===== 搜尋補充：4篇文章各配3-5個查詢詞（AI依角度複雜度自己決定要幾個），抓外部佐證資料 =====
+        function buildSearchQueryPrompt(roles, targetLangLabel) {
+            const articlesList = roles.map((r, i) => `${i + 1}. [${r.role === 'pillar' ? 'PILLAR' : 'CLUSTER'} / ${r.type}] "${r.title}"`).join('\n');
+            return `You are a research assistant preparing web-search queries to gather supplementary supporting facts for a set of 4 B2B industrial-tech articles about to be written.
+
+**THE 4 ARTICLES**:
+${articlesList}
+
+**YOUR TASK**: For EACH of the 4 articles, propose **3 to 5** web search queries in ${targetLangLabel === 'English' ? 'English' : 'English (search queries should stay in English regardless of article language, for broader result coverage)'} — decide the count per article based on how much external research genuinely helps that specific angle (a narrow/simple angle may only need 3; a broad, data-hungry angle like a buying guide or market comparison can use up to 5). Each query within an article must target a DIFFERENT kind of supporting material:
+- For "authority_definition" angles: industry-standard definitions/frameworks, market/category overview data, and (if a 3rd+ query is warranted) related standards bodies or classification schemes.
+- For "technical_deep_dive" angles: technical specs/benchmark data, recent industry commentary on that technology, and (if warranted) competing technology comparisons.
+- For "use_case_scenario" / "vertical_application" angles: real-world case studies, industry adoption data, and (if warranted) ROI/outcome data.
+- For "buying_guide" / "comparison_decision" angles: buyer evaluation criteria, market comparison data, pricing/TCO considerations, and (if warranted) vendor landscape data.
+- For "pain_point" / "faq_digest" angles: the underlying industry pain point/challenge, common questions/discussions on the topic, and (if warranted) solution approaches.
+Each query should be specific and concrete (include the product category, not generic terms), suitable for a real web search engine.
+
+🚨 DO NOT WRAP YOUR RESPONSE IN MARKDOWN CODE BLOCKS. RETURN RAW TEXT. 🚨
+
+**MANDATORY OUTPUT FORMAT**: for each of the 4 articles, output QUERY_1 through QUERY_5 tags. Fill in 3, 4, or 5 of them with real queries (your choice per article) — leave any remaining tags completely EMPTY (e.g. \`[ARTICLE_1_QUERY_5][/ARTICLE_1_QUERY_5]\`) if that article doesn't need that many. Example structure (repeat for articles 1-4):
+[ARTICLE_1_QUERY_1]{query}[/ARTICLE_1_QUERY_1]
+[ARTICLE_1_QUERY_2]{query}[/ARTICLE_1_QUERY_2]
+[ARTICLE_1_QUERY_3]{query}[/ARTICLE_1_QUERY_3]
+[ARTICLE_1_QUERY_4]{query or empty}[/ARTICLE_1_QUERY_4]
+[ARTICLE_1_QUERY_5]{query or empty}[/ARTICLE_1_QUERY_5]
+...same 5 tags for ARTICLE_2, ARTICLE_3, ARTICLE_4...`;
+        }
+
+        async function runTavilySearch(query) {
+            try {
+                const res = await fetch('/api/tavily-search', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ query, max_results: 4 })
+                });
+                if (!res.ok) return [];
+                const data = await res.json();
+                return data.results || [];
+            } catch (e) {
+                return [];
+            }
+        }
+
+        // 從查詢詞生成結果裡撈出某篇文章的所有查詢——只認開頭標籤編號，不要求結尾標籤編號也對得上，
+        // 避免AI偶爾把結尾標籤編號寫錯（例如QUERY_2的結尾誤植成QUERY_3）時，該查詢詞被 parseTaggedField 的嚴格配對規則整個吃掉
+        function parseArticleQueries(text, articleIndex) {
+            const openTagRe = new RegExp(`\\[ARTICLE_${articleIndex}_QUERY_\\d+\\]`, 'g');
+            const matches = [...text.matchAll(openTagRe)];
+            const queries = [];
+            for (let m = 0; m < matches.length; m++) {
+                const start = matches[m].index + matches[m][0].length;
+                const end = m + 1 < matches.length ? matches[m + 1].index : text.length;
+                const raw = text.slice(start, end).replace(/\[\/ARTICLE_\d+_QUERY_\d+\]/g, '').trim();
+                if (raw) queries.push(raw);
+            }
+            return queries;
+        }
+
+        // 幫4篇文章各自取得3-5個查詢詞（依角度複雜度而異），平行搜尋，回傳「每篇文章 -> 格式化好的研究素材文字」的陣列（失敗時該篇為空字串，不中斷流程）
+        async function gatherArticleResearchContext(roles, targetLangLabel, promptText) {
+            try {
+                const queryPrompt = buildSearchQueryPrompt(roles, targetLangLabel);
+                const payload = { contents: [{ parts: [{ text: `[SOURCE CONTENT FOR CONTEXT]\n${promptText.slice(0, 4000)}` }] }], systemInstruction: { parts: [{ text: queryPrompt }] } };
+                const responseData = await fetchWithRetry('/api/generate', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+                const outputText = responseData.candidates?.[0]?.content?.parts?.[0]?.text || '';
+
+                const searchTasks = [];
+                for (let i = 0; i < roles.length; i++) {
+                    const queries = parseArticleQueries(outputText, i + 1);
+                    searchTasks.push(Promise.all(queries.map(q => runTavilySearch(q))));
+                }
+                const allResults = await Promise.all(searchTasks);
+
+                return allResults.map(resultSets => {
+                    const combined = resultSets.flat().slice(0, 12);
+                    if (combined.length === 0) return '';
+                    return combined.map(r => `- ${detox(r.title)}: ${detox(r.content).slice(0, 300)}`).join('\n');
+                });
+            } catch (e) {
+                return roles.map(() => '');
+            }
+        }
+
+        // 把研華產品照片網址透過後端轉存成base64（避開CORS），失敗回傳null
+        async function fetchImageAsBase64(url) {
+            try {
+                const res = await fetch('/api/fetch-image', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ url })
+                });
+                if (!res.ok) return null;
+                return await res.json(); // { mimeType, data }
+            } catch (e) {
+                return null;
+            }
+        }
+
+        // 呼叫Gemini原生圖片模型，把base64圖片資料轉成data URL；失敗回傳null（不中斷生成流程）
+        // refImage（選填）：{mimeType, data} 格式的真實研華產品照片，附上去時會要求AI照著這張真實外觀畫，不是憑空想像
+        async function callImageGenerationApi(prompt, refImage) {
+            try {
+                let fullPrompt = `${prompt} Professional stock-photography style, realistic lighting, no on-image text or logos.`;
+                if (refImage) {
+                    fullPrompt = `CRITICAL PRODUCT FIDELITY RULE (highest priority): the attached reference image shows the EXACT real Advantech product to feature in this scene. Render it with high fidelity — preserve its precise shape, color, port layout, and proportions. Do NOT redesign, restyle, or invent a different appearance for it; only render what you can directly observe in the reference image. ${fullPrompt}`;
+                }
+                const res = await fetch('/api/generate-image', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ prompt: fullPrompt, refImage: refImage || null })
+                });
+                if (!res.ok) return null;
+                const data = await res.json();
+                const parts = data.candidates?.[0]?.content?.parts || [];
+                const imgPart = parts.find(p => p.inlineData);
+                if (!imgPart) return null;
+                return `data:${imgPart.inlineData.mimeType};base64,${imgPart.inlineData.data}`;
+            } catch (e) {
+                return null;
+            }
+        }
+
+        // AI標示浮水印素材（沿用「內容工廠」專案同一份PNG與同一套尺寸公式，見ai_modified_badge.png）：
+        // 標示寬度＝畫布短邊×(130/600)，限制在50-140px；下邊界與右邊界留白＝15×(標示寬度/130)
+        const AI_BADGE_REF_WIDTH = 130;
+        const AI_BADGE_REF_MARGIN = 15;
+        let __aiBadgeImg = null;
+        function loadAiBadgeImage() {
+            if (__aiBadgeImg) return __aiBadgeImg;
+            __aiBadgeImg = new Promise((resolve) => {
+                const img = new Image();
+                img.onload = () => resolve(img);
+                img.onerror = () => resolve(null);
+                img.src = 'ai_modified_badge.png';
+            });
+            return __aiBadgeImg;
+        }
+
+        // 用畫布把Gemini生成的圖片（尺寸不固定）裁切縮放成精確的1200x628（cover模式，中心裁切，不變形），
+        // 再疊上AI標示浮水印（右下角，位置/大小公式與「內容工廠」專案一致）
+        function resizeImageDataUrl(dataUrl, targetW, targetH) {
+            return new Promise((resolve) => {
+                const img = new Image();
+                img.onload = async () => {
+                    const canvas = document.createElement('canvas');
+                    canvas.width = targetW;
+                    canvas.height = targetH;
+                    const ctx = canvas.getContext('2d');
+                    const srcRatio = img.width / img.height;
+                    const targetRatio = targetW / targetH;
+                    let sx, sy, sw, sh;
+                    if (srcRatio > targetRatio) {
+                        sh = img.height;
+                        sw = sh * targetRatio;
+                        sx = (img.width - sw) / 2;
+                        sy = 0;
+                    } else {
+                        sw = img.width;
+                        sh = sw / targetRatio;
+                        sx = 0;
+                        sy = (img.height - sh) / 2;
+                    }
+                    ctx.drawImage(img, sx, sy, sw, sh, 0, 0, targetW, targetH);
+
+                    const badgeImg = await loadAiBadgeImage();
+                    if (badgeImg) {
+                        const shortSide = Math.min(targetW, targetH);
+                        const badgeW = Math.max(50, Math.min(140, Math.round(shortSide * (AI_BADGE_REF_WIDTH / 600))));
+                        const badgeH = Math.round(badgeImg.height * (badgeW / badgeImg.width));
+                        const margin = Math.round(AI_BADGE_REF_MARGIN * (badgeW / AI_BADGE_REF_WIDTH));
+                        const x = Math.max(0, targetW - badgeW - margin);
+                        const y = Math.max(0, targetH - badgeH - margin);
+                        ctx.drawImage(badgeImg, x, y, badgeW, badgeH);
+                    }
+                    resolve(canvas.toDataURL('image/png'));
+                };
+                img.onerror = () => resolve(null);
+                img.src = dataUrl;
+            });
+        }
+
+        // 依AI選的候選索引，抓對應的真實產品照片轉成base64（索引無效/未選/抓取失敗都回傳null，不中斷流程）
+        async function resolvePhotoRef(photoCandidates, refIndex) {
+            if (refIndex === null || refIndex === undefined || refIndex === '' || refIndex.toLowerCase?.() === 'none') return null;
+            const idx = parseInt(refIndex, 10);
+            if (isNaN(idx) || !photoCandidates || !photoCandidates[idx]) return null;
+            return await fetchImageAsBase64(photoCandidates[idx].url);
+        }
+
+        // 幫單篇文章的2個構圖描述各自生成圖片並裁切成1200x628，失敗的那張回傳null（不中斷流程）
+        async function generateArticleImages(imagePrompt1, imagePrompt2, photoCandidates, refIndex1, refIndex2) {
+            const [ref1, ref2] = await Promise.all([
+                resolvePhotoRef(photoCandidates, refIndex1),
+                resolvePhotoRef(photoCandidates, refIndex2)
+            ]);
+            const [raw1, raw2] = await Promise.all([
+                imagePrompt1 ? callImageGenerationApi(imagePrompt1, ref1) : null,
+                imagePrompt2 ? callImageGenerationApi(imagePrompt2, ref2) : null
+            ]);
+            const [img1, img2] = await Promise.all([
+                raw1 ? resizeImageDataUrl(raw1, 1200, 628) : null,
+                raw2 ? resizeImageDataUrl(raw2, 1200, 628) : null
+            ]);
+            return { image1: img1, image2: img2 };
+        }
+
+        function buildArticleStep2Prompt(role, angleTypeLabel, myTitle, siblingTitles, targetLangLabel, brandName, grammarRule, strategy, geo, researchContext, photoCandidates) {
             const isPillar = role === 'pillar';
             const wordCountRule = isPillar
                 ? '1200-2000 words for the BODY (this is the comprehensive pillar/hub piece — the most in-depth of the 4 articles).'
@@ -1866,9 +2181,30 @@ For each of the 3 chosen pillar angles, select the 3 highest content-fit-scoring
                     ? 'Lean toward a brand-authority/thought-leadership tone — establish expertise and trust.'
                     : 'Use a balanced, informative tone.');
             const crossRefInstruction = siblingTitles.length > 0
-                ? `**INTERNAL CROSS-REFERENCE (CRITICAL)**: This article is part of a 4-article topic cluster. The other 3 articles are: ${siblingTitles.map(s => `"${s}"`).join(', ')}. Naturally mention at least 1-2 of them by title within the BODY (e.g., "For a deeper dive on X, see our related article '{title}'"). Do NOT invent a URL or hyperlink — mention the title in prose only. ${isPillar ? 'As the pillar, briefly summarize what each cluster article covers.' : 'As a cluster piece, reference the pillar for the comprehensive overview.'}`
+                ? `**INTERNAL CROSS-REFERENCE**: This article is part of a 4-article topic cluster. The other 3 articles are: ${siblingTitles.map(s => `"${s}"`).join(', ')}. Mention AT MOST ONE of them by title, ONCE, in ONE natural place in the BODY (e.g. near the end of one relevant section). Do NOT insert a "see our related article" mention at the start of multiple sections — that reads as mechanical and repetitive. Do NOT invent a URL or hyperlink — mention the title in prose only.`
                 : '';
             const engineToneInstruction = getEngineInstructions(geo).articleTone;
+            const researchInstruction = researchContext
+                ? `**SUPPLEMENTARY RESEARCH CONTEXT (external web search results)**:
+${researchContext}
+
+**HOW TO USE THE ABOVE**:
+- Its PRIMARY role is to help you establish the genuine, vendor-neutral judgment-point framework for this topic (see CONTENT FRAMEWORK APPROACH above) — use it to figure out what real considerations/criteria matter here, independent of our product.
+- When citing a specific fact/statistic directly in prose, select only the 2-4 strongest, most relevant ones — do not try to cite all of it, and do not turn the article into a list of external statistics.
+- 🚨 NEVER copy sentences verbatim from the research context — extract the underlying fact/number only and re-express it entirely in your own words, in ${brandName}'s voice and tone (do not imitate the source's writing style).
+- When you cite a fact from it, attribute it naturally in prose (e.g. "according to recent industry data" / "根據近期產業報告") — do NOT insert a URL or hyperlink.
+- If a fact conflicts with the source content, claims specifically ABOUT the product always defer to the real source content — but general industry/category framework points drawn from research do not need to defer to it, they are not claims about the product.
+- If none of the research context is relevant enough, ignore it entirely rather than forcing an awkward mention.
+- 🚨 Any external example/comparison you cite must make a CLEAR, DIRECT point in service of the paragraph's argument (e.g. a real contrast, a supporting data point) — never name-drop an external product/company/stat that doesn't clearly connect to what the paragraph is actually arguing.`
+                : '';
+            const frameworkInstruction = `**CONTENT FRAMEWORK APPROACH (applies to every content angle, not just buying-guide types)**:
+Before drafting the BODY, establish the genuine, vendor-neutral framework of judgment points that matter for THIS topic (angle: ${angleTypeLabel}, title: "${myTitle}") — the same points a reader would weigh regardless of which vendor they eventually choose. Draw on general industry/category knowledge and the supplementary research context below (if provided) to identify these points — do NOT invent a framework that just happens to mirror our product's own spec-sheet categories.
+- Use these genuine judgment points as your H2 section structure — each H2 heading must be a real consideration a reader cares about (e.g. "Processing Power Requirements", "Total Cost of Ownership", "Environmental Durability"), NOT a restatement of one of our product's spec categories.
+- WITHIN each section, first explain why that judgment point matters in general — grounded in category knowledge/research, not yet tied to our product — THEN connect it to how ${brandName}'s product satisfies or addresses that specific point. The product should read as the answer/evidence for an already-established judgment point, never as the point itself.
+- This applies even to product-centric angles (technical_deep_dive, use_case_scenario): open each section by establishing why the underlying consideration matters broadly, THEN show how our product delivers on it — do not open directly with a product-spec list.
+- 🚨 DO NOT ENUMERATE THE FULL SPEC SHEET: when connecting a judgment point to the product, cite only the 1-2 MOST RELEVANT specs as illustrative evidence for THAT specific point. Never dump every related spec from the source content into one section just because they exist — a long spec list is a data sheet, not a reason. Save other specs for whichever OTHER section they actually support.
+- 🚨 DO NOT FORCE A WEAK PRODUCT CONNECTION: if the source content has no specific, concrete backing for how the product addresses a judgment point you chose, do NOT write a vague unsubstantiated claim about the product (e.g. "the system is designed to ensure efficiency") just to have a product mention — that violates the NO FLUFF rule below. Either find a genuinely concrete mechanism/spec that fits, or address that judgment point in honest general category terms without a forced product claim.
+- 🚨 NO "LEFTOVER SPECS" CATCH-ALL SECTION: never create a final/extra H2 section (e.g. "Integration Considerations", "Additional Features") just to fit in specs that didn't belong to any of your real judgment-point sections. If a spec from the source content doesn't clearly support one of your established judgment points, either fold it briefly into whichever existing section it fits best, or leave it out entirely — do not invent a section whose real purpose is "here are the remaining specs," since that section's heading will inevitably promise something (a challenge, a consideration) that the leftover-specs content doesn't actually deliver.`;
 
             return `You are a senior B2B content writer and GEO (Generative Engine Optimization) specialist for the industrial computing (IPC/IIoT) sector, writing on behalf of ${brandName}.
 
@@ -1881,6 +2217,10 @@ ${engineToneInstruction}
 
 ${crossRefInstruction}
 
+${researchInstruction}
+
+${frameworkInstruction}
+
 **GEO STRUCTURAL RULES (2026 GEO/AEO citation-driver research, follow strictly)**:
 1. 🚨 FRONT-LOAD FACTS: ~44% of AI citations come from the first 30% of an article. Put the single most important, quotable fact in the first 2 sentences of the BODY.
 2. 🚨 KEY TAKEAWAYS FIRST: The [TLDR] block needs 3-5 bullet points, each a standalone, independently-citable factual statement (not a marketing teaser — must make sense quoted alone, out of context).
@@ -1890,8 +2230,23 @@ ${crossRefInstruction}
 6. ${wordCountRule}
 7. 🚨 NO FLUFF: Forbidden subjective adjectives without a supporting fact (e.g. "強化", "專業級", "頂級", "world-class", "cutting-edge"). Every claim must be backed by a concrete spec, mechanism, or named use-case from the source content.
 8. 🚨 ANTI-HALLUCINATION: Only state facts present in the provided source content or safe, general category knowledge. If specific data is unavailable, write in general category terms rather than inventing numbers.
+   - 🚨 NEVER invent an alternate model/chip/configuration variant that isn't explicitly named in the source, even if the source's own phrasing seems to imply other variants might exist (e.g. a spec written as "(ModelX: 4 units)" does NOT mean other models with different numbers exist — state ONLY the one specific fact given, exactly as written, without extrapolating siblings or alternates).
+   - 🚨 Reproduce the exact product model number/SKU EXACTLY character-for-character as it appears in the source (e.g. every digit) — never alter, round, or guess a single character of it.
 
 **[FAQ] REQUIREMENTS**: Exactly 5 Q&A pairs, each independently extractable (understandable with ZERO surrounding context — maps directly to FAQPage structured data). Each answer: 2-4 factual sentences, no fluff.
+
+${photoCandidates && photoCandidates.length > 0 ? `**AVAILABLE REAL PRODUCT PHOTOS** (real Advantech product photos found on the scraped pages, index-numbered):
+${photoCandidates.map((c, i) => `${i}: ${c.alt || '(no caption)'} — from ${c.sourceLabel}`).join('\n')}
+` : ''}
+**IMAGE COMPOSITION BRIEFS (for a photo-generation model, not for the reader)**: After writing the article above, write 2 image-generation prompts in English, each describing a REALISTIC, PHOTOGRAPHIC (not illustration/diagram/cartoon) scene. Decide each scene by working through this priority order STRICTLY, in this sequence — do NOT skip ahead to the product:
+1. THEME FIRST: what is THIS specific article's angle (${angleTypeLabel}, title "${myTitle}")? The scene must visually embody THIS particular theme — never default to a generic "factory floor with robotic arms" scene that could equally apply to any article about this product category. A definition/authority article, a buying-guide article, and a harsh-environment article about the SAME product must NOT produce visually similar scenes.
+2. SUBJECT: given that theme, what is the most fitting main subject? It does NOT have to be the hardware product — it can be a person/operator, an environment, a process in action, a challenge/consequence, or an abstract concept made concrete.
+3. APPLICATION SCENARIO: if the BODY you just wrote mentions a specific real-world scenario, industry, or workflow, depict THAT concrete scenario — not a generic setting.
+4. PRODUCT — LOWEST PRIORITY, OPTIONAL: only include a suggestion of the hardware if it fits naturally without forcing a "product mounted on a wall" cliché. The product is optional supporting context, never the mandatory anchor of the composition.
+- IMAGE_1_PROMPT: the broad scene resulting from the priority above.
+- IMAGE_2_PROMPT: a narrower scene drawn from a DIFFERENT point in the BODY than IMAGE_1_PROMPT — do not reuse the same visual idea twice within this article.
+Each prompt: 1-2 sentences, describe the scene/setting/mood only (camera angle, lighting, environment) — do NOT ask for any on-image text, logos, or brand names (image-generation models render text unreliably). Do NOT describe the specific appearance of any hardware in the prompt text (no port counts, no chassis color/shape) — if a real reference photo will be attached (see below), the photo itself conveys the appearance; describing it too in words is redundant and can conflict with the photo.
+${photoCandidates && photoCandidates.length > 0 ? `- 🚨 REFERENCE PHOTO SELECTION: for each image, if — and ONLY if — the featured hardware in that specific scene (per the priority order above) is clearly one of the products listed in AVAILABLE REAL PRODUCT PHOTOS, output that product's index number so it can be attached as a real reference photo (ensuring the generated image is faithful to a genuine Advantech product, not an imagined generic box). If no listed photo is relevant to that image (e.g. the scene has no featured hardware, or discusses a product not in the list), output "none" — do NOT force a mismatched reference.` : ''}
 
 🚨 DO NOT WRAP YOUR RESPONSE IN MARKDOWN CODE BLOCKS. RETURN RAW TEXT. 🚨
 
@@ -1919,7 +2274,11 @@ Q5: {Question}
 A5: {Answer}
 [/FAQ]
 [TAGS]{Tag1}, {Tag2}, {Tag3}, {Tag4}[/TAGS]
-[CATEGORY]{Category}[/CATEGORY]`;
+[CATEGORY]{Category}[/CATEGORY]
+[IMAGE_1_PROMPT]{realistic photo scene description}[/IMAGE_1_PROMPT]
+[IMAGE_1_REF_INDEX]{index number, or "none"}[/IMAGE_1_REF_INDEX]
+[IMAGE_2_PROMPT]{realistic photo scene description}[/IMAGE_2_PROMPT]
+[IMAGE_2_REF_INDEX]{index number, or "none"}[/IMAGE_2_REF_INDEX]`;
         }
 
         function parseArticleOutput(text) {
@@ -1930,7 +2289,11 @@ A5: {Answer}
                 body: parseTaggedField(text, 'BODY'),
                 faq: parseTaggedField(text, 'FAQ'),
                 tags: parseTaggedField(text, 'TAGS'),
-                category: parseTaggedField(text, 'CATEGORY')
+                category: parseTaggedField(text, 'CATEGORY'),
+                imagePrompt1: parseTaggedField(text, 'IMAGE_1_PROMPT'),
+                imageRefIndex1: parseTaggedField(text, 'IMAGE_1_REF_INDEX'),
+                imagePrompt2: parseTaggedField(text, 'IMAGE_2_PROMPT'),
+                imageRefIndex2: parseTaggedField(text, 'IMAGE_2_REF_INDEX')
             };
         }
 
@@ -1954,9 +2317,18 @@ A5: {Answer}
             const outputContainer = document.getElementById('output-container');
             const results = [];
 
+            const source = articleWorkflowState.source;
+            const promptText = `Brand Guidelines (Reference): ${articleWorkflowState.kbManual}\n\n[SOURCE CONTENT]\n${source.targetFileText}\n\n${source.referenceFileText ? '[ADDITIONAL REFERENCE CONTEXT]\n' + source.referenceFileText : ''}`;
+
+            outputContainer.innerHTML = workerLoaderHtml(t.articleResearching, t.procSub);
+            const researchTimer = startFakeProgress(0, 10);
+            const { targetLangLabel: researchLangLabel } = getLangContext();
+            const researchContexts = await gatherArticleResearchContext(roles, researchLangLabel, promptText);
+            finishFakeProgress(researchTimer, 10);
+
             for (let i = 0; i < roles.length; i++) {
-                const segStart = Math.round((i / roles.length) * 100);
-                const segEnd = Math.round(((i + 1) / roles.length) * 100);
+                const segStart = 10 + Math.round((i / roles.length) * 55);
+                const segEnd = 10 + Math.round(((i + 1) / roles.length) * 55);
                 const segCeiling = segStart + (segEnd - segStart) * 0.88;
                 outputContainer.innerHTML = workerLoaderHtml(
                     t.articleGenerating.replace('{n}', i + 1).replace('{total}', roles.length),
@@ -1966,10 +2338,8 @@ A5: {Answer}
                 try {
                     const siblingTitles = allTitles.filter((title, ti) => ti !== i);
                     const { targetLangLabel, brandName, grammarRule } = getLangContext();
-                    const systemPrompt = buildArticleStep2Prompt(roles[i].role, angleLabel(roles[i].type), roles[i].title, siblingTitles, targetLangLabel, brandName, grammarRule, articleWorkflowState.strategy, articleWorkflowState.geo);
+                    const systemPrompt = buildArticleStep2Prompt(roles[i].role, angleLabel(roles[i].type), roles[i].title, siblingTitles, targetLangLabel, brandName, grammarRule, articleWorkflowState.strategy, articleWorkflowState.geo, researchContexts[i], source.photoCandidates);
 
-                    const source = articleWorkflowState.source;
-                    const promptText = `Brand Guidelines (Reference): ${articleWorkflowState.kbManual}\n\n[SOURCE CONTENT]\n${source.targetFileText}\n\n${source.referenceFileText ? '[ADDITIONAL REFERENCE CONTEXT]\n' + source.referenceFileText : ''}`;
                     let partsArray = [{ text: promptText }];
                     if (source.imageParts.length > 0) partsArray = partsArray.concat(source.imageParts);
 
@@ -1987,6 +2357,23 @@ A5: {Answer}
                     finishFakeProgress(segTimer, segEnd);
                     results.push({ role: roles[i].role, angleType: roles[i].type, title: roles[i].title, error: e.message });
                 }
+            }
+
+            // 每篇文章各生成2張重點配圖（失敗不中斷流程，該篇圖片留空即可）
+            for (let i = 0; i < results.length; i++) {
+                if (results[i].error) continue;
+                const segStart = 65 + Math.round((i / results.length) * 35);
+                const segEnd = 65 + Math.round(((i + 1) / results.length) * 35);
+                const segCeiling = segStart + (segEnd - segStart) * 0.88;
+                outputContainer.innerHTML = workerLoaderHtml(
+                    t.articleImaging.replace('{n}', i + 1).replace('{total}', results.length),
+                    results[i].title
+                );
+                const segTimer = startFakeProgress(segStart, segCeiling);
+                const { image1, image2 } = await generateArticleImages(results[i].imagePrompt1, results[i].imagePrompt2, source.photoCandidates, results[i].imageRefIndex1, results[i].imageRefIndex2);
+                results[i].image1 = image1;
+                results[i].image2 = image2;
+                finishFakeProgress(segTimer, segEnd);
             }
 
             window.trackUsage();
@@ -2036,15 +2423,20 @@ A5: {Answer}
                         <p class="text-sm text-slate-600 leading-relaxed pl-6">${p.a}</p>
                     </div>`).join('');
 
+                const image1Html = r.image1 ? `<img src="${r.image1}" alt="${escapeHtml(r.title)}" class="w-full rounded-xl mb-6 shadow-sm" style="aspect-ratio:1200/628;object-fit:cover;">` : '';
+                const image2Html = r.image2 ? `<img src="${r.image2}" alt="${escapeHtml(r.title)}" class="w-full rounded-xl my-6 shadow-sm" style="aspect-ratio:1200/628;object-fit:cover;">` : '';
+
                 return `<div id="article-panel-${i}" class="${i === 0 ? '' : 'hidden'} bg-white border border-slate-200 rounded-2xl p-6 sm:p-10">
                     <span class="text-[10px] font-black text-blue-600 uppercase tracking-widest bg-blue-50 px-2 py-0.5 rounded border border-blue-100">${angleLabel(r.angleType)}</span>
                     <h2 class="text-2xl font-black text-slate-800 mt-3 mb-3">${r.title}</h2>
                     <p class="text-sm text-slate-500 mb-6 italic">${r.metaDescription || ''}</p>
+                    ${image1Html}
                     <div class="bg-amber-50 border border-amber-200 rounded-xl p-5 mb-6">
                         <p class="text-[10px] font-black text-amber-600 uppercase tracking-widest mb-3">${t.articleTldrLabel}</p>
                         <ul class="space-y-2">${tldrHtml}</ul>
                     </div>
                     ${tocHtml}
+                    ${image2Html}
                     <div class="article-body">${simpleMarkdownToHtml(r.body)}</div>
                     <div class="border-t border-slate-100 pt-8 mt-8">
                         <p class="text-[11px] font-black text-indigo-600 uppercase tracking-widest bg-indigo-50 px-4 py-2 rounded-lg border border-indigo-100 shadow-sm inline-block mb-4">${t.articleFaqLabel}</p>
@@ -2094,11 +2486,13 @@ A5: {Answer}
             btn.classList.add('opacity-75', 'cursor-not-allowed');
             document.getElementById('export-btn-container')?.classList.add('hidden');
             resultArea.classList.remove('hidden');
-            resultArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
             currentEngineMode = contentType === 'ads' ? "ADS" : "GEO";
 
             outputContainer.innerHTML = workerLoaderHtml(t.procTitle, t.procSub);
+            // 捲到頁面實際最底部（而非只對齊結果區塊頂部），桌機手機共用同一套邏輯；
+            // 等loading動畫塞進outputContainer後才量測高度，確保捲動位置有算進新內容
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
             const fakeProgressTimer = startFakeProgress(5, 92);
 
             let targetFileText = "";
@@ -2682,7 +3076,7 @@ ${scrapeRes.text}
                         <div class="bg-slate-50 border-b border-slate-200 px-8 py-5 flex flex-col sm:flex-row justify-between sm:items-center gap-4">
                             <div class="flex items-center gap-4">
                                 <div class="w-10 h-10 rounded-xl bg-[#005bac]/10 text-[#005bac] flex items-center justify-center text-lg"><i class="fas fa-microchip"></i></div>
-                                <div><h4 class="font-black text-slate-800 text-base">${detox(model) || 'IPC MODEL'} (v1.18.3)</h4><p class="text-xs text-slate-500 truncate max-w-md mt-1">${url}</p></div>
+                                <div><h4 class="font-black text-slate-800 text-base">${detox(model) || 'IPC MODEL'}</h4><p class="text-xs text-slate-500 truncate max-w-md mt-1">${url}</p></div>
                             </div>
                             <button onclick="window.copyToClip(this, 'all')" data-content="${encodeURIComponent(titleClean + '\n' + descClean + '\n\n' + featuresTextToCopy + '\n\n' + 'TL;DR:\n' + tldrClean + '\n\n' + faqClean + '\n\n' + t.tagLabel + ' ' + detox(tags) + '\n' + t.catLabel + ' ' + detox(cat))}" class="text-xs bg-white border border-slate-300 px-5 py-2.5 rounded-lg font-bold shadow-sm transition-all hover:-translate-y-0.5 hover:shadow flex items-center gap-2"><i class="far fa-copy"></i> ${t.copyAll}</button>
                         </div>
@@ -2793,7 +3187,7 @@ ${scrapeRes.text}
                 <img src="advantech-logo.png" alt="Advantech" class="h-8 sm:h-10 w-auto rounded-lg shadow-md flex-shrink-0">
                 <div class="min-w-0">
                     <h1 class="text-sm sm:text-xl font-bold text-slate-800 leading-tight truncate" data-i18n="navTitle">GEO 內容生成系統</h1>
-                    <p class="text-[10px] sm:text-xs text-slate-500 font-medium tracking-wide mt-0.5 hidden sm:block" data-i18n="navVer">v1.21.3 手機版全面修正版</p>
+                    <p class="text-[10px] sm:text-xs text-slate-500 font-medium tracking-wide mt-0.5 hidden sm:block" data-i18n="navVer">v1.24.5</p>
                 </div>
             </div>
             <div class="flex items-center gap-1.5 sm:gap-4 flex-shrink-0">
@@ -2943,7 +3337,7 @@ ${scrapeRes.text}
                 <div class="sm:w-40">
                     <label class="block text-xs font-semibold text-slate-500 uppercase mb-2" data-i18n="geoLabel">目標優化引擎</label>
                     <select id="pref-geo" class="w-full px-3 sm:px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg text-sm font-semibold text-slate-700 focus:border-[#005bac] outline-none cursor-pointer shadow-sm">
-                        <option value="Standard SEO">標準SEO優化</option>
+                        <option value="Standard SEO">標準GEO優化</option>
                         <option value="Gemini">Gemini</option>
                         <option value="Claude">Claude</option>
                         <option value="ChatGPT">ChatGPT</option>

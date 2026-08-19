@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GEO 內容優化系統 v1.24.5</title>
+    <title>GEO 內容優化系統 v1.24.6</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
@@ -54,7 +54,7 @@
         const i18n = {
             'zh-TW': {
                 navTitle: "GEO 內容生成系統",
-                navVer: "v1.24.5",
+                navVer: "v1.24.6",
                 authConnecting: "正在連接雲端...",
                 authSuccess: "雲端已連線",
                 authError: "連線異常",
@@ -159,7 +159,7 @@
             },
             'zh-CN': {
                 navTitle: "GEO 内容生成系统",
-                navVer: "v1.24.5",
+                navVer: "v1.24.6",
                 authConnecting: "正在连接云端...",
                 authSuccess: "云端已连线",
                 authError: "连线异常",
@@ -264,7 +264,7 @@
             },
             'en': {
                 navTitle: "GEO Content System",
-                navVer: "v1.24.5",
+                navVer: "v1.24.6",
                 authConnecting: "Connecting...",
                 authSuccess: "Cloud Connected",
                 authError: "Auth Error",
@@ -369,7 +369,7 @@
             },
             'ja': {
                 navTitle: "GEO コンテンツ生成システム",
-                navVer: "v1.24.5",
+                navVer: "v1.24.6",
                 authConnecting: "クラウドに接続中...",
                 authSuccess: "クラウド接続済み",
                 authError: "接続エラー",
@@ -474,7 +474,7 @@
             },
             'ko': {
                 navTitle: "GEO 콘텐츠 생성 시스템",
-                navVer: "v1.24.5",
+                navVer: "v1.24.6",
                 authConnecting: "클라우드 연결 중...",
                 authSuccess: "클라우드 연결됨",
                 authError: "연결 오류",
@@ -2066,9 +2066,9 @@ Each query should be specific and concrete (include the product category, not ge
         // refImage（選填）：{mimeType, data} 格式的真實研華產品照片，附上去時會要求AI照著這張真實外觀畫，不是憑空想像
         async function callImageGenerationApi(prompt, refImage) {
             try {
-                let fullPrompt = `${prompt} Professional stock-photography style, realistic lighting, no on-image text or logos.`;
+                let fullPrompt = `${prompt} Professional stock-photography style, realistic lighting, no on-image text or logos. Do not render any cables, wires, cords, or plugs anywhere in the image, on or off the hardware.`;
                 if (refImage) {
-                    fullPrompt = `CRITICAL PRODUCT FIDELITY RULE (highest priority): the attached reference image shows the EXACT real Advantech product to feature in this scene. Render it with high fidelity — preserve its precise shape, color, port layout, and proportions. Do NOT redesign, restyle, or invent a different appearance for it; only render what you can directly observe in the reference image. ${fullPrompt}`;
+                    fullPrompt = `CRITICAL PRODUCT FIDELITY RULE (highest priority): the attached reference image shows the EXACT real Advantech product to feature in this scene. Render it with high fidelity — preserve its precise shape, color, port layout, and proportions. Do NOT redesign, restyle, or invent a different appearance for it; only render what you can directly observe in the reference image. Do NOT add any cables, wires, cords, or plugs touching or near this product, even if the scene implies connectivity or the product is mounted inside other machinery — show it as a standalone unit with clean, empty ports. ${fullPrompt}`;
                 }
                 const res = await fetch('/api/generate-image', {
                     method: 'POST',
@@ -2245,7 +2245,7 @@ ${photoCandidates.map((c, i) => `${i}: ${c.alt || '(no caption)'} — from ${c.s
 4. PRODUCT — LOWEST PRIORITY, OPTIONAL: only include a suggestion of the hardware if it fits naturally without forcing a "product mounted on a wall" cliché. The product is optional supporting context, never the mandatory anchor of the composition.
 - IMAGE_1_PROMPT: the broad scene resulting from the priority above.
 - IMAGE_2_PROMPT: a narrower scene drawn from a DIFFERENT point in the BODY than IMAGE_1_PROMPT — do not reuse the same visual idea twice within this article.
-Each prompt: 1-2 sentences, describe the scene/setting/mood only (camera angle, lighting, environment) — do NOT ask for any on-image text, logos, or brand names (image-generation models render text unreliably). Do NOT describe the specific appearance of any hardware in the prompt text (no port counts, no chassis color/shape) — if a real reference photo will be attached (see below), the photo itself conveys the appearance; describing it too in words is redundant and can conflict with the photo.
+Each prompt: 1-2 sentences, describe the scene/setting/mood only (camera angle, lighting, environment) — do NOT ask for any on-image text, logos, or brand names (image-generation models render text unreliably). Do NOT describe the specific appearance of any hardware in the prompt text (no port counts, no chassis color/shape) — if a real reference photo will be attached (see below), the photo itself conveys the appearance; describing it too in words is redundant and can conflict with the photo. 🚨 NO CABLES ON THE FEATURED HARDWARE: the featured Advantech device in the scene (the one that may get a real reference photo attached, per the priority order above) must be shown with NO cables, wires, cords, or plugs touching or entering it — image-generation models reliably get this wrong (plugging a cable into the wrong port type, dangling unplugged ends), and there is no way to word around it, so simply don't depict it. Unrelated background elements that are clearly NOT the featured device (e.g. a blurred server rack, other equipment) may still show ambient cabling if it fits the scene, since those aren't scrutinized for per-port correctness — the restriction is specifically about the featured Advantech hardware itself. For connectivity/I/O-themed articles, show the featured device cable-free and let the article's own text carry the connectivity claims instead.
 ${photoCandidates && photoCandidates.length > 0 ? `- 🚨 REFERENCE PHOTO SELECTION: for each image, if — and ONLY if — the featured hardware in that specific scene (per the priority order above) is clearly one of the products listed in AVAILABLE REAL PRODUCT PHOTOS, output that product's index number so it can be attached as a real reference photo (ensuring the generated image is faithful to a genuine Advantech product, not an imagined generic box). If no listed photo is relevant to that image (e.g. the scene has no featured hardware, or discusses a product not in the list), output "none" — do NOT force a mismatched reference.` : ''}
 
 🚨 DO NOT WRAP YOUR RESPONSE IN MARKDOWN CODE BLOCKS. RETURN RAW TEXT. 🚨
@@ -3187,7 +3187,7 @@ ${scrapeRes.text}
                 <img src="advantech-logo.png" alt="Advantech" class="h-8 sm:h-10 w-auto rounded-lg shadow-md flex-shrink-0">
                 <div class="min-w-0">
                     <h1 class="text-sm sm:text-xl font-bold text-slate-800 leading-tight truncate" data-i18n="navTitle">GEO 內容生成系統</h1>
-                    <p class="text-[10px] sm:text-xs text-slate-500 font-medium tracking-wide mt-0.5 hidden sm:block" data-i18n="navVer">v1.24.5</p>
+                    <p class="text-[10px] sm:text-xs text-slate-500 font-medium tracking-wide mt-0.5 hidden sm:block" data-i18n="navVer">v1.24.6</p>
                 </div>
             </div>
             <div class="flex items-center gap-1.5 sm:gap-4 flex-shrink-0">

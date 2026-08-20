@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GEO 內容優化系統 v1.24.7</title>
+    <title>GEO 內容優化系統 v1.24.8</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
@@ -54,7 +54,7 @@
         const i18n = {
             'zh-TW': {
                 navTitle: "GEO 內容生成系統",
-                navVer: "v1.24.7",
+                navVer: "v1.24.8",
                 authConnecting: "正在連接雲端...",
                 authSuccess: "雲端已連線",
                 authError: "連線異常",
@@ -159,7 +159,7 @@
             },
             'zh-CN': {
                 navTitle: "GEO 内容生成系统",
-                navVer: "v1.24.7",
+                navVer: "v1.24.8",
                 authConnecting: "正在连接云端...",
                 authSuccess: "云端已连线",
                 authError: "连线异常",
@@ -264,7 +264,7 @@
             },
             'en': {
                 navTitle: "GEO Content System",
-                navVer: "v1.24.7",
+                navVer: "v1.24.8",
                 authConnecting: "Connecting...",
                 authSuccess: "Cloud Connected",
                 authError: "Auth Error",
@@ -369,7 +369,7 @@
             },
             'ja': {
                 navTitle: "GEO コンテンツ生成システム",
-                navVer: "v1.24.7",
+                navVer: "v1.24.8",
                 authConnecting: "クラウドに接続中...",
                 authSuccess: "クラウド接続済み",
                 authError: "接続エラー",
@@ -474,7 +474,7 @@
             },
             'ko': {
                 navTitle: "GEO 콘텐츠 생성 시스템",
-                navVer: "v1.24.7",
+                navVer: "v1.24.8",
                 authConnecting: "클라우드 연결 중...",
                 authSuccess: "클라우드 연결됨",
                 authError: "연결 오류",
@@ -1533,6 +1533,17 @@
         };
 
         // 從爬蟲抓回的Markdown內容裡找出「像是產品主圖」的圖片網址（供文章配圖當參考圖用）：
+        // 從圖片網址或說明文字判斷「這是哪個產品型號」，用來去重——研華圖片網址慣例為
+        // .../productfile/PIS/{型號}/... ，{型號}資料夾名稱就是最可靠的產品識別依據；抓不到再退而
+        // 求其次用說明文字開頭的型號字樣（例如"MIC-742-AT7A1. Click to expand image"→"MIC-742-AT7A1"）
+        function extractProductIdentifier(url, alt) {
+            const urlMatch = url.match(/\/productfile\/PIS\/([^\/]+)\//i);
+            if (urlMatch) return urlMatch[1].toUpperCase();
+            const altMatch = (alt || '').match(/^[A-Z0-9][A-Z0-9\-]{3,}/i);
+            if (altMatch) return altMatch[0].toUpperCase();
+            return url;
+        }
+
         // 排除svg小圖示，優先挑網址路徑或說明文字裡含「photo/main/product」字樣的（研華官網慣用命名，例如
         // "Product - Photo(Main)"），沒有明確標記時退而求其次收錄其他圖片但排到後面，非必要就不會被選用。
         function extractProductPhotoCandidates(markdownText, sourceLabel) {
@@ -1637,13 +1648,16 @@
                 }
             }
 
-            // 每個來源只留信心度最高的1張候選（避免同一產品頁多張圖同時入選），最多留5張候選給AI挑選
-            const seenSources = new Set();
+            // 每個「產品型號」只留信心度最高的1張候選（避免同一產品的多張角度照同時入選），最多留8張候選給AI挑選。
+            // 用產品型號去重、不是用來源網址去重——PLP類別頁一個網址裡可能列出多款不同產品，若照網址去重
+            // 只留1張，會導致文章不管實際提到哪個產品，配圖永遠只能選頁面上第一個產品。
+            const seenProducts = new Set();
             photoCandidates = photoCandidates.filter(c => {
-                if (seenSources.has(c.sourceLabel)) return false;
-                seenSources.add(c.sourceLabel);
+                const key = extractProductIdentifier(c.url, c.alt);
+                if (seenProducts.has(key)) return false;
+                seenProducts.add(key);
                 return true;
-            }).slice(0, 5);
+            }).slice(0, 8);
 
             const MAX_CHARS = 30000;
             if (targetFileText.length > MAX_CHARS) {
@@ -2253,7 +2267,7 @@ ${photoCandidates.map((c, i) => `${i}: ${c.alt || '(no caption)'} — from ${c.s
 - IMAGE_1_PROMPT: the broad scene resulting from the priority above.
 - IMAGE_2_PROMPT: a narrower scene drawn from a DIFFERENT point in the BODY than IMAGE_1_PROMPT — do not reuse the same visual idea twice within this article.
 Each prompt: 1-2 sentences, describe the scene/setting/mood only (camera angle, lighting, environment) — do NOT ask for any on-image text, logos, or brand names (image-generation models render text unreliably). Do NOT describe the specific appearance of any hardware in the prompt text (no port counts, no chassis color/shape) — if a real reference photo will be attached (see below), the photo itself conveys the appearance; describing it too in words is redundant and can conflict with the photo. 🚨 NO CABLES ON THE FEATURED HARDWARE: the featured Advantech device in the scene (the one that may get a real reference photo attached, per the priority order above) must be shown with NO cables, wires, cords, or plugs touching or entering it — image-generation models reliably get this wrong (plugging a cable into the wrong port type, dangling unplugged ends), and there is no way to word around it, so simply don't depict it. Unrelated background elements that are clearly NOT the featured device (e.g. a blurred server rack, other equipment) may still show ambient cabling if it fits the scene, since those aren't scrutinized for per-port correctness — the restriction is specifically about the featured Advantech hardware itself. For connectivity/I/O-themed articles, show the featured device cable-free and let the article's own text carry the connectivity claims instead.
-${photoCandidates && photoCandidates.length > 0 ? `- 🚨 REFERENCE PHOTO SELECTION: for each image, if — and ONLY if — the featured hardware in that specific scene (per the priority order above) is clearly one of the products listed in AVAILABLE REAL PRODUCT PHOTOS, output that product's index number so it can be attached as a real reference photo (ensuring the generated image is faithful to a genuine Advantech product, not an imagined generic box). If no listed photo is relevant to that image (e.g. the scene has no featured hardware, or discusses a product not in the list), output "none" — do NOT force a mismatched reference.` : ''}
+${photoCandidates && photoCandidates.length > 0 ? `- 🚨 REFERENCE PHOTO SELECTION: the AVAILABLE REAL PRODUCT PHOTOS list may contain MULTIPLE DIFFERENT products (e.g. when the source is a category/product-line page listing many models) — do NOT default to index 0 or whichever photo happens to be listed first. For each image, if — and ONLY if — the featured hardware in that specific scene (per the priority order above) is clearly a SPECIFIC product you actually named or discussed in THIS article's own BODY text, find that exact product's entry in the list (match by model number/name in the photo's caption) and output its index number. If the article's BODY doesn't specifically name any of the listed products for that image, or discusses a product not in the list, output "none" — do NOT force a reference to a different, unrelated product just because it's in the list.` : ''}
 
 🚨 DO NOT WRAP YOUR RESPONSE IN MARKDOWN CODE BLOCKS. RETURN RAW TEXT. 🚨
 
@@ -3194,7 +3208,7 @@ ${scrapeRes.text}
                 <img src="advantech-logo.png" alt="Advantech" class="h-8 sm:h-10 w-auto rounded-lg shadow-md flex-shrink-0">
                 <div class="min-w-0">
                     <h1 class="text-sm sm:text-xl font-bold text-slate-800 leading-tight truncate" data-i18n="navTitle">GEO 內容生成系統</h1>
-                    <p class="text-[10px] sm:text-xs text-slate-500 font-medium tracking-wide mt-0.5 hidden sm:block" data-i18n="navVer">v1.24.7</p>
+                    <p class="text-[10px] sm:text-xs text-slate-500 font-medium tracking-wide mt-0.5 hidden sm:block" data-i18n="navVer">v1.24.8</p>
                 </div>
             </div>
             <div class="flex items-center gap-1.5 sm:gap-4 flex-shrink-0">

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GEO 內容優化系統 v1.24.10</title>
+    <title>GEO 內容優化系統 v1.24.11</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/xlsx-js-style@1.2.0/dist/xlsx.bundle.js"></script>
@@ -54,7 +54,7 @@
         const i18n = {
             'zh-TW': {
                 navTitle: "GEO 內容生成系統",
-                navVer: "v1.24.10",
+                navVer: "v1.24.11",
                 authConnecting: "正在連接雲端...",
                 authSuccess: "雲端已連線",
                 authError: "連線異常",
@@ -64,6 +64,9 @@
                 levelPLP: "產品線頁面 (PLP)",
                 levelHome: "企業首頁 (Home)",
                 urlPlaceholder: "請輸入「目標產品網址」。AI 將以此鎖定精確型號，並作為 SEO 語境與頁面層級的背景參考。",
+                ctaUrlLabel: "導流連結網址 (可新增多個，SEO/GEO文章用，選填)",
+                ctaUrlPlaceholder: "請輸入希望讀者點擊導向的網址，AI會依文章內容自動選用最相關的一個",
+                btnAddCtaUrl: "新增連結",
                 pdfTitle: "拖放「關聯文件」(支援 PDF, DOCX, XLSX, 圖檔, TXT)",
                 fileSelected: "目標檔案：",
                 refFileSelected: "參考檔案：",
@@ -159,7 +162,7 @@
             },
             'zh-CN': {
                 navTitle: "GEO 内容生成系统",
-                navVer: "v1.24.10",
+                navVer: "v1.24.11",
                 authConnecting: "正在连接云端...",
                 authSuccess: "云端已连线",
                 authError: "连线异常",
@@ -169,6 +172,9 @@
                 levelPLP: "产品线页面 (PLP)",
                 levelHome: "企业首页 (Home)",
                 urlPlaceholder: "请输入「目标产品网址」。AI 将以此锁定精确型号，并作为 SEO 语境与页面层级的背景参考。",
+                ctaUrlLabel: "导流链接网址 (可新增多个，SEO/GEO文章用，选填)",
+                ctaUrlPlaceholder: "请输入希望读者点击导向的网址，AI会依文章内容自动选用最相关的一个",
+                btnAddCtaUrl: "新增链接",
                 pdfTitle: "拖放「关联文件」(支持 PDF, DOCX, XLSX, 图档, TXT)",
                 fileSelected: "目标档案：",
                 refFileSelected: "参考档案：",
@@ -264,7 +270,7 @@
             },
             'en': {
                 navTitle: "GEO Content System",
-                navVer: "v1.24.10",
+                navVer: "v1.24.11",
                 authConnecting: "Connecting...",
                 authSuccess: "Cloud Connected",
                 authError: "Auth Error",
@@ -274,6 +280,9 @@
                 levelPLP: "Product Line (PLP)",
                 levelHome: "Corporate Home",
                 urlPlaceholder: "Enter 'Target Product URLs'. AI uses this to lock the exact model and as SEO context.",
+                ctaUrlLabel: "Traffic-Driving Link URLs (add multiple, for SEO/GEO Articles, optional)",
+                ctaUrlPlaceholder: "Enter a URL you want readers directed to — AI will pick the most relevant one for each article",
+                btnAddCtaUrl: "Add Link",
                 pdfTitle: "Drop 'Related Docs' (PDF, DOCX, XLSX, Images, TXT)",
                 fileSelected: "Target Files:",
                 refFileSelected: "Ref Files:",
@@ -369,7 +378,7 @@
             },
             'ja': {
                 navTitle: "GEO コンテンツ生成システム",
-                navVer: "v1.24.10",
+                navVer: "v1.24.11",
                 authConnecting: "クラウドに接続中...",
                 authSuccess: "クラウド接続済み",
                 authError: "接続エラー",
@@ -379,6 +388,9 @@
                 levelPLP: "商品ラインページ (PLP)",
                 levelHome: "企業ホームページ (Home)",
                 urlPlaceholder: "「対象商品URL」を入力してください。AIがこれを基に正確な型番を特定し、SEOコンテキストおよびページ階層の参考情報として使用します。",
+                ctaUrlLabel: "誘導リンクURL (複数追加可、SEO/GEO記事用、任意)",
+                ctaUrlPlaceholder: "読者を誘導したいURLを入力してください。AIが記事内容に応じて最も関連性の高いものを選びます",
+                btnAddCtaUrl: "リンクを追加",
                 pdfTitle: "「関連ファイル」をドロップ (PDF, DOCX, XLSX, 画像, TXT 対応)",
                 fileSelected: "対象ファイル：",
                 refFileSelected: "参考ファイル：",
@@ -474,7 +486,7 @@
             },
             'ko': {
                 navTitle: "GEO 콘텐츠 생성 시스템",
-                navVer: "v1.24.10",
+                navVer: "v1.24.11",
                 authConnecting: "클라우드 연결 중...",
                 authSuccess: "클라우드 연결됨",
                 authError: "연결 오류",
@@ -484,6 +496,9 @@
                 levelPLP: "제품 라인 페이지 (PLP)",
                 levelHome: "기업 홈페이지 (Home)",
                 urlPlaceholder: "'대상 제품 URL'을 입력하세요. AI가 이를 기반으로 정확한 모델명을 파악하고, SEO 컨텍스트 및 페이지 레벨의 참고 정보로 활용합니다.",
+                ctaUrlLabel: "유입 유도 링크 URL (여러 개 추가 가능, SEO/GEO 아티클용, 선택사항)",
+                ctaUrlPlaceholder: "독자를 유도하고 싶은 URL을 입력하세요. AI가 아티클 내용에 따라 가장 관련성 높은 것을 선택합니다",
+                btnAddCtaUrl: "링크 추가",
                 pdfTitle: "'관련 문서' 끌어다 놓기 (PDF, DOCX, XLSX, 이미지, TXT 지원)",
                 fileSelected: "대상 파일:",
                 refFileSelected: "참고 파일:",
@@ -1457,6 +1472,9 @@
             // 直到下一個真正有空行分隔的段落才恢復正常——這裡在標題後面補一個空行，確保內文永遠會被切成獨立區塊。
             html = html.replace(/(<\/h[34]>)\n(?!\n)/g, '$1\n\n');
             html = html.replace(/\*\*(.+?)\*\*/g, '<strong class="text-slate-900">$1</strong>');
+            // 把導流連結的markdown連結語法[文字](網址)轉成可點擊的超連結——網址在插入這裡之前已經過白名單檢查（僅允許http/https），
+            // 一般AI輸出的文字裡不會出現[文字](網址)這種格式，所以這條規則不會誤觸文章其他內容
+            html = html.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer" class="font-bold text-[#005bac] underline hover:text-[#004a8d]">$1</a>');
             html = html.split(/\n\s*\n/).map(block => {
                 const trimmed = block.trim();
                 if (!trimmed) return '';
@@ -1501,8 +1519,26 @@
             geoSelect.options[0].text = i18n[currentLang].standardSeoOptionLabel;
         };
 
-        // 「生成內容」尚無額外連動行為；SEO/GEO文章 的表單規格將於後續階段設計
-        window.onContentTypeChange = () => {};
+        // 選「SEO/GEO文章」時才顯示導流連結網址欄位（其他內容類型尚無此功能）
+        window.onContentTypeChange = () => {
+            const ct = document.getElementById('pref-content-type').value;
+            document.getElementById('cta-url-container').classList.toggle('hidden', ct !== 'article');
+        };
+
+        // 導流連結網址可新增多個：每列只填網址，不用使用者自己填說明文字，由系統另外抓網頁標題判斷主題
+        window.addCtaUrlRow = () => {
+            const list = document.getElementById('cta-url-list');
+            const row = document.createElement('div');
+            row.className = 'flex gap-2';
+            row.innerHTML = `<input type="url" class="cta-url-row flex-grow p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 input-focus" placeholder="${i18n[currentLang].ctaUrlPlaceholder}">
+                <button type="button" onclick="window.removeCtaUrlRow(this)" class="text-slate-400 hover:text-red-500 px-2" aria-label="Remove"><i class="fas fa-times"></i></button>`;
+            list.appendChild(row);
+        };
+        window.removeCtaUrlRow = (btn) => {
+            const list = document.getElementById('cta-url-list');
+            if (list.children.length > 1) btn.closest('div').remove();
+            else btn.closest('div').querySelector('.cta-url-row').value = ''; // 只剩最後一列時清空即可，不整列移除
+        };
 
         // ===== SEO/GEO 文章：主文＋欉集雙階段生成流程 =====
         let articleWorkflowState = { source: null, geo: '', strategy: '', kbManual: '', bundles: [], selectedIndex: -1 };
@@ -2098,7 +2134,7 @@ Each query should be specific and concrete (include the product category, not ge
         // 呼叫Gemini原生圖片模型，把base64圖片資料轉成data URL；第一次失敗會自動重打一次，兩次都失敗才回傳null（不中斷生成流程）
         // refImage（選填）：{mimeType, data} 格式的真實研華產品照片，附上去時會要求AI照著這張真實外觀畫，不是憑空想像
         async function callImageGenerationApi(prompt, refImage) {
-            let fullPrompt = `${prompt} Professional stock-photography style, realistic lighting, no on-image text or logos. Do not render any cables, wires, cords, or plugs anywhere in the image, on or off the hardware.`;
+            let fullPrompt = `${prompt} Professional stock-photography style, bright and clean lighting with vibrant, energetic color — NOT a dark, desaturated, blue-toned, or moody/somber look. No on-image text or logos. Do not render any cables, wires, cords, or plugs anywhere in the image, on or off the hardware.`;
             if (refImage) {
                 fullPrompt = `CRITICAL PRODUCT FIDELITY RULE (highest priority): the attached reference image shows the EXACT real Advantech product to feature in this scene. Render it with high fidelity — preserve its precise shape, color, port layout, and proportions. Do NOT redesign, restyle, or invent a different appearance for it; only render what you can directly observe in the reference image. Do NOT add any cables, wires, cords, or plugs touching or near this product, even if the scene implies connectivity or the product is mounted inside other machinery — show it as a standalone unit with clean, empty ports. Do NOT depict it as bolted, screwed, clamped, or mechanically mounted onto a wall, pole, machine, or bracket — instead show it simply placed or resting on a surface (table, shelf, workbench, floor) in the scene, not fixed/attached to anything. ${fullPrompt}`;
             }
@@ -2191,7 +2227,7 @@ Each query should be specific and concrete (include the product category, not ge
             return { image1: img1, image2: img2 };
         }
 
-        function buildArticleStep2Prompt(role, angleTypeLabel, myTitle, siblingTitles, targetLangLabel, brandName, grammarRule, strategy, geo, researchContext, photoCandidates) {
+        function buildArticleStep2Prompt(role, angleTypeLabel, myTitle, siblingTitles, targetLangLabel, brandName, grammarRule, strategy, geo, researchContext, photoCandidates, ctaLinkCandidates) {
             const isPillar = role === 'pillar';
             const wordCountRule = isPillar
                 ? '1200-2000 words for the BODY (this is the comprehensive pillar/hub piece — the most in-depth of the 4 articles).'
@@ -2203,6 +2239,11 @@ Each query should be specific and concrete (include the product category, not ge
                     : 'Use a balanced, informative tone.');
             const crossRefInstruction = siblingTitles.length > 0
                 ? `**INTERNAL CROSS-REFERENCE**: This article is part of a 4-article topic cluster. The other 3 articles are: ${siblingTitles.map(s => `"${s}"`).join(', ')}. Mention AT MOST ONE of them by title, ONCE, in ONE natural place in the BODY (e.g. near the end of one relevant section). Do NOT insert a "see our related article" mention at the start of multiple sections — that reads as mechanical and repetitive. Do NOT invent a URL or hyperlink — mention the title in prose only.`
+                : '';
+            const ctaInstruction = ctaLinkCandidates && ctaLinkCandidates.length > 0
+                ? `**TRAFFIC-DRIVING CTA LINK**: Below is a list of available destination links (index-numbered, with each page's real title) that the app can insert as ONE real hyperlink into this article — you do NOT need to know or write the actual URL yourself.
+${ctaLinkCandidates.map((c, i) => `${i}: ${c.title || '(no title found for this page)'}`).join('\n')}
+Pick whichever ONE of these is the BEST topical match for THIS article (compare each title against this article's own angle/title). If more than one option exists and none is a clearly better fit than the others, just pick the most generally relevant one — always pick one, never skip inserting a link. Then place a placeholder token EXACTLY ONCE at the ideal natural point in the BODY (e.g. near the end of a relevant section, or in the conclusion) — do NOT use it more than once, and do NOT place it in the TLDR, FAQ, or headings. Write a complete, natural sentence around it in ${targetLangLabel}, where the token stands in for a short, contextually fitting call-to-action phrase (3-8 words, e.g. "explore our full range of edge computing solutions" / "深入了解研華的邊緣運算解決方案"). Format: \`{{CTA:INDEX:the anchor phrase goes here in ${targetLangLabel}}}\` — replace INDEX with the chosen link's index number from the list above, and replace the phrase text with your actual short phrase; keep the \`{{CTA:\` and \`}}\` exactly as shown. Example usage in a sentence: "...to see how this applies to your deployment, {{CTA:0:explore our full range of edge computing solutions}}." Do NOT write an actual URL anywhere — the app substitutes the real link afterward.`
                 : '';
             const engineToneInstruction = getEngineInstructions(geo).articleTone;
             const researchInstruction = researchContext
@@ -2238,6 +2279,8 @@ ${engineToneInstruction}
 
 ${crossRefInstruction}
 
+${ctaInstruction}
+
 ${researchInstruction}
 
 ${frameworkInstruction}
@@ -2266,7 +2309,7 @@ ${photoCandidates.map((c, i) => `${i}: ${c.alt || '(no caption)'} — from ${c.s
 4. PRODUCT — LOWEST PRIORITY, OPTIONAL: only include a suggestion of the hardware if it fits naturally without forcing a "product mounted on a wall" cliché. The product is optional supporting context, never the mandatory anchor of the composition. If the featured hardware IS included, show it simply PLACED/RESTING in the scene (on a table, shelf, workbench, floor, or nearby surface) — do NOT describe it as bolted, screwed, clamped, or mechanically mounted onto a wall, pole, machine, or bracket; image-generation models render these attachment/installation details wrong (implausible brackets, the unit appearing to merge or float half-embedded into other equipment).
 - IMAGE_1_PROMPT: the broad scene resulting from the priority above.
 - IMAGE_2_PROMPT: a narrower scene drawn from a DIFFERENT point in the BODY than IMAGE_1_PROMPT — do not reuse the same visual idea twice within this article.
-Each prompt: 1-2 sentences, describe the scene/setting/mood only (camera angle, lighting, environment) — do NOT ask for any on-image text, logos, or brand names (image-generation models render text unreliably). Do NOT describe the specific appearance of any hardware in the prompt text (no port counts, no chassis color/shape) — if a real reference photo will be attached (see below), the photo itself conveys the appearance; describing it too in words is redundant and can conflict with the photo. 🚨 NO CABLES ON THE FEATURED HARDWARE: the featured Advantech device in the scene (the one that may get a real reference photo attached, per the priority order above) must be shown with NO cables, wires, cords, or plugs touching or entering it — image-generation models reliably get this wrong (plugging a cable into the wrong port type, dangling unplugged ends), and there is no way to word around it, so simply don't depict it. Unrelated background elements that are clearly NOT the featured device (e.g. a blurred server rack, other equipment) may still show ambient cabling if it fits the scene, since those aren't scrutinized for per-port correctness — the restriction is specifically about the featured Advantech hardware itself. For connectivity/I/O-themed articles, show the featured device cable-free and let the article's own text carry the connectivity claims instead.
+Each prompt: 1-2 sentences, describe the scene/setting/mood only (camera angle, lighting, environment) — do NOT ask for any on-image text, logos, or brand names (image-generation models render text unreliably). 🚨 LIGHTING/MOOD DEFAULT: describe bright, clean, energetic lighting (e.g. "bright daylight through factory windows", "crisp well-lit modern facility") — do NOT default to dark, desaturated, blue-toned, or somber/moody lighting; that reads as gloomy and lifeless, not the confident brand tone this app should convey. Only use darker/dramatic lighting when the article's own angle is specifically about a problem/challenge (pain-point angle) AND even then keep it moderate, not oppressive. Do NOT describe the specific appearance of any hardware in the prompt text (no port counts, no chassis color/shape) — if a real reference photo will be attached (see below), the photo itself conveys the appearance; describing it too in words is redundant and can conflict with the photo. 🚨 NO CABLES ON THE FEATURED HARDWARE: the featured Advantech device in the scene (the one that may get a real reference photo attached, per the priority order above) must be shown with NO cables, wires, cords, or plugs touching or entering it — image-generation models reliably get this wrong (plugging a cable into the wrong port type, dangling unplugged ends), and there is no way to word around it, so simply don't depict it. Unrelated background elements that are clearly NOT the featured device (e.g. a blurred server rack, other equipment) may still show ambient cabling if it fits the scene, since those aren't scrutinized for per-port correctness — the restriction is specifically about the featured Advantech hardware itself. For connectivity/I/O-themed articles, show the featured device cable-free and let the article's own text carry the connectivity claims instead.
 ${photoCandidates && photoCandidates.length > 0 ? `- 🚨 REFERENCE PHOTO SELECTION: the AVAILABLE REAL PRODUCT PHOTOS list may contain MULTIPLE DIFFERENT products (e.g. when the source is a category/product-line page listing many models) — do NOT default to index 0 or whichever photo happens to be listed first. For each image, if — and ONLY if — the featured hardware in that specific scene (per the priority order above) is clearly a SPECIFIC product you actually named or discussed in THIS article's own BODY text, find that exact product's entry in the list (match by model number/name in the photo's caption) and output its index number. If the article's BODY doesn't specifically name any of the listed products for that image, or discusses a product not in the list, output "none" — do NOT force a reference to a different, unrelated product just because it's in the list.` : ''}
 
 🚨 DO NOT WRAP YOUR RESPONSE IN MARKDOWN CODE BLOCKS. RETURN RAW TEXT. 🚨
@@ -2300,6 +2343,47 @@ A5: {Answer}
 [IMAGE_1_REF_INDEX]{index number, or "none"}[/IMAGE_1_REF_INDEX]
 [IMAGE_2_PROMPT]{realistic photo scene description}[/IMAGE_2_PROMPT]
 [IMAGE_2_REF_INDEX]{index number, or "none"}[/IMAGE_2_REF_INDEX]`;
+        }
+
+        // 把AI寫在BODY裡的{{CTA:索引:錨點文字}}占位符換成真正的markdown連結——網址清單是使用者自己在介面輸入、
+        // 系統代為驗證過的，從頭到尾不讓AI自己寫網址，只讓AI決定選哪一個候選連結、錨點文字要寫什麼、放在哪裡，
+        // 避免AI打錯或編造網址字元
+        function applyCtaLink(body, ctaLinkCandidates) {
+            if (!ctaLinkCandidates || ctaLinkCandidates.length === 0) return body;
+            const placeholderRe = /\{\{CTA:(\d+):([^}]+)\}\}/g;
+            let used = false;
+            const replaced = body.replace(placeholderRe, (m, idxStr, anchorText) => {
+                const candidate = ctaLinkCandidates[parseInt(idxStr, 10)];
+                if (used || !candidate) return anchorText.trim(); // 索引錯誤或已用過一次的，只留文字、不重複插入連結
+                used = true;
+                return `[${anchorText.trim()}](${candidate.url})`;
+            });
+            if (used) return replaced;
+            // AI沒有照規則放置占位符，退而求其次在文章結尾自然補一句導流句（用第一個候選連結），確保連結還是有被嵌入
+            const learnMoreText = { 'zh-TW': '了解更多', 'zh-CN': '了解更多', 'en': 'Learn More', 'ja': '詳しくはこちら', 'ko': '자세히 알아보기' }[currentLang] || 'Learn More';
+            return `${body}\n\n[${learnMoreText}](${ctaLinkCandidates[0].url})`;
+        }
+
+        // 使用者輸入的導流連結網址只填網址、不填說明文字；改由系統輕量抓一次網頁<title>當作真實主題依據，
+        // 讓AI判斷該用哪一個連結時有真實內容可以參考，而不是只能瞎猜網址字串的意思
+        async function gatherCtaLinkCandidates(urls) {
+            const results = await Promise.all(urls.map(async (rawUrl) => {
+                let safeUrl;
+                try {
+                    const u = new URL(rawUrl);
+                    if (u.protocol !== 'http:' && u.protocol !== 'https:') return null;
+                    safeUrl = u.href;
+                } catch (e) {
+                    return null;
+                }
+                try {
+                    const res = await fetchWithRetry('/api/fetch-title', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ url: safeUrl }) }, 2);
+                    return { url: safeUrl, title: res?.title || '' };
+                } catch (e) {
+                    return { url: safeUrl, title: '' }; // 抓標題失敗不影響流程，只是AI少了真實標題可判斷，仍保留這個候選連結
+                }
+            }));
+            return results.filter(Boolean);
         }
 
         function parseArticleOutput(text) {
@@ -2337,11 +2421,13 @@ A5: {Answer}
             const allTitles = roles.map(r => r.title);
             const outputContainer = document.getElementById('output-container');
             const results = [];
+            const ctaUrls = Array.from(document.querySelectorAll('.cta-url-row')).map(el => el.value.trim()).filter(Boolean);
 
             const source = articleWorkflowState.source;
             const promptText = `Brand Guidelines (Reference): ${articleWorkflowState.kbManual}\n\n[SOURCE CONTENT]\n${source.targetFileText}\n\n${source.referenceFileText ? '[ADDITIONAL REFERENCE CONTEXT]\n' + source.referenceFileText : ''}`;
 
             outputContainer.innerHTML = workerLoaderHtml(t.articleResearching, t.procSub);
+            const ctaLinkCandidates = ctaUrls.length > 0 ? await gatherCtaLinkCandidates(ctaUrls) : [];
             const researchTimer = startFakeProgress(0, 10);
             const { targetLangLabel: researchLangLabel } = getLangContext();
             const researchContexts = await gatherArticleResearchContext(roles, researchLangLabel, promptText);
@@ -2359,7 +2445,7 @@ A5: {Answer}
                 try {
                     const siblingTitles = allTitles.filter((title, ti) => ti !== i);
                     const { targetLangLabel, brandName, grammarRule } = getLangContext();
-                    const systemPrompt = buildArticleStep2Prompt(roles[i].role, angleLabel(roles[i].type), roles[i].title, siblingTitles, targetLangLabel, brandName, grammarRule, articleWorkflowState.strategy, articleWorkflowState.geo, researchContexts[i], source.photoCandidates);
+                    const systemPrompt = buildArticleStep2Prompt(roles[i].role, angleLabel(roles[i].type), roles[i].title, siblingTitles, targetLangLabel, brandName, grammarRule, articleWorkflowState.strategy, articleWorkflowState.geo, researchContexts[i], source.photoCandidates, ctaLinkCandidates);
 
                     let partsArray = [{ text: promptText }];
                     if (source.imageParts.length > 0) partsArray = partsArray.concat(source.imageParts);
@@ -2370,6 +2456,7 @@ A5: {Answer}
                     if (!outputText) throw new Error(t.articleStep2Failed);
 
                     const parsed = parseArticleOutput(outputText);
+                    parsed.body = applyCtaLink(parsed.body, ctaLinkCandidates);
                     parsed.role = roles[i].role;
                     parsed.angleType = roles[i].type;
                     results.push(parsed);
@@ -3208,7 +3295,7 @@ ${scrapeRes.text}
                 <img src="advantech-logo.png" alt="Advantech" class="h-8 sm:h-10 w-auto rounded-lg shadow-md flex-shrink-0">
                 <div class="min-w-0">
                     <h1 class="text-sm sm:text-xl font-bold text-slate-800 leading-tight truncate" data-i18n="navTitle">GEO 內容生成系統</h1>
-                    <p class="text-[10px] sm:text-xs text-slate-500 font-medium tracking-wide mt-0.5 hidden sm:block" data-i18n="navVer">v1.24.10</p>
+                    <p class="text-[10px] sm:text-xs text-slate-500 font-medium tracking-wide mt-0.5 hidden sm:block" data-i18n="navVer">v1.24.11</p>
                 </div>
             </div>
             <div class="flex items-center gap-1.5 sm:gap-4 flex-shrink-0">
@@ -3259,6 +3346,18 @@ ${scrapeRes.text}
                 <div class="flex flex-col h-full">
                     <label class="block text-xs font-semibold text-slate-500 uppercase mb-2">Target URLs</label>
                     <textarea id="url-input" class="w-full h-40 sm:h-56 p-3 sm:p-4 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 input-focus custom-scrollbar resize-none leading-relaxed flex-grow mobile-textarea" data-i18n="urlPlaceholder" placeholder="請輸入產品網址..."></textarea>
+                    <div id="cta-url-container" class="hidden mt-4">
+                        <label class="block text-xs font-semibold text-slate-500 uppercase mb-2" data-i18n="ctaUrlLabel">導流連結網址 (可新增多個，SEO/GEO文章用，選填)</label>
+                        <div id="cta-url-list" class="space-y-2">
+                            <div class="flex gap-2">
+                                <input type="url" class="cta-url-row flex-grow p-3 bg-slate-50 border border-slate-200 rounded-xl text-sm text-slate-700 input-focus" data-i18n="ctaUrlPlaceholder" placeholder="請輸入希望讀者點擊導向的網址，AI會依文章內容自動選用最相關的一個">
+                                <button type="button" onclick="window.removeCtaUrlRow(this)" class="text-slate-400 hover:text-red-500 px-2" aria-label="Remove"><i class="fas fa-times"></i></button>
+                            </div>
+                        </div>
+                        <button type="button" onclick="window.addCtaUrlRow()" class="mt-2 text-xs font-semibold text-blue-600 hover:text-blue-800 flex items-center gap-1">
+                            <i class="fas fa-plus"></i> <span data-i18n="btnAddCtaUrl">新增連結</span>
+                        </button>
+                    </div>
                 </div>
                 <div class="flex flex-col h-full">
                     <label class="block text-xs font-semibold text-slate-500 uppercase mb-2">Source Files</label>

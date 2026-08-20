@@ -143,6 +143,31 @@ app.post('/api/fetch-image', async (req, res) => {
     }
 });
 
+// 【導流連結標題抓取通道】：使用者新增的導流連結不會另外請他填說明文字，改由系統輕量抓一次網頁<title>標籤，
+// 讓AI依真實標題判斷這個連結跟哪篇文章主題最相關；刻意不用完整的Apify爬蟲（太重太慢），單純fetch原始HTML抓標題即可
+app.post('/api/fetch-title', async (req, res) => {
+    const { url } = req.body;
+    if (!url) {
+        return res.status(400).json({ error: { message: "沒有提供網址" } });
+    }
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 10000);
+    try {
+        const response = await fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0' }, signal: controller.signal });
+        clearTimeout(timeout);
+        if (!response.ok) {
+            return res.status(response.status).json({ error: { message: `無法讀取網頁: HTTP ${response.status}` } });
+        }
+        const html = await response.text();
+        const match = html.match(/<title[^>]*>([^<]*)<\/title>/i);
+        const title = match ? match[1].replace(/\s+/g, ' ').trim() : '';
+        res.json({ title });
+    } catch (error) {
+        clearTimeout(timeout);
+        res.status(500).json({ error: { message: `讀取網頁標題失敗: ${error.message}` } });
+    }
+});
+
 // 【GEO文章重點配圖通道】：幫SEO/GEO文章生成流程呼叫Gemini原生圖片模型，產出文章重點示意圖
 app.post('/api/generate-image', async (req, res) => {
     const apiKey = process.env.GEMINI_API_KEY;
